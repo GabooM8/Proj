@@ -1,7 +1,8 @@
 package the_knife.classes;
+import java.io.Serializable;
 import java.util.Date;
 
-public class Utente {
+public class Utente implements Serializable {
     String nome;
     String cognome;
     String username;

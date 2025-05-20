@@ -1,6 +1,8 @@
 package the_knife.classes;
 
-public class Ristorante {
+import java.io.Serializable;
+
+public class Ristorante implements Serializable {
     String nome;
     String indirizzo;
     String nazione;
