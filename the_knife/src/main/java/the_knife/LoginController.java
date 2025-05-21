@@ -10,4 +10,8 @@ public class LoginController {
     private void switchToSecondary() throws IOException {
         App.setRoot("Register");
     }
+    @FXML
+    private void switchToGuest() throws IOException {
+        App.setRoot("guest");
+    }
 }
