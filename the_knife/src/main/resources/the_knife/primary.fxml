@@ -16,8 +16,8 @@
          </StackPane.margin>
          <children>
             <Label alignment="TOP_LEFT" text="Login" textFill="#127067" VBox.vgrow="ALWAYS" />
-            <TextField VBox.vgrow="ALWAYS" />
-            <PasswordField />
+            <TextField promptText="Nome Utente" VBox.vgrow="ALWAYS" />
+            <PasswordField promptText="Password" />
             <Button mnemonicParsing="false" style="-fx-background-color: #127067;" text="Login" textFill="WHITE" VBox.vgrow="ALWAYS" />
             <Button mnemonicParsing="false" onAction="#switchToSecondary" style="-fx-background-color: white;" text="Registrati" textFill="#127067" underline="true" VBox.vgrow="ALWAYS" />
             <Button mnemonicParsing="false" style="-fx-background-color: white;" text="Procedi come guest" underline="true" VBox.vgrow="ALWAYS" />
