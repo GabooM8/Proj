@@ -11,11 +11,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import the_knife.classes.Utente;
 
-public class SecondaryController {
+public class RegisterController {
 
     @FXML
     private void switchToPrimary() throws IOException {
-        App.setRoot("primary");
+        App.setRoot("Login");
 
        
        

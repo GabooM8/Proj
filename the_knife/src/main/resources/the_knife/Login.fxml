@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #fbf7ef;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="the_knife.LoginController">
+   <children>
+      <VBox alignment="CENTER" fillWidth="false" spacing="20.0" style="-fx-background-color: white; -fx-background-radius: 25; -fx-border-color: black; -fx-border-radius: 25;" StackPane.alignment="CENTER">
+         <StackPane.margin>
+            <Insets bottom="50.0" left="170.0" right="170.0" top="50.0" />
+         </StackPane.margin>
+         <children>
+            <Label alignment="TOP_LEFT" text="Login" textFill="#127067" VBox.vgrow="ALWAYS" />
+            <TextField promptText="Nome Utente" VBox.vgrow="ALWAYS" />
+            <PasswordField promptText="Password" />
+            <Button mnemonicParsing="false" style="-fx-background-color: #127067;" text="Login" textFill="WHITE" VBox.vgrow="ALWAYS" />
+            <Button mnemonicParsing="false" onAction="#switchToSecondary" style="-fx-background-color: white;" text="Registrati" textFill="#127067" underline="true" VBox.vgrow="ALWAYS" />
+            <Button mnemonicParsing="false" style="-fx-background-color: white;" text="Procedi come guest" underline="true" VBox.vgrow="ALWAYS" />
+         </children>
+         <padding>
+            <Insets bottom="20.0" top="20.0" />
+         </padding>
+      </VBox>
+   </children>
+</StackPane>
