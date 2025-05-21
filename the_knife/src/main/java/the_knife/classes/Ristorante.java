@@ -1,25 +1,25 @@
 package the_knife.classes;
 
-import java.io.Serializable;
-
-public class Ristorante implements Serializable {
+public class Ristorante {
     String nome;
     String indirizzo;
     String nazione;
     String citta;
     int prezzo;
+    int numStelle;
     String cucina;
     double latitudine;
     double longitudine;
     String telefono; // per delivery
     String weburl; // per prenotazione online
 
-    public Ristorante(String nome, String indirizzo, String nazione, String citta, int prezzo, String cucina, double latitudine, double longitudine, String telefono, String weburl) {
+    public Ristorante(String nome, String indirizzo, String nazione, String citta, int prezzo, int numStelle, String cucina, double latitudine, double longitudine, String telefono, String weburl) {
         this.nome = nome;
         this.indirizzo = indirizzo;
         this.nazione = nazione;
         this.citta = citta;
         this.prezzo = prezzo;
+        this.numStelle = numStelle;
         this.cucina = cucina;
         this.latitudine = latitudine;
         this.longitudine = longitudine;
@@ -50,6 +50,9 @@ public class Ristorante implements Serializable {
     public int getPrezzo() {
         return prezzo;
     }
+    public int getNumStelle() {
+        return numStelle;
+    }
     public String getCucina() {
         return cucina;
     }
@@ -73,6 +76,7 @@ public class Ristorante implements Serializable {
                 "Nazione: " + nazione + "\n" +
                 "Citta: " + citta + "\n" +
                 "Prezzo: " + prezzo + "\n" +
+                "Numero Stelle: " + numStelle + "\n" +
                 "Cucina: " + cucina + "\n" +
                 "Latitudine: " + latitudine + "\n" +
                 "Longitudine: " + longitudine + "\n" +
