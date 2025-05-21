@@ -1,0 +1,44 @@
+.tab-pane {
+    -fx-background-color: #fbf7ef; /* Il tuo colore beige per l'intera area del TabPane */
+}
+
+.tab-pane .tab-header-area {
+    -fx-alignment: CENTER; /* Allinea il contenuto dell'header al centro */
+    -fx-background-color: #fbf7ef; /* Colore per la zona della testata delle tab */
+}
+
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-background-color: #fbf7ef; /* Colore per lo sfondo effettivo dietro le tab */
+}
+
+/* Opzionale: per lo sfondo delle singole tab se sono selezionate o no */
+.tab-pane .tab {
+    -fx-background-color: #fbf7ef; /* Sfondo delle tab non selezionate */
+    -fx-border-color: transparent; /* Rimuovi bordi se vuoi */
+}
+
+.tab-pane .tab:selected {
+    -fx-background-color: #fbf7ef; /* Sfondo della tab selezionata */
+    -fx-border-color: transparent;
+    -fx-border-width: 0 0 2 0; /* Un sottile bordo inferiore per indicare la selezione */
+    -fx-border-color: #167067; /* Colore del bordo inferiore della tab selezionata */
+}
+
+.tab-pane .tab:hover {
+    -fx-background-color: #E0D4C5; /* Un leggero cambio di colore al passaggio del mouse */
+}
+
+/* Stile per il testo del titolo di tutte le tab (non selezionate) */
+.tab-pane .tab .tab-label {
+    -fx-text-fill: black; /* Colore del testo delle tab non selezionate (es. grigio scuro) */
+}
+
+/* Stile per il testo del titolo della tab SELEZIONATA */
+.tab-pane .tab:selected .tab-label {
+    -fx-text-fill: #167067; /* Colore del testo della tab selezionata (es. nero o un colore che risalti) */
+}
+
+/* Opzionale: Stile per il testo della tab quando ci passi sopra con il mouse */
+.tab-pane .tab:hover .tab-label {
+    -fx-text-fill: #167067; /* Un colore di evidenziazione al passaggio del mouse */
+}
