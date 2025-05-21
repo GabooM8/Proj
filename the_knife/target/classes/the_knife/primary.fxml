@@ -16,11 +16,11 @@
          </StackPane.margin>
          <children>
             <Label alignment="TOP_LEFT" text="Login" textFill="#127067" VBox.vgrow="ALWAYS" />
-            <TextField promptText="Nome Utente" VBox.vgrow="ALWAYS" />
-            <PasswordField promptText="Password" />
+            <TextField VBox.vgrow="ALWAYS" />
+            <PasswordField />
             <Button mnemonicParsing="false" style="-fx-background-color: #127067;" text="Login" textFill="WHITE" VBox.vgrow="ALWAYS" />
             <Button mnemonicParsing="false" onAction="#switchToSecondary" style="-fx-background-color: white;" text="Registrati" textFill="#127067" underline="true" VBox.vgrow="ALWAYS" />
-            <Button mnemonicParsing="false" style="-fx-background-color: white;" text="Procedi come guest" underline="true" VBox.vgrow="ALWAYS" />
+            <Button mnemonicParsing="false" onAction="#switchToGuest" style="-fx-background-color: white;" text="Procedi come guest" underline="true" VBox.vgrow="ALWAYS" />
          </children>
          <padding>
             <Insets bottom="20.0" top="20.0" />

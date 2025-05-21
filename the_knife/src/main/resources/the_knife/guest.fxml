@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #fbf7ef;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="the_knife.GuestController">
+   <children>
+      <VBox alignment="CENTER" fillWidth="false" prefHeight="200.0" prefWidth="100.0" spacing="20.0" style="-fx-background-color: white; -fx-background-radius: 25; -fx-border-color: black; -fx-border-radius: 25;">
+         <StackPane.margin>
+            <Insets bottom="50.0" left="170.0" right="170.0" top="50.0" />
+         </StackPane.margin>
+         <children>
+            <Label text="Guest" textFill="#127067" />
+            <TextField promptText="Nome" />
+            <TextField promptText="Luogo" />
+            <Button mnemonicParsing="false" style="-fx-background-color: #127067;" text="Cerca" textFill="WHITE" />
+            <Button mnemonicParsing="false" onAction="#switchToPrimary" style="-fx-background-color: white;" text="Indietro" underline="true" />
+         </children>
+         <padding>
+            <Insets bottom="20.0" top="20.0" />
+         </padding>
+      </VBox>
+   </children>
+</StackPane>
