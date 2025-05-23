@@ -17,49 +17,44 @@ public class Funzioni {
     String cucina = "";
 
     public List<Ristorante> cercaRistorante(List<Ristorante> ristoranti, String input) {
-        List<Ristorante> risultatiRicerca = new ArrayList<>();
-        for (Ristorante ristorante : ristoranti) {
-            if (ristorante.getNome().equalsIgnoreCase(input) || ristorante.getIndirizzo().equalsIgnoreCase(input) || ristorante.getCitta().equalsIgnoreCase(input) || ristorante.getNazione().equalsIgnoreCase(input)) {
-                risultatiRicerca.add(ristorante);
-            }
-        }
-        return risultatiRicerca;
-    }
-
-    public List<Ristorante> filtraRistoranti(List<Ristorante> ristoranti) {
-        List<Ristorante> risultatiFiltrati = new ArrayList<>();
+        List<Ristorante> risultati = new ArrayList<>();
         for (Ristorante ristorante : ristoranti) {
             boolean match = true;
 
-            if (delivery && !ristorante.getTelefono().equals("N/A")) {
-                match = false;
-            }
-            if (prenotazione && !ristorante.getWeburl().equals("N/A")) {
-                match = false;
-            }
-            if (ristorante.getPrezzo() < prezzoMin || ristorante.getPrezzo() > prezzoMax) {
-                match = false;
-            }
-            if (numStelle > 0 && ristorante.getNumStelle() < numStelle) {
-                match = false;
-            }
-            if (!cucina.isEmpty() && !ristorante.getCucina().equalsIgnoreCase(cucina)) {
+            // Verifica se il ristorante corrisponde all'input di ricerca
+            if (input != null && !input.isEmpty() &&
+                !ristorante.getNome().equalsIgnoreCase(input) ||
+                !ristorante.getIndirizzo().equalsIgnoreCase(input)||
+                !ristorante.getCitta().equalsIgnoreCase(input) ||
+                !ristorante.getNazione().equalsIgnoreCase(input)) {
                 match = false;
             }
 
+            // Applica i filtri solo se il ristorante corrisponde all'input
             if (match) {
-                risultatiFiltrati.add(ristorante);
+                if (delivery && ristorante.getTelefono().equals("N/A")) {
+                    match = false;
+                }
+                if (prenotazione && ristorante.getWeburl().equals("N/A")) {
+                    match = false;
+                }
+                if (ristorante.getPrezzo() < prezzoMin || ristorante.getPrezzo() > prezzoMax) {
+                    match = false;
+                }
+                if (numStelle > 0 && ristorante.getNumStelle() < numStelle) {
+                    match = false;
+                }
+                if (!cucina.isEmpty() && !ristorante.getCucina().equalsIgnoreCase(cucina)) {
+                    match = false;
+                }
+            }
+
+            // Aggiungi il ristorante ai risultati se soddisfa tutti i criteri
+            if (match) {
+                risultati.add(ristorante);
             }
         }
-        return risultatiFiltrati;
-    }
-
-    public List<Ristorante> cercaEFiltraRistoranti(List<Ristorante> ristoranti, String input) {
-        // Prima cerca i ristoranti in base all'input
-        List<Ristorante> risultatiRicerca = cercaRistorante(ristoranti, input);
-
-        // Poi applica i filtri sui risultati della ricerca
-        return filtraRistoranti(risultatiRicerca);
+        return risultati;
     }
 
     public Utente registrazione() {
