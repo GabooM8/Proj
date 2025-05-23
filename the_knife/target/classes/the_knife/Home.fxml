@@ -59,7 +59,7 @@
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="C:\Users\utente\Documents\UNI\Laboratorio A\Proj\Proj\the_knife\src\main\java\the_knife\source\Sort.png" />
+                        <Image url="..\..\source\Sort.png" />
                      </image>
                   </ImageView>
                </graphic>
