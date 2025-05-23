@@ -29,9 +29,9 @@
                      <Font name="Open Sans" size="18.0" />
                   </font>
                </Label>
-               <Button mnemonicParsing="false" style="-fx-background-color: transparent;">
+               <Button mnemonicParsing="false" onAction="#switchToProfiloUT" style="-fx-background-color: transparent;">
                   <graphic>
-                     <ImageView fitHeight="40.0" fitWidth="40.0" onDragDetected="#switchToProfiloUT" pickOnBounds="true" preserveRatio="true">
+                     <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                         <image>
                            <Image url="@../../java/the_knife/source/Profile.png" />
                         </image>
