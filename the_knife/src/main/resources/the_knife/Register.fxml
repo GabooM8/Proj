@@ -43,7 +43,7 @@
                     </FXCollections>
                 </items>
             </ComboBox>
-            <Button style="-fx-background-color: #127067;" text="Registrati" textFill="WHITE" />
+            <Button onAction="#switchToHome" style="-fx-background-color: #127067;" text="Registrati" textFill="WHITE" />
             <Hyperlink fx:id="secondaryButton" alignment="CENTER" onAction="#switchToPrimary" style="-fx-underline: true;" text="Login" textFill="#127067">
                <font>
                   <Font size="10.0" />

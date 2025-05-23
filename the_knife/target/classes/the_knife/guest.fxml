@@ -21,7 +21,7 @@
                </font></Label>
             <TextField promptText="Nome" />
             <TextField promptText="Luogo" />
-            <Button mnemonicParsing="false" style="-fx-background-color: #127067;" text="Cerca" textFill="WHITE" />
+            <Button mnemonicParsing="false" onAction="#switchToHome" style="-fx-background-color: #127067;" text="Cerca" textFill="WHITE" />
             <Button mnemonicParsing="false" onAction="#switchToPrimary" style="-fx-background-color: white;" text="Indietro" underline="true">
                <font>
                   <Font size="10.0" />

@@ -22,7 +22,7 @@
                </font></Label>
             <TextField promptText="Nome Utente" VBox.vgrow="ALWAYS" />
             <PasswordField promptText="Password" />
-            <Button mnemonicParsing="false" style="-fx-background-color: #127067;" text="Login" textFill="WHITE" VBox.vgrow="ALWAYS" />
+            <Button mnemonicParsing="false" onAction="#switchToHome" style="-fx-background-color: #127067;" text="Login" textFill="WHITE" VBox.vgrow="ALWAYS" />
             <Button mnemonicParsing="false" onAction="#switchToSecondary" style="-fx-background-color: white;" text="Registrati" textFill="#127067" underline="true" VBox.vgrow="ALWAYS">
                <font>
                   <Font size="10.0" />

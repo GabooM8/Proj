@@ -9,8 +9,11 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
@@ -22,13 +25,29 @@
          <padding>
             <Insets bottom="30" left="20" right="20" top="30" />
          </padding>
-
-         <!-- Titolo -->
-         <Label style="-fx-font-size: 24px; -fx-font-family: 'Open Sans'; -fx-font-weight: bold;" text="Profilo Utente" textFill="#267067">
-            <font>
-               <Font name="Open Sans" size="24" />
-            </font>
-         </Label>
+         <HBox alignment="CENTER" spacing="200.0">
+            <children>
+               <Button mnemonicParsing="false" style="-fx-background-color: transparent;">
+                  <graphic>
+                     <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@../../java/the_knife/source/Back.png" />
+                        </image>
+                     </ImageView>
+                  </graphic>
+               </Button>
+      
+               <!-- Titolo -->
+               <Label style="-fx-font-size: 24px; -fx-font-family: 'Open Sans'; -fx-font-weight: bold;" text="Profilo Utente" textFill="#267067">
+                  <font>
+                     <Font name="Open Sans" size="24" />
+                  </font>
+               </Label>
+            </children>
+            <padding>
+               <Insets right="225.0" />
+            </padding>
+         </HBox>
 
          <!-- TabPane esteso -->
          <TabPane prefHeight="460" prefWidth="680" stylesheets="@../tab_style.css" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
