@@ -26,7 +26,7 @@
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../java/the_knife/source/Back.png" />
+                        <Image url="@/the_knife/images/Back.png" />
                      </image>
                   </ImageView>
                </graphic>
