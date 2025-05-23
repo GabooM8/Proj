@@ -8,7 +8,7 @@ public class HomeController {
     String ruolo;
 
     @FXML
-    private void switchToProfiloUT(String ruolo) throws IOException {
+    private void switchToProfiloUT() throws IOException {
         /*if(ruolo.equals("Utente")) {
             App.setRoot("profiloUt");
         } else if(ruolo.equals("Ristoratore")) {
