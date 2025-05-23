@@ -39,4 +39,9 @@ public class RegisterController {
             System.out.println("Utente: " + utente.toString());
         }*/
     }
+
+    @FXML
+    private void switchToHome() throws IOException {
+        App.setRoot("Home");
+    }
 }

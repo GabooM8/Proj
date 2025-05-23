@@ -10,4 +10,9 @@ public class GuestController {
     private void switchToPrimary() throws IOException {
         App.setRoot("Login");
     }
+
+    @FXML
+    private void switchToHome() throws IOException {
+        App.setRoot("Home");
+    }
 }

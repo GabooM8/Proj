@@ -6,4 +6,8 @@ import javafx.fxml.FXML;
 
 public class ProfiloUtControlle {
     
+    @FXML
+    private void switchToHome() throws IOException {
+        App.setRoot("Home");
+    }
 }

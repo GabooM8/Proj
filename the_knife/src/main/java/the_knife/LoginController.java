@@ -14,4 +14,9 @@ public class LoginController {
     private void switchToGuest() throws IOException {
         App.setRoot("guest");
     }
+
+    @FXML
+    private void switchToHome() throws IOException {
+        App.setRoot("Home");
+    }
 }
