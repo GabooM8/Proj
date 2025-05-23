@@ -7,18 +7,14 @@ import javafx.fxml.FXML;
 public class HomeController {
     
     @FXML
-    private void switchToProfiloUT() throws IOException {
-        App.setRoot("ProfiloUt");
-    }
-
-    @FXML
-    private void switchToProfiloRist() throws IOException {
-        App.setRoot("ristoratore");
-    }
-
-    @FXML
-    private void switchToRegister() throws IOException {
-        App.setRoot("Register");
+    private void switchToProfiloUT(String ruolo) throws IOException {
+        if(ruolo.equals("Utente")) {
+            App.setRoot("profiloUt");
+        } else if(ruolo.equals("Ristoratore")) {
+            App.setRoot("profiloRist");
+        } else if(ruolo.equals("Guest")) {     
+            App.setRoot("Register");
+        }
     }
 
     @FXML
