@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #fbf7ef;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #fbf7ef;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="the_knife.ProfiloUtControlle">
    <children>
       <VBox alignment="TOP_CENTER" maxWidth="700" prefHeight="550" prefWidth="700" spacing="20">
          <padding>
@@ -27,7 +27,7 @@
          </padding>
          <HBox alignment="CENTER" spacing="200.0">
             <children>
-               <Button mnemonicParsing="false" style="-fx-background-color: transparent;">
+               <Button mnemonicParsing="false" onAction="#switchToHome" style="-fx-background-color: transparent;">
                   <graphic>
                      <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                         <image>
