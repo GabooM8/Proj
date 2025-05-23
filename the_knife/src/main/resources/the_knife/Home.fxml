@@ -33,7 +33,7 @@
                   <graphic>
                      <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                         <image>
-                           <Image url="@/the_knife/images/Profile.png" />
+                           <Image url="@/the_knife/Profile.png" />
                         </image>
                      </ImageView>
                   </graphic>
@@ -59,7 +59,7 @@
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@/the_knife/images/Sort.png" />
+                        <Image url="@/the_knife/Sort.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -89,7 +89,7 @@
                            <graphic>
                               <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@/the_knife/images/Open.png" />
+                                    <Image url="@/the_knife/Open.png" />
                                  </image>
                               </ImageView>
                            </graphic></Button>
@@ -109,7 +109,7 @@
                            <graphic>
                               <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@/the_knife/images/Open.png" />
+                                    <Image url="@/the_knife/Open.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -130,7 +130,7 @@
                            <graphic>
                               <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@/the_knife/images/Open.png" />
+                                    <Image url="@/the_knife/Open.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -151,7 +151,7 @@
                            <graphic>
                               <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@/the_knife/images/Open.png" />
+                                    <Image url="@/the_knife/Open.png" />
                                  </image>
                               </ImageView>
                            </graphic>
