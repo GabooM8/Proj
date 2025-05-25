@@ -1,6 +1,8 @@
 package the_knife.classes;
 
-public class Ristorante {
+import java.io.Serializable;
+
+public class Ristorante implements Serializable {
     String nome;
     String indirizzo;
     String nazione;
@@ -10,10 +12,15 @@ public class Ristorante {
     String cucina;
     double latitudine;
     double longitudine;
-    String telefono; // per delivery
-    String weburl; // per prenotazione online
+    boolean delivery;
+    boolean prenotazione;
+    //String telefono; // per delivery
+    //String weburl; // per prenotazione online
 
-    public Ristorante(String nome, String indirizzo, String nazione, String citta, int prezzo, int numStelle, String cucina, double latitudine, double longitudine, String telefono, String weburl) {
+    public Ristorante() {
+    }
+
+    public Ristorante(String nome, String indirizzo, String nazione, String citta, int prezzo, int numStelle, String cucina, double latitudine, double longitudine, boolean delivery, boolean prenotazione) {
         this.nome = nome;
         this.indirizzo = indirizzo;
         this.nazione = nazione;
@@ -23,7 +30,9 @@ public class Ristorante {
         this.cucina = cucina;
         this.latitudine = latitudine;
         this.longitudine = longitudine;
-        if (weburl == null || weburl.isEmpty()) {
+        this.delivery = delivery;
+        this.prenotazione = prenotazione;
+        /*if (weburl == null || weburl.isEmpty()) {
             this.weburl = "N/A";
         } else {
             this.weburl = weburl;
@@ -32,7 +41,7 @@ public class Ristorante {
             this.telefono = "N/A";
         } else {
             this.telefono = telefono;
-        }
+        }*/
     }
 
     public String getNome() {
@@ -62,12 +71,67 @@ public class Ristorante {
     public double getLongitudine() {
         return longitudine;
     }
-    public String getTelefono() {
+    public boolean getDelivery() {
+        return delivery;
+    }
+    public boolean getPrenotazione() {
+        return prenotazione;
+    }
+    /*public String getTelefono() {
         return telefono;
     }
     public String getWeburl() {
         return weburl;
+    }*/
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
+    public void setIndirizzo(String indirizzo) {
+        this.indirizzo = indirizzo;
+    }
+    public void setNazione(String nazione) {
+        this.nazione = nazione;
+    }
+    public void setCitta(String citta) {
+        this.citta = citta;
+    }
+    public void setPrezzo(int prezzo) {
+        this.prezzo = prezzo;
+    }
+
+    public void setNumStelle(int numStelle) {
+        this.numStelle = numStelle;
+    }
+    public void setCucina(String cucina) {
+        this.cucina = cucina;
+    }
+    public void setLongitudine(double longitudine) {
+        this.longitudine = longitudine;
+    }
+    public void setLatitudine(double latitudine) {
+        this.latitudine = latitudine;
+    }
+    public void setDelivery(boolean delivery) {
+        this.delivery = delivery;
+    }
+    public void setPrenotazione(boolean prenotazione) {
+        this.prenotazione = prenotazione;
+    }
+    /*public void setTelefono(String telefono) {
+        if (telefono == null || telefono.isEmpty()) {
+            this.telefono = "N/A";
+        } else {
+            this.telefono = telefono;
+        }
+    }
+    public void setWeburl(String weburl) {
+        if (weburl == null || weburl.isEmpty()) {
+            this.weburl = "N/A";
+        } else {
+            this.weburl = weburl;
+        }
+    }*/
 
     @Override
     public String toString() {
@@ -80,8 +144,10 @@ public class Ristorante {
                 "Cucina: " + cucina + "\n" +
                 "Latitudine: " + latitudine + "\n" +
                 "Longitudine: " + longitudine + "\n" +
-                "Telefono: " + telefono + "\n" +
-                "Weburl: " + weburl + "\n";   
+                "Delivery: " + (delivery ? "Si" : "No") + "\n" +
+                "Prenotazione: " + (prenotazione ? "Si" : "No") + "\n";
+                /*"Telefono: " + telefono + "\n" +
+                "Weburl: " + weburl + "\n";   */
     }
     
 }

@@ -4,12 +4,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.ResourceBundle;
 import java.net.URL; 
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import the_knife.classes.Utente;
+import the_knife.classes.Ristorante;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class RegisterController {
 
@@ -20,25 +25,72 @@ public class RegisterController {
        
        
 
-        //prova funzionamento FileMenager
+        //prova funzionamento FileMenager e funzioni per trasformare CSV in oggetti Ristorante e file.bin
         
-        /*String filename = "utenti.bin";
+        /*String filename = "ristoranti.bin";
 
-        List<Object> utenti = new ArrayList<>();
-        Utente utente1 = new Utente("Mario", "Rossi", "mario.rossi", "password123", new Date(), "Roma", false);
-        Utente utente2 = new Utente("Luigi", "Verdi", "luigi.verdi", "password456", new Date(), "Milano", true);
+        List<Object> ristoranti = new ArrayList<>();
 
-        utenti.add(utente1);
-        utenti.add(utente2);
+        String csvFile = "the_knife/src/main/java/the_knife/files/michelin_my_maps.csv";
 
-        FileMenager.addToFile(utenti, filename);
+        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+            String line;
+            int cont = 0;
+            while ((line = br.readLine()) != null) {
+                if(cont == 0) {
+                    cont++;
+                    continue; // Salta l'intestazione del CSV
+                }
 
-        List<Object> utentiRead = FileMenager.readFromFile(filename);
-        for (Object obj : utentiRead) {
-            Utente utente = (Utente) obj;
-            System.out.println("Utente: " + utente.toString());
+                String[] values = parseCSVLine(line); //fa split (considerando le virgole tra virgolette)          
+
+                //creo variabili
+
+                String[] location = values[2].split(",");
+
+                String nazione = (location[0]);
+                String citta;
+                if(location.length < 2)
+                    citta=location[0];
+                else
+                    citta = (location[1]);
+
+                
+                int numero_st = 0;
+                boolean delivery;
+                boolean prenotazione;
+
+                if(values[7]==null || values[7].isEmpty()) {
+                    delivery = false;
+                } else {
+                    delivery = true;
+                }
+                if(values[9]==null || values[9].isEmpty()) {
+                    prenotazione = false;
+                } else {
+                    prenotazione = true;
+                }
+
+                Ristorante ristorante = new Ristorante(values[0],values[1],nazione,citta,values[3].length(),numero_st,values[4],Double.parseDouble(values[6]),Double.parseDouble(values[5]), delivery, prenotazione);
+                ristoranti.add(ristorante);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    
+
+        FileMenager.addToFile(ristoranti, filename);
+
+        List<Object> ristorantiRead = FileMenager.readFromFile(filename);
+        for (Object obj : ristorantiRead) {
+            Ristorante ris = (Ristorante) obj;
+            System.out.println("Ristorante: " + ris.toString());
         }*/
     }
+
+    /*public static String[] parseCSVLine(String line) {
+        return line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
+    }*/ 
 
     @FXML
     private void switchToHome() throws IOException {

@@ -32,10 +32,10 @@ public class Funzioni {
 
             // Applica i filtri solo se il ristorante corrisponde all'input
             if (match) {
-                if (delivery && ristorante.getTelefono().equals("N/A")) {
+                if (delivery && !ristorante.getDelivery()) {
                     match = false;
                 }
-                if (prenotazione && ristorante.getWeburl().equals("N/A")) {
+                if (prenotazione && !ristorante.getPrenotazione()) {
                     match = false;
                 }
                 if (ristorante.getPrezzo() < prezzoMin || ristorante.getPrezzo() > prezzoMax) {
