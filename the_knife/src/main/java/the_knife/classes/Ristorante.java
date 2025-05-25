@@ -1,6 +1,8 @@
 package the_knife.classes;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Ristorante implements Serializable {
     int id;
@@ -15,6 +17,7 @@ public class Ristorante implements Serializable {
     double longitudine;
     boolean delivery;
     boolean prenotazione;
+    List<Recensione> recensioni;
     //String telefono; // per delivery
     //String weburl; // per prenotazione online
 
@@ -34,6 +37,7 @@ public class Ristorante implements Serializable {
         this.longitudine = longitudine;
         this.delivery = delivery;
         this.prenotazione = prenotazione;
+        this.recensioni = new ArrayList<>();
         /*if (weburl == null || weburl.isEmpty()) {
             this.weburl = "N/A";
         } else {
@@ -81,6 +85,9 @@ public class Ristorante implements Serializable {
     }
     public boolean getPrenotazione() {
         return prenotazione;
+    }
+    public List<Recensione> getRecensioni() {
+        return recensioni;
     }
     /*public String getTelefono() {
         return telefono;
@@ -140,6 +147,10 @@ public class Ristorante implements Serializable {
             this.weburl = weburl;
         }
     }*/
+
+    public void addRecensione(Recensione recensione) {
+        this.recensioni.add(recensione);
+    }
 
     @Override
     public String toString() {
