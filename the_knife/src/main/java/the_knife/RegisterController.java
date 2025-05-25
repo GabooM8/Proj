@@ -27,16 +27,16 @@ public class RegisterController {
 
         //prova funzionamento FileMenager e funzioni per trasformare CSV in oggetti Ristorante e file.bin
         
-        /*String filename = "ristoranti.bin";
+        String filename = "ristoranti.bin";
 
         List<Object> ristoranti = new ArrayList<>();
 
         String csvFile = "the_knife/src/main/java/the_knife/files/michelin_my_maps.csv";
-
+        
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
             String line;
             int cont = 0;
-            while ((line = br.readLine()) != null) {
+            while ((line = br.readLine()) != null) { 
                 if(cont == 0) {
                     cont++;
                     continue; // Salta l'intestazione del CSV
@@ -71,8 +71,9 @@ public class RegisterController {
                     prenotazione = true;
                 }
 
-                Ristorante ristorante = new Ristorante(values[0],values[1],nazione,citta,values[3].length(),numero_st,values[4],Double.parseDouble(values[6]),Double.parseDouble(values[5]), delivery, prenotazione);
+                Ristorante ristorante = new Ristorante(cont,values[0],values[1],nazione,citta,values[3].length(),numero_st,values[4],Double.parseDouble(values[6]),Double.parseDouble(values[5]), delivery, prenotazione);
                 ristoranti.add(ristorante);
+                cont++;
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -85,12 +86,12 @@ public class RegisterController {
         for (Object obj : ristorantiRead) {
             Ristorante ris = (Ristorante) obj;
             System.out.println("Ristorante: " + ris.toString());
-        }*/
+        }
     }
 
-    /*public static String[] parseCSVLine(String line) {
+    public static String[] parseCSVLine(String line) {
         return line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
-    }*/ 
+    }
 
     @FXML
     private void switchToHome() throws IOException {
