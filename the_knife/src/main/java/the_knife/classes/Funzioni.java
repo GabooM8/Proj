@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
+import the_knife.FileMenager;
 
 public class Funzioni {
     // filtri
@@ -57,7 +58,7 @@ public class Funzioni {
         return risultati;
     }
 
-    public Utente registrazione() {
+    public void registrazione() {
         try (Scanner scanner = new Scanner(System.in)) {
             System.out.println("Inserisci il nome:");
             String nome = scanner.nextLine();
@@ -101,12 +102,17 @@ public class Funzioni {
                         break;
                 }
             }
+            
+            String filename = "utenti.bin";
+            List<Object> utenti = FileMenager.readFromFile(filename);
 
-            Utente nuovoUtente = new Utente(nome, cognome, username, password, dataNascita, luogoDomicilio, isRistoratore);
+            Utente u = (Utente)utenti.getLast();
+
+            int id = u.getId() + 1; // Incrementa l'ID dell'ultimo utente
+
+            utenti.add(new Utente(id,nome, cognome, username, password, dataNascita, luogoDomicilio, isRistoratore));
+            FileMenager.addToFile(utenti, filename);
             System.out.println("Registrazione completata con successo!");
-            System.out.println(nuovoUtente);
-
-            return nuovoUtente;
         }
     }
 }

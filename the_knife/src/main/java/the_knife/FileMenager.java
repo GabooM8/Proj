@@ -31,7 +31,6 @@ public class FileMenager {
         File file = new File(filePath);
 
         if (!file.exists()) {
-            System.out.println("File non trovato: ");
             return new ArrayList<>();
         }
 

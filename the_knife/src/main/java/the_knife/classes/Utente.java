@@ -3,6 +3,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Utente implements Serializable {
+    int id;
     String nome;
     String cognome;
     String username;
@@ -11,6 +12,9 @@ public class Utente implements Serializable {
     String luogoDomicilio;
     Boolean IsRistoratore;
 
+    public int getId() {
+        return id;
+    }
     public String getNome() {
     return nome;
   }
@@ -51,7 +55,11 @@ public class Utente implements Serializable {
         return IsRistoratore;
     }
 
-    public Utente(String nome, String cognome, String username, String password, Date dataNascita, String luogoDomicilio, Boolean isRistoratore) {
+    public Utente() {
+        
+    }
+    public Utente(int id,String nome, String cognome, String username, String password, Date dataNascita, String luogoDomicilio, Boolean isRistoratore) {
+        this.id = id;
         this.nome = nome;
         this.cognome = cognome;
         this.username = username;
@@ -63,7 +71,8 @@ public class Utente implements Serializable {
 
      @Override
     public String toString(){
-        return "Nome: " + nome + "\n" +
+        return "id: " + id + "\n" +
+                "Nome: " + nome + "\n" +
                 "Cognome: " + cognome + "\n" +
                 "Username: " + username + "\n" +
                 "Password: " + password + "\n" +
