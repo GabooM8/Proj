@@ -1,6 +1,8 @@
 package the_knife.classes;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Utente implements Serializable {
     int id;
@@ -11,6 +13,8 @@ public class Utente implements Serializable {
     Date dataNascita;
     String luogoDomicilio;
     Boolean IsRistoratore;
+    List<Integer> ristoranti; //preferiti per utente e i propri per ristoratore
+    List<Integer> recensioni;
 
     public int getId() {
         return id;
@@ -54,6 +58,12 @@ public class Utente implements Serializable {
     public Boolean getIsRistoratore() {
         return IsRistoratore;
     }
+    public List<Integer> getRistoranti() {
+        return ristoranti;
+    }
+    public List<Integer> getRecensioni() {
+        return recensioni;
+    }
 
     public Utente() {
         
@@ -67,6 +77,15 @@ public class Utente implements Serializable {
         this.dataNascita = dataNascita;
         this.luogoDomicilio = luogoDomicilio;
         this.IsRistoratore = isRistoratore;
+        this.ristoranti = new ArrayList<>();
+        this.recensioni = new ArrayList<>();
+    }
+
+    public void addRecensione(int id_recensione) {
+        recensioni.add(id_recensione);
+    }
+    public void addRistorante(int id_ristorante) {
+        ristoranti.add(id_ristorante);
     }
 
      @Override

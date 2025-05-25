@@ -17,7 +17,7 @@ public class Ristorante implements Serializable {
     double longitudine;
     boolean delivery;
     boolean prenotazione;
-    List<Recensione> recensioni;
+    ArrayList<Integer> recensioni;
     //String telefono; // per delivery
     //String weburl; // per prenotazione online
 
@@ -86,7 +86,7 @@ public class Ristorante implements Serializable {
     public boolean getPrenotazione() {
         return prenotazione;
     }
-    public List<Recensione> getRecensioni() {
+    public List<Integer> getRecensioni() {
         return recensioni;
     }
     /*public String getTelefono() {
@@ -148,8 +148,8 @@ public class Ristorante implements Serializable {
         }
     }*/
 
-    public void addRecensione(Recensione recensione) {
-        this.recensioni.add(recensione);
+    public void addRecensione(int id_recensione) {
+        this.recensioni.add(id_recensione);
     }
 
     @Override
