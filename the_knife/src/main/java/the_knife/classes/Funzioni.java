@@ -115,4 +115,54 @@ public class Funzioni {
             System.out.println("Registrazione completata con successo!");
         }
     }
+
+    public void addPreferito(int idRistorante, int idUtente) {
+        String filename = "utenti.bin";
+        List<Object> utenti = FileMenager.readFromFile(filename);
+        for(Object obj : utenti) {
+            Utente utente = (Utente) obj;
+            if (utente.getId() == idUtente) {
+                utente.addRistorante(idRistorante);
+            }
+        }
+    }
+
+    public List<Ristorante> visualizzaPreferiti(int idUtente) {
+        String filename= "utenti.bin";
+        Utente utente= null;
+        List<Object> utenti = FileMenager.readFromFile(filename);
+        for(Object obj : utenti) {
+            Utente u = (Utente) obj;
+            if (u.getId() == idUtente) {
+                utente=u;
+                break;
+            }
+        }
+        List<Ristorante> preferiti = new ArrayList<>();
+        String ristoranteFile = "ristoranti.bin";
+        List<Object> ristoranti = FileMenager.readFromFile(ristoranteFile);
+        for (Object obj : ristoranti) {
+            Ristorante ristorante = (Ristorante) obj;
+            if (utente.getRistoranti().contains(ristorante.getId())) {
+                preferiti.add(ristorante);
+            }
+        }
+        return preferiti;
+    }
+
+    public void DeletePreferito(int idRistorante, int idUtente) {
+        String filename = "utenti.bin";
+        List<Object> utenti = FileMenager.readFromFile(filename);
+        for(Object obj : utenti) {
+            Utente utente = (Utente) obj;
+            if (utente.getId() == idUtente) {
+                List<Integer> ristoranti = utente.getRistoranti();
+                if(ristoranti.contains(idRistorante)) {
+                    ristoranti.remove(idRistorante);
+                }
+                break;
+            }
+        }
+        FileMenager.addToFile(utenti, filename);
+    }
 }
