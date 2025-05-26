@@ -46,7 +46,7 @@
 
          <!-- Campo ricerca -->
          <HBox alignment="CENTER" spacing="10">
-            <TextField prefWidth="300" promptText="Cerca..." />
+            <TextField fx:id="searchBar" onAction="#inputSearchBar" prefWidth="300" promptText="Cerca..." />
             <MenuButton>
                <items>
                   <MenuItem text="dal più vicino" />

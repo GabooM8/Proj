@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
+
 import the_knife.FileMenager;
 
 public class Funzioni {
@@ -17,44 +18,60 @@ public class Funzioni {
     int numStelle = 0;
     String cucina = "";
 
-    public List<Ristorante> cercaRistorante(List<Ristorante> ristoranti, String input) {
+    public List<Ristorante> cercaRistoranti(String input) {
+        String filename = "ristoranti.bin";
         List<Ristorante> risultati = new ArrayList<>();
-        for (Ristorante ristorante : ristoranti) {
-            boolean match = true;
 
-            // Verifica se il ristorante corrisponde all'input di ricerca
-            if (input != null && !input.isEmpty() &&
-                !ristorante.getNome().equalsIgnoreCase(input) ||
-                !ristorante.getIndirizzo().equalsIgnoreCase(input)||
-                !ristorante.getCitta().equalsIgnoreCase(input) ||
-                !ristorante.getNazione().equalsIgnoreCase(input)) {
-                match = false;
-            }
+        // Legge i dati dal file binario
+        List<Object> oggetti = FileMenager.readFromFile(filename);
 
-            // Applica i filtri solo se il ristorante corrisponde all'input
-            if (match) {
-                if (delivery && !ristorante.getDelivery()) {
-                    match = false;
+        // Converte gli oggetti in istanze di Ristorante e applica i filtri
+        for (Object obj : oggetti) {
+            if (obj instanceof Ristorante) {
+                Ristorante ristorante = (Ristorante) obj;
+                boolean match = true;
+                
+                /*
+                if (input == null || input.isEmpty()) {
+                    // Se l'input è vuoto, non applicare il filtro di ricerca
+                    break;
                 }
-                if (prenotazione && !ristorante.getPrenotazione()) {
-                    match = false;
-                }
-                if (ristorante.getPrezzo() < prezzoMin || ristorante.getPrezzo() > prezzoMax) {
-                    match = false;
-                }
-                if (numStelle > 0 && ristorante.getNumStelle() < numStelle) {
-                    match = false;
-                }
-                if (!cucina.isEmpty() && !ristorante.getCucina().equalsIgnoreCase(cucina)) {
-                    match = false;
-                }
-            }
 
-            // Aggiungi il ristorante ai risultati se soddisfa tutti i criteri
-            if (match) {
-                risultati.add(ristorante);
+                // Verifica se il ristorante corrisponde all'input di ricerca
+                if (!ristorante.getNome().equalsIgnoreCase(input) ||
+                    !ristorante.getIndirizzo().equalsIgnoreCase(input) ||
+                    !ristorante.getCitta().equalsIgnoreCase(input) ||
+                    !ristorante.getNazione().equalsIgnoreCase(input)) {
+                    match = false;
+                }
+                    */
+
+                // Applica i filtri solo se il ristorante corrisponde all'input
+                if (match) {
+                    if (delivery && !ristorante.getDelivery()) {
+                        match = false;
+                    }
+                    if (prenotazione && !ristorante.getPrenotazione()) {
+                        match = false;
+                    }
+                    if (ristorante.getPrezzo() < prezzoMin || ristorante.getPrezzo() > prezzoMax) {
+                        match = false;
+                    }
+                    if (numStelle > 0 && ristorante.getNumStelle() < numStelle) {
+                        match = false;
+                    }
+                    if (!cucina.isEmpty() && !ristorante.getCucina().equalsIgnoreCase(cucina)) {
+                        match = false;
+                    }
+                }
+
+                // Aggiungi il ristorante ai risultati se soddisfa tutti i criteri
+                if (match) {
+                    risultati.add(ristorante);
+                }
             }
         }
+
         return risultati;
     }
 
