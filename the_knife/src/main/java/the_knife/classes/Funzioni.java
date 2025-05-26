@@ -10,14 +10,7 @@ import java.util.Scanner;
 import the_knife.FileMenager;
 
 public class Funzioni {
-    // filtri
-    boolean delivery = false;
-    boolean prenotazione = false;
-    int fasciaPrezzo = 0;
-    int numStelle = 0;
-    String cucina = "";
-
-    public List<Ristorante> cercaRistoranti(String input, int fasciaPrezzo, int numStelle, String cucina) {
+    public List<Ristorante> cercaRistoranti(String input, int fasciaPrezzoFiltro, int numStelleFiltro, String cucinaFiltro, boolean deliveryFiltro, boolean prenotazioneFiltro) {
         String filename = "ristoranti.bin";
         List<Ristorante> risultati = new ArrayList<>();
 
@@ -49,19 +42,19 @@ public class Funzioni {
 
                 // Applica gli altri filtri se il match è ancora valido
                 if (match) {
-                    if (delivery && !ristorante.getDelivery()) {
+                    if (deliveryFiltro && !ristorante.getDelivery()) {
                         match = false;
                     }
-                    if (prenotazione && !ristorante.getPrenotazione()) {
+                    if (prenotazioneFiltro && !ristorante.getPrenotazione()) {
                         match = false;
                     }
-                    if (fasciaPrezzo > 0 && ristorante.getPrezzo() != fasciaPrezzo) {
+                    if (fasciaPrezzoFiltro > 0 && ristorante.getPrezzo() != fasciaPrezzoFiltro) {
                         match = false;
                     }
-                    if (numStelle > 0 && ristorante.getNumStelle() < numStelle) {
+                    if (numStelleFiltro > 0 && ristorante.getNumStelle() < numStelleFiltro) {
                         match = false;
                     }
-                    if (!cucina.isEmpty() && !ristorante.getCucina().equalsIgnoreCase(cucina)) {
+                    if (cucinaFiltro != null && !cucinaFiltro.isEmpty() && !ristorante.getCucina().equalsIgnoreCase(cucinaFiltro)) {
                         match = false;
                     }
                 }

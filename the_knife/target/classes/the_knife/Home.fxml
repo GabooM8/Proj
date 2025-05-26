@@ -44,7 +44,7 @@
 
          <!-- Campo ricerca -->
          <HBox alignment="CENTER" spacing="10">
-            <TextField fx:id="searchBar" onAction="#inputSearchBar" prefWidth="300" promptText="Cerca..." />
+            <TextField fx:id="searchBar" onAction="#inputSearchBar" prefWidth="300" promptText="Cerca per nome o per cucina..." />
             <MenuButton>
                <items>
                   <MenuItem text="dal più vicino" />
@@ -75,18 +75,16 @@
                </padding>
                <Label style="-fx-font-size: 14px; -fx-font-family: 'Open Sans';" text="Filtri" textFill="#126067" underline="true" />
                <Label style="-fx-font-weight: bold;" text="Locazione:" />
-               <TextField promptText="Nazione, città, indirizzo" />
+               <TextField promptText="Nazione, città, indirizzo (obbligatorio)" />
                <Label style="-fx-font-weight: bold;" text="Fascia di prezzo:" />
-               <ComboBox fx:id="prezzoComboBox" prefWidth="150.0" />
+               <ComboBox fx:id="prezzoComboBox" onAction="#prezzoComboBoxAction" prefWidth="150.0" />
                <Label style="-fx-font-weight: bold;" text="Numero minimo stelle:" />
-               <ComboBox fx:id="stelleComboBox" prefWidth="150" />
+               <ComboBox fx:id="stelleComboBox" onAction="#stelleComboBoxAction" prefWidth="150" />
                <Label style="-fx-font-weight: bold;" text="Disponibilità:" />
                <HBox alignment="CENTER" spacing="10">
-                  <CheckBox text="Delivery" />
-                  <CheckBox text="Prenotazione" />
+                  <CheckBox fx:id="deliveryCheckBox" onAction="#deliveryCheckBoxAction" text="Delivery" />
+                  <CheckBox fx:id="prenotazioneCheckBox" onAction="#prenotazioneCheckBoxAction" text="Prenotazione" />
                </HBox>
-               <Label style="-fx-font-weight: bold;" text="Tipo di cucina:" />
-               <ComboBox fx:id="cucinaComboBox" prefWidth="150" />
                <Button style="-fx-background-color: #267067; -fx-text-fill: white;" text="Azzera filtri" />
             </VBox>
          </HBox>
