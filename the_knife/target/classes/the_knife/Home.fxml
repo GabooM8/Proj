@@ -5,15 +5,14 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -68,98 +67,7 @@
 
          <!-- Area contenuti -->
          <HBox alignment="TOP_CENTER" spacing="40">
-            <!-- COLONNA CARD (scrollabile) -->
-            <ScrollPane fitToWidth="true" prefHeight="400" prefViewportWidth="350" style="-fx-background-color:transparent;">
-               <content>
-                  <VBox spacing="15">
-					<padding>
-						<Insets bottom="10" left="10" right="10" top="10" />
-					</padding>
-                     <!-- Card 1 -->
-                     <HBox alignment="CENTER_LEFT" prefWidth="300" style="-fx-background-color: white; -fx-border-color: #D1D1D1; -fx-border-radius: 5; -fx-background-radius: 5;">
-                        <padding>
-                           <Insets bottom="10" left="10" right="10" top="10" />
-                        </padding>
-                        <VBox spacing="5">
-                           <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #267067;" text="Card 1" />
-                           <Label style="-fx-text-fill: #555;" text="Testo card 1" />
-                        </VBox>
-                        <Region HBox.hgrow="ALWAYS" />
-                        <Button onAction="#switchToRistorante" style="-fx-background-color: transparent;">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@images/Open.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic></Button>
-                     </HBox>
-
-                     <!-- Card 2 -->
-                     <HBox alignment="CENTER_LEFT" prefWidth="300" style="-fx-background-color: white; -fx-border-color: #D1D1D1; -fx-border-radius: 5; -fx-background-radius: 5;">
-                        <padding>
-                           <Insets bottom="10" left="10" right="10" top="10" />
-                        </padding>
-                        <VBox spacing="5">
-                           <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #267067;" text="Card 2" />
-                           <Label style="-fx-text-fill: #555;" text="Testo card 2" />
-                        </VBox>
-                        <Region HBox.hgrow="ALWAYS" />
-                        <Button onAction="#switchToRistorante" style="-fx-background-color: transparent;">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@images/Open.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                     </HBox>
-
-                     <!-- Card 3 -->
-                     <HBox alignment="CENTER_LEFT" prefWidth="300" style="-fx-background-color: white; -fx-border-color: #D1D1D1; -fx-border-radius: 5; -fx-background-radius: 5;">
-                        <padding>
-                           <Insets bottom="10" left="10" right="10" top="10" />
-                        </padding>
-                        <VBox spacing="5">
-                           <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #267067;" text="Card 3" />
-                           <Label style="-fx-text-fill: #555;" text="Testo card 3" />
-                        </VBox>
-                        <Region HBox.hgrow="ALWAYS" />
-                        <Button onAction="#switchToRistorante" style="-fx-background-color: transparent;">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@images/Open.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                     </HBox>
-
-                     <!-- Card 4 -->
-                     <HBox alignment="CENTER_LEFT" prefWidth="300" style="-fx-background-color: white; -fx-border-color: #D1D1D1; -fx-border-radius: 5; -fx-background-radius: 5;">
-                        <padding>
-                           <Insets bottom="10" left="10" right="10" top="10" />
-                        </padding>
-                        <VBox spacing="5">
-                           <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #267067;" text="Card 4" />
-                           <Label style="-fx-text-fill: #555;" text="Testo card 4" />
-                        </VBox>
-                        <Region HBox.hgrow="ALWAYS" />
-                        <Button onAction="#switchToRistorante" style="-fx-background-color: transparent;">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@images/Open.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                     </HBox>
-                  </VBox>
-               </content>
-            </ScrollPane>
+            <ListView fx:id="ristoranteListView" prefWidth="400.0" />
 
             <!-- COLONNA FILTRI -->
             <VBox alignment="CENTER" prefWidth="300" spacing="10" style="-fx-background-color: white; -fx-border-color: #D1D1D1; -fx-border-radius: 5;">
@@ -193,4 +101,7 @@
          </HBox>
       </VBox>
    </children>
+   <padding>
+      <Insets bottom="20.0" top="20.0" />
+   </padding>
 </StackPane>

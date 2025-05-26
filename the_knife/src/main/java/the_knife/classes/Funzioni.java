@@ -33,23 +33,22 @@ public class Funzioni {
                 Ristorante ristorante = (Ristorante) obj;
                 boolean match = true;
 
-                System.out.println(ristorante.getNazione());
-
-
-                if (input == null || input.isEmpty()) {
-                    // Se l'input è vuoto, non applicare il filtro di ricerca
-                    break;
+                // Filtra per input testuale se fornito
+                if (input != null && !input.isEmpty()) {
+                    boolean textMatch = ristorante.getNome().toLowerCase().contains(input.toLowerCase()) ||
+                                        ristorante.getIndirizzo().toLowerCase().contains(input.toLowerCase()) ||
+                                        ristorante.getCitta().toLowerCase().contains(input.toLowerCase()) ||
+                                        ristorante.getNazione().toLowerCase().contains(input.toLowerCase()) ||
+                                        ristorante.getCucina().toLowerCase().contains(input.toLowerCase());
+                    if (!textMatch) {
+                        match = false;
+                    }
+                } else {
+                    // Se l'input è vuoto, consideriamo che il "filtro testuale" sia superato
+                    // e procediamo con gli altri filtri.
                 }
 
-                // Verifica se il ristorante corrisponde all'input di ricerca
-                if (!ristorante.getNome().equalsIgnoreCase(input) &&
-                    !ristorante.getIndirizzo().equalsIgnoreCase(input) &&
-                    !ristorante.getCitta().equalsIgnoreCase(input) &&
-                    !ristorante.getNazione().equalsIgnoreCase(input)) {
-                    match = false;
-                }
-
-                // Applica i filtri solo se il ristorante corrisponde all'input
+                // Applica gli altri filtri se il match è ancora valido
                 if (match) {
                     if (delivery && !ristorante.getDelivery()) {
                         match = false;

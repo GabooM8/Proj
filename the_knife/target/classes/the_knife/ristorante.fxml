@@ -26,7 +26,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Label text="Nome ristorante" textFill="#167067">
+                  <Label fx:id="nomeRistoranteLabel" text="Nome ristorante" textFill="#167067">
                      <font>
                         <Font name="Open Sans" size="18.0" />
                      </font>
@@ -44,29 +44,28 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" />
-                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="10.0" HBox.hgrow="ALWAYS">
-                     <children>
-                        <Label text="Luogo" />
-                        <Label text="Valutazione media" />
-                        <Label text="Fascia di prezzo" />
-                        <Label text="Tipo di cucina" />
-                     </children>
-                     <padding>
-                        <Insets bottom="20.0" top="20.0" />
-                     </padding>
-                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="120.0" />
                   <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="20.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label fx:id="indirizzoRistoranteLabel" text="Indirizzo" />
+                        <Label fx:id="stelleLabel" text="Valutazione media" />
+                        <Label fx:id="prezzoLabel" text="Fascia di prezzo" />
+                     </children>
+                     <padding>
+                        <Insets bottom="20.0" top="20.0" />
+                     </padding>
+                  </VBox>
+                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="0.0" spacing="20.0" HBox.hgrow="ALWAYS">
                      <padding>
                         <Insets bottom="20.0" top="20.0" />
                      </padding>
                      <children>
-                        <Label text="Sito web" />
-                        <Label text="Delivery" />
-                        <Label text="Prenotazione" />
+                        <Label fx:id="cucinaRistoranteLabel" text="Tipo di cucina" />
+                        <Label fx:id="deliveryLabel" text="Delivery" />
+                        <Label fx:id="prenotazioneLabel" text="Prenotazione" />
                      </children>
                   </VBox>
-                  <VBox prefHeight="200.0" prefWidth="100.0" />
+                  <VBox prefHeight="200.0" prefWidth="80.0" />
                </children>
             </HBox>
             <Label text="Recensioni" />

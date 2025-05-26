@@ -39,6 +39,15 @@
                   <Insets left="46.0" />
                </padding>
             </Label>
+            <Button mnemonicParsing="false" style="-fx-background-color: #fbf7ef;">
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/add-symbol.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
          </children>
       </HBox>
       <TabPane prefHeight="400.0" prefWidth="400.0" style="-fx-background-color: #fbf7ef;" stylesheets="@../tab_style.css" tabClosingPolicy="UNAVAILABLE">
