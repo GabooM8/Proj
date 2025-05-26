@@ -22,6 +22,8 @@ public class Funzioni {
         String filename = "ristoranti.bin";
         List<Ristorante> risultati = new ArrayList<>();
 
+        System.out.println(input);
+
         // Legge i dati dal file binario
         List<Object> oggetti = FileMenager.readFromFile(filename);
 
@@ -30,21 +32,22 @@ public class Funzioni {
             if (obj instanceof Ristorante) {
                 Ristorante ristorante = (Ristorante) obj;
                 boolean match = true;
-                
-                /*
+
+                System.out.println(ristorante.getNazione());
+
+
                 if (input == null || input.isEmpty()) {
                     // Se l'input è vuoto, non applicare il filtro di ricerca
                     break;
                 }
 
                 // Verifica se il ristorante corrisponde all'input di ricerca
-                if (!ristorante.getNome().equalsIgnoreCase(input) ||
-                    !ristorante.getIndirizzo().equalsIgnoreCase(input) ||
-                    !ristorante.getCitta().equalsIgnoreCase(input) ||
+                if (!ristorante.getNome().equalsIgnoreCase(input) &&
+                    !ristorante.getIndirizzo().equalsIgnoreCase(input) &&
+                    !ristorante.getCitta().equalsIgnoreCase(input) &&
                     !ristorante.getNazione().equalsIgnoreCase(input)) {
                     match = false;
                 }
-                    */
 
                 // Applica i filtri solo se il ristorante corrisponde all'input
                 if (match) {
