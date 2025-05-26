@@ -13,12 +13,11 @@ public class Funzioni {
     // filtri
     boolean delivery = false;
     boolean prenotazione = false;
-    int prezzoMin = 0;
-    int prezzoMax = Integer.MAX_VALUE; // Default massimo
+    int fasciaPrezzo = 0;
     int numStelle = 0;
     String cucina = "";
 
-    public List<Ristorante> cercaRistoranti(String input) {
+    public List<Ristorante> cercaRistoranti(String input, int fasciaPrezzo, int numStelle, String cucina) {
         String filename = "ristoranti.bin";
         List<Ristorante> risultati = new ArrayList<>();
 
@@ -56,7 +55,7 @@ public class Funzioni {
                     if (prenotazione && !ristorante.getPrenotazione()) {
                         match = false;
                     }
-                    if (ristorante.getPrezzo() < prezzoMin || ristorante.getPrezzo() > prezzoMax) {
+                    if (fasciaPrezzo > 0 && ristorante.getPrezzo() != fasciaPrezzo) {
                         match = false;
                     }
                     if (numStelle > 0 && ristorante.getNumStelle() < numStelle) {

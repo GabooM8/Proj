@@ -26,10 +26,10 @@ public class RistoranteController {
     public void initData(Ristorante ristorante) {
         this.ristoranteCorrente = ristorante;
         System.out.println("Dati ricevuti per il ristorante: " + this.ristoranteCorrente.getNome());
-        updateUI();
+        visualizzaRistorante();
     }
 
-    private void updateUI() {
+    private void visualizzaRistorante() {
         if (ristoranteCorrente != null) {
             if (nomeRistoranteLabel != null) nomeRistoranteLabel.setText(ristoranteCorrente.getNome());
             if (indirizzoRistoranteLabel != null) indirizzoRistoranteLabel.setText(ristoranteCorrente.getIndirizzo());
@@ -46,4 +46,33 @@ public class RistoranteController {
     private void switchToHome() throws IOException {
         App.setRoot("Home");
     }
+
+    /*
+    @FXML private ListView<Ristorante> recensioniListView;
+
+    @FXML
+    public void initialize() {
+        if (recensioniListView != null) {
+            recensioniListView.setCellFactory(param -> new ListCell<Ristorante>() {
+                @Override
+                protected void updateItem(Ristorante item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || item == null || item.getNome() == null) {
+                        setText(null);
+                        setGraphic(null);
+                    } else {
+                        setText(item.getNome() + " - " + item.getCitta() + " (" + item.getCucina() + ")");
+                    }
+                }
+            });
+
+            
+            recensioniListView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+                if (newSelection != null) {
+                    System.out.println("Recensione selezionata: " + newSelection.getNome());
+                }
+            });
+        }
+    }
+    */
 }
