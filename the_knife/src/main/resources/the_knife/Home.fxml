@@ -45,14 +45,14 @@
          <!-- Campo ricerca -->
          <HBox alignment="CENTER" spacing="10">
             <TextField fx:id="searchBar" onAction="#inputSearchBar" prefWidth="300" promptText="Cerca per nome o per cucina..." />
-            <MenuButton>
+            <MenuButton fx:id="sortButton" onAction="#sortButtonAction">
                <items>
-                  <MenuItem text="dal più vicino" />
-                  <MenuItem text="dal più lontano" />
-                  <MenuItem text="dal meno costoso" />
-                  <MenuItem text="dal più costoso" />
-                  <MenuItem text="per numero di stelle (maggiori)" />
-                  <MenuItem text="per numero di stelle (minori)" />
+                  <MenuItem fx:id="nearestItem" text="dal più vicino" />
+                  <MenuItem fx:id="farthestItem" text="dal più lontano" />
+                  <MenuItem fx:id="cheapestItem" text="dal meno costoso" />
+                  <MenuItem fx:id="mostExpensiveItem" text="dal più costoso" />
+                  <MenuItem fx:id="bestRatedItem" text="per numero di stelle (maggiori)" />
+                  <MenuItem fx:id="worstRatedItem" text="per numero di stelle (minori)" />
                </items>
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
@@ -75,7 +75,7 @@
                </padding>
                <Label style="-fx-font-size: 14px; -fx-font-family: 'Open Sans';" text="Filtri" textFill="#126067" underline="true" />
                <Label style="-fx-font-weight: bold;" text="Locazione:" />
-               <TextField promptText="Nazione, città, indirizzo (obbligatorio)" />
+               <TextField fx:id="locationTextField" onAction="#locationTextFieldAction" promptText="Nazione, città, indirizzo (obbligatorio)" />
                <Label style="-fx-font-weight: bold;" text="Fascia di prezzo:" />
                <ComboBox fx:id="prezzoComboBox" onAction="#prezzoComboBoxAction" prefWidth="150.0" />
                <Label style="-fx-font-weight: bold;" text="Numero minimo stelle:" />

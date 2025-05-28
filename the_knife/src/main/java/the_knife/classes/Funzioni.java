@@ -10,11 +10,9 @@ import java.util.Scanner;
 import the_knife.FileMenager;
 
 public class Funzioni {
-    public List<Ristorante> cercaRistorante(String input, int fasciaPrezzoFiltro, int numStelleFiltro, String cucinaFiltro, boolean deliveryFiltro, boolean prenotazioneFiltro) {
+    public List<Ristorante> cercaRistorante(String inputSearchBar, String inputLocationFilter, int fasciaPrezzoFiltro, int numStelleFiltro, String cucinaFiltro, boolean deliveryFiltro, boolean prenotazioneFiltro) {
         String filename = "ristoranti.bin";
         List<Ristorante> risultati = new ArrayList<>();
-
-        System.out.println(input);
 
         // Legge i dati dal file binario
         List<Object> oggetti = FileMenager.readFromFile(filename);
@@ -25,13 +23,23 @@ public class Funzioni {
                 Ristorante ristorante = (Ristorante) obj;
                 boolean match = true;
 
-                // Filtra per input testuale se fornito
-                if (input != null && !input.isEmpty()) {
-                    boolean textMatch = ristorante.getNome().toLowerCase().contains(input.toLowerCase()) ||
-                                        ristorante.getIndirizzo().toLowerCase().contains(input.toLowerCase()) ||
-                                        ristorante.getCitta().toLowerCase().contains(input.toLowerCase()) ||
-                                        ristorante.getNazione().toLowerCase().contains(input.toLowerCase()) ||
-                                        ristorante.getCucina().toLowerCase().contains(input.toLowerCase());
+                // Filtra per input (searchBar) testuale se fornito
+                if (inputSearchBar != null && !inputSearchBar.isEmpty()) {
+                    boolean textMatch = ristorante.getNome().toLowerCase().contains(inputSearchBar.toLowerCase()) ||
+                                        ristorante.getCucina().toLowerCase().contains(inputSearchBar.toLowerCase());
+                    if (!textMatch) {
+                        match = false;
+                    }
+                } else {
+                    // Se l'input è vuoto, consideriamo che il "filtro testuale" sia superato
+                    // e procediamo con gli altri filtri.
+                }
+
+                // Filtra per input (locationFilter) testuale se fornito
+                if (inputLocationFilter != null && !inputLocationFilter.isEmpty()) {
+                    boolean textMatch = ristorante.getIndirizzo().toLowerCase().contains(inputLocationFilter.toLowerCase()) ||
+                                        ristorante.getCitta().toLowerCase().contains(inputLocationFilter.toLowerCase()) ||
+                                        ristorante.getNazione().toLowerCase().contains(inputLocationFilter.toLowerCase());
                     if (!textMatch) {
                         match = false;
                     }

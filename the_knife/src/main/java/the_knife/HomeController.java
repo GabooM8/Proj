@@ -12,6 +12,8 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import the_knife.classes.Funzioni;
 import the_knife.classes.Ristorante;
@@ -25,9 +27,17 @@ public class HomeController {
     String cucina = "";
 
     @FXML private TextField searchBar;
+    @FXML private MenuButton sortButton;
+    @FXML private MenuItem farthestItem;
+    @FXML private MenuItem nearestItem;
+    @FXML private MenuItem mostExpensiveItem;
+    @FXML private MenuItem cheapestItem;
+    @FXML private MenuItem bestRatedItem;
+    @FXML private MenuItem worstRatedItem;
 
     @FXML private ListView<Ristorante> ristoranteListView;
 
+    @FXML private TextField locationTextField;
     @FXML private ComboBox<String> prezzoComboBox;
     @FXML private ComboBox<String> stelleComboBox;
     @FXML private CheckBox deliveryCheckBox;
@@ -58,7 +68,15 @@ public class HomeController {
     @FXML
     public void initialize() {
 
-        aggiornaApplicazioneFiltri();
+        Funzioni funzioni = new Funzioni();
+        // Passa i valori dei filtri 'delivery' e 'prenotazione' dalla HomeController
+        List<Ristorante> ristorantiTrovati = funzioni.cercaRistorante("", "", fasciaPrezzo, numStelle, cucina, this.delivery, this.prenotazione);
+        //System.out.println("Ristoranti trovati: " + ristorantiTrovati.size());
+
+        if (ristoranteListView != null) {
+            ObservableList<Ristorante> observableRistoranti = FXCollections.observableArrayList(ristorantiTrovati);
+            ristoranteListView.setItems(observableRistoranti);
+        }
 
         // Inizializza ComboBox con le ObservableList definite come membri della classe
         prezzoComboBox.setItems(opzioniFiltroPrezzo);
@@ -86,7 +104,7 @@ public class HomeController {
             
             ristoranteListView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
                 if (newSelection != null) {
-                    System.out.println("Ristorante selezionato: " + newSelection.getNome());
+                    //System.out.println("Ristorante selezionato: " + newSelection.getNome());
                     // Chiama il metodo per cambiare la vista al dettaglio del ristorante
                     try {
                         switchToRistorante();
@@ -106,6 +124,59 @@ public class HomeController {
 
     @FXML
     private void inputSearchBar(ActionEvent event) { // Chiamato quando si preme Invio nella searchBar
+        aggiornaApplicazioneFiltri();
+    }
+
+    @FXML
+    private void sortButtonAction(ActionEvent event) {
+        String selectedOption = sortButton.getText();
+        if (selectedOption != null) {
+            System.out.println("Opzione di ordinamento selezionata: " + selectedOption);
+        } else {
+            System.out.println("Nessuna opzione di ordinamento selezionata.");
+        }
+    }
+
+    @FXML
+    private void locationTextFieldAction(ActionEvent event) {
+        aggiornaApplicazioneFiltri();
+    }
+
+    @FXML
+    private void prezzoComboBoxAction(ActionEvent event) {
+        String selectedOption = prezzoComboBox.getSelectionModel().getSelectedItem();
+        if (selectedOption != null) {
+            //System.out.println("Filtro prezzo selezionato: " + selectedOption);
+            if (selectedOption.equals("Bassa (€)")) {
+                fasciaPrezzo = 1; // Imposta fascia prezzo bassa
+            } else if (selectedOption.equals("Media (€€)")) {
+                fasciaPrezzo = 2; // Imposta fascia prezzo media
+            } else if (selectedOption.equals("Alta (€€€)")) {
+                fasciaPrezzo = 3; // Imposta fascia prezzo alta
+            } else if (selectedOption.equals("Molto Alta (€€€€)")) {
+                fasciaPrezzo = 4; // Imposta fascia prezzo molto alta
+            } else if (selectedOption.equals("Tutte")) {
+                fasciaPrezzo = 0; // Nessun filtro per il prezzo
+            }
+        }
+        aggiornaApplicazioneFiltri();
+    }
+
+    @FXML
+    private void stelleComboBoxAction(ActionEvent event) {
+        String selectedOption = stelleComboBox.getSelectionModel().getSelectedItem();
+        if (selectedOption != null) {
+            //System.out.println("Filtro stelle selezionato: " + selectedOption);
+            if (selectedOption.equals("Una stella (*)")) {
+                numStelle = 1;
+            } else if (selectedOption.equals("Due stelle (**)")) {
+                numStelle = 2;
+            } else if (selectedOption.equals("Tre stelle (***)")) {
+                numStelle = 3;
+            } else if (selectedOption.equals("Nessuna")) {
+                numStelle = 0; // Nessun filtro per le stelle
+            }
+        }
         aggiornaApplicazioneFiltri();
     }
 
@@ -130,72 +201,47 @@ public class HomeController {
     }
 
     @FXML
-    private void prezzoComboBoxAction(ActionEvent event) {
-        String selectedOption = prezzoComboBox.getSelectionModel().getSelectedItem();
-        if (selectedOption != null) {
-            System.out.println("Filtro prezzo selezionato: " + selectedOption);
-            if (selectedOption.equals("Bassa (€)")) {
-                fasciaPrezzo = 1; // Imposta fascia prezzo bassa
-            } else if (selectedOption.equals("Media (€€)")) {
-                fasciaPrezzo = 2; // Imposta fascia prezzo media
-            } else if (selectedOption.equals("Alta (€€€)")) {
-                fasciaPrezzo = 3; // Imposta fascia prezzo alta
-            } else if (selectedOption.equals("Molto Alta (€€€€)")) {
-                fasciaPrezzo = 4; // Imposta fascia prezzo molto alta
-            } else if (selectedOption.equals("Tutte")) {
-                fasciaPrezzo = 0; // Nessun filtro per il prezzo
-            }
-        } else {
-            System.out.println("Nessun elemento selezionato.");
-        }
-        aggiornaApplicazioneFiltri();
-    }
-
-    @FXML
-    private void stelleComboBoxAction(ActionEvent event) {
-        String selectedOption = stelleComboBox.getSelectionModel().getSelectedItem();
-        if (selectedOption != null) {
-            System.out.println("Filtro stelle selezionato: " + selectedOption);
-            if (selectedOption.equals("Una stella (*)")) {
-                numStelle = 1;
-            } else if (selectedOption.equals("Due stelle (**)")) {
-                numStelle = 2;
-            } else if (selectedOption.equals("Tre stelle (***)")) {
-                numStelle = 3;
-            } else if (selectedOption.equals("Nessuna")) {
-                numStelle = 0; // Nessun filtro per le stelle
-            }
-        } else {
-            System.out.println("Nessun elemento selezionato.");
-        }
-        aggiornaApplicazioneFiltri();
-    }
-
-    private void aggiornaApplicazioneFiltri() {
-        String input = searchBar.getText();
-
-        Funzioni funzioni = new Funzioni();
-        // Passa i valori dei filtri 'delivery' e 'prenotazione' dalla HomeController
-        List<Ristorante> ristorantiTrovati = funzioni.cercaRistorante(input, fasciaPrezzo, numStelle, cucina, this.delivery, this.prenotazione);
-        System.out.println("Ristoranti trovati: " + ristorantiTrovati.size());
-
-        if (ristoranteListView != null) {
-            ObservableList<Ristorante> observableRistoranti = FXCollections.observableArrayList(ristorantiTrovati);
-            ristoranteListView.setItems(observableRistoranti);
-        }
-    }
-
-    @FXML
     private void resetFilters(ActionEvent event) {
         // Resetta i filtri
         searchBar.clear();
+        locationTextField.clear();
         prezzoComboBox.getSelectionModel().select("Tutte");
         stelleComboBox.getSelectionModel().select("Nessuna");
         deliveryCheckBox.setSelected(false);
         prenotazioneCheckBox.setSelected(false);
         
         // Aggiorna la lista dei ristoranti senza filtri
-        aggiornaApplicazioneFiltri();
+        Funzioni funzioni = new Funzioni();
+        List<Ristorante> ristorantiTrovati = funzioni.cercaRistorante("", "", 0, 0, "", false, false);
+        //System.out.println("Ristoranti trovati dopo reset: " + ristorantiTrovati.size());
+        if (ristoranteListView != null) {
+            ObservableList<Ristorante> observableRistoranti = FXCollections.observableArrayList(ristorantiTrovati);
+            ristoranteListView.setItems(observableRistoranti);
+        }
+        //System.out.println("Filtri resettati.");
+    }
+
+    private void aggiornaApplicazioneFiltri() {
+        String input = searchBar.getText();
+        String location = locationTextField.getText();
+
+        if (location != null && !location.isEmpty()) {
+            Funzioni funzioni = new Funzioni();
+            // Passa i valori dei filtri 'delivery' e 'prenotazione' dalla HomeController
+            List<Ristorante> ristorantiTrovati = funzioni.cercaRistorante(input, location, fasciaPrezzo, numStelle, cucina, this.delivery, this.prenotazione);
+            //System.out.println("Ristoranti trovati: " + ristorantiTrovati.size());
+
+            if (ristoranteListView != null) {
+                ObservableList<Ristorante> observableRistoranti = FXCollections.observableArrayList(ristorantiTrovati);
+                ristoranteListView.setItems(observableRistoranti);
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Avviso");
+            alert.setHeaderText(null);
+            alert.setContentText("Per favore, inserisci una località valida per cercare i ristoranti.");
+            alert.showAndWait();
+        }
     }
 
     @FXML
@@ -215,7 +261,7 @@ public class HomeController {
     private void switchToRistorante() throws IOException {
         Ristorante selectedRistorante = ristoranteListView.getSelectionModel().getSelectedItem();
         if (selectedRistorante != null) {
-            System.out.println("Navigazione alla vista del ristorante: " + selectedRistorante.getNome());
+            //System.out.println("Navigazione alla vista del ristorante: " + selectedRistorante.getNome());
             App.setRoot("ristorante", selectedRistorante); // Passa l'oggetto Ristorante selezionato
         }
     }
