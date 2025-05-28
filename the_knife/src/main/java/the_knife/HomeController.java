@@ -58,6 +58,8 @@ public class HomeController {
     @FXML
     public void initialize() {
 
+        aggiornaApplicazioneFiltri();
+
         // Inizializza ComboBox con le ObservableList definite come membri della classe
         prezzoComboBox.setItems(opzioniFiltroPrezzo);
         prezzoComboBox.getSelectionModel().select("Tutte");
@@ -174,13 +176,26 @@ public class HomeController {
 
         Funzioni funzioni = new Funzioni();
         // Passa i valori dei filtri 'delivery' e 'prenotazione' dalla HomeController
-        List<Ristorante> ristorantiTrovati = funzioni.cercaRistoranti(input, fasciaPrezzo, numStelle, cucina, this.delivery, this.prenotazione);
+        List<Ristorante> ristorantiTrovati = funzioni.cercaRistorante(input, fasciaPrezzo, numStelle, cucina, this.delivery, this.prenotazione);
         System.out.println("Ristoranti trovati: " + ristorantiTrovati.size());
 
         if (ristoranteListView != null) {
             ObservableList<Ristorante> observableRistoranti = FXCollections.observableArrayList(ristorantiTrovati);
             ristoranteListView.setItems(observableRistoranti);
         }
+    }
+
+    @FXML
+    private void resetFilters(ActionEvent event) {
+        // Resetta i filtri
+        searchBar.clear();
+        prezzoComboBox.getSelectionModel().select("Tutte");
+        stelleComboBox.getSelectionModel().select("Nessuna");
+        deliveryCheckBox.setSelected(false);
+        prenotazioneCheckBox.setSelected(false);
+        
+        // Aggiorna la lista dei ristoranti senza filtri
+        aggiornaApplicazioneFiltri();
     }
 
     @FXML

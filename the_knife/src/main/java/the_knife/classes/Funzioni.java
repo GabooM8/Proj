@@ -10,7 +10,7 @@ import java.util.Scanner;
 import the_knife.FileMenager;
 
 public class Funzioni {
-    public List<Ristorante> cercaRistoranti(String input, int fasciaPrezzoFiltro, int numStelleFiltro, String cucinaFiltro, boolean deliveryFiltro, boolean prenotazioneFiltro) {
+    public List<Ristorante> cercaRistorante(String input, int fasciaPrezzoFiltro, int numStelleFiltro, String cucinaFiltro, boolean deliveryFiltro, boolean prenotazioneFiltro) {
         String filename = "ristoranti.bin";
         List<Ristorante> risultati = new ArrayList<>();
 

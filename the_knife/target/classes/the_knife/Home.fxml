@@ -85,7 +85,7 @@
                   <CheckBox fx:id="deliveryCheckBox" onAction="#deliveryCheckBoxAction" text="Delivery" />
                   <CheckBox fx:id="prenotazioneCheckBox" onAction="#prenotazioneCheckBoxAction" text="Prenotazione" />
                </HBox>
-               <Button style="-fx-background-color: #267067; -fx-text-fill: white;" text="Azzera filtri" />
+               <Button onAction="#resetFilters" style="-fx-background-color: #267067; -fx-text-fill: white;" text="Azzera filtri" />
             </VBox>
          </HBox>
       </VBox>
