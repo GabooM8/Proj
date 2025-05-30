@@ -19,7 +19,10 @@ import the_knife.classes.Funzioni;
 import the_knife.classes.Ristorante;
 
 public class HomeController {
-    String ruolo;
+    Boolean Ristoratore;
+    String Username;
+    String Luogo;
+
     boolean delivery = false;
     boolean prenotazione = false;
     int fasciaPrezzo = 0;

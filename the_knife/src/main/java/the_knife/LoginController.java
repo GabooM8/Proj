@@ -47,15 +47,18 @@ public class LoginController {
             }
         }
 
+        Utente u;
         boolean found = false;
         for (Utente utente : utenti) {
             if (utente.getUsername().equals(username) && utente.getPassword().equals(password)) {
                 found = true;
+                u= utente;
                 break;
             }
         }
 
         if(found) {
+            //App.setRoot("Home", username, u.getLuogoDomicilio(), u.getIsRistoratore());
             App.setRoot("Home");
         } else {
             System.out.println("username o password errati.");
