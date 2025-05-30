@@ -1,8 +1,16 @@
 package the_knife;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import the_knife.classes.Utente;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.ComboBox;
+import java.time.LocalDate;
 
 public class RegisterController {
 
@@ -88,8 +96,62 @@ public class RegisterController {
         return line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
     }
 
+
+    @FXML
+    private TextField nome;
+    @FXML
+    private TextField cognome;
+    @FXML
+    private TextField username;
+    @FXML
+    private PasswordField password;
+    @FXML
+    private DatePicker datan;
+    @FXML
+    private TextField domicilio;
+    @FXML
+    private ComboBox<String> cmbx_rl;
+
     @FXML
     private void switchToHome() throws IOException {
+        String U_nome=nome.getText();
+        String U_cognome=cognome.getText();
+        String U_username=username.getText();
+        String U_password=password.getText();
+        LocalDate U_datan=datan.getValue();
+        String U_domicilio=domicilio.getText();
+        String U_rls = cmbx_rl.getValue();
+
+        if(U_nome.isEmpty() || U_cognome.isEmpty() || U_username.isEmpty() || U_password.isEmpty() || U_datan == null || U_domicilio.isEmpty() || U_rls == null) 
+        {
+            System.out.println("Compila tutti i campi!");
+            return;
+        }
+        Boolean U_rl = (U_rls.equals("Ristoratore")) ? true : false;
+
+        List<?> objects = (List<?>) FileMenager.readFromFile("Utenti.bin");
+        List<Utente> utenti = new ArrayList<>();
+        for (Object obj : objects) {
+            if (obj instanceof Utente) {
+                utenti.add((Utente) obj);
+            }
+        }
+        int id = utenti.size() + 1;
+
+        
+        for(Utente u : utenti)
+        {
+            if(u.getUsername().equals(U_username) || u.getNome().equals(U_nome) && u.getCognome().equals(U_cognome) || u.getDataNascita().equals(U_datan) || u.getLuogoDomicilio().equals(U_domicilio) || u.getIsRistoratore().equals(U_rl) || u.getPassword().equals(U_password)) {
+                System.out.println("Utente già esistente!");                    
+                return;
+            }
+        }       
+
+        Utente u = new Utente(id, U_nome, U_cognome, U_username, U_password, U_datan, U_domicilio, U_rl);
+        utenti.add(u);
+        List<Object> utentiObj = new ArrayList<>(utenti);
+        FileMenager.addToFile(utentiObj, "Utenti.bin");
+        System.out.println("Registrazione completata con successo!");
         App.setRoot("Home");
     }
 }

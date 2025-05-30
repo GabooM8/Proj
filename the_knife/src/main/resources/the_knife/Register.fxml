@@ -29,12 +29,12 @@
                   <Font name="Open Sans" size="18.0" />
                </font>
             </Label>
-            <TextField alignment="TOP_LEFT" promptText="Nome" />
-            <TextField alignment="TOP_LEFT" promptText="Cognome" />
-            <TextField alignment="TOP_LEFT" promptText="Username" />
-            <PasswordField promptText="Password" />
-            <DatePicker prefHeight="25.0" prefWidth="149.0" promptText="Data di nascita" />
-            <TextField promptText="Luogo del domicilio" />
+            <TextField fx:id="nome" alignment="TOP_LEFT" promptText="Nome" />
+            <TextField fx:id="cognome" alignment="TOP_LEFT" promptText="Cognome" />
+            <TextField fx:id="username" alignment="TOP_LEFT" promptText="Username" />
+            <PasswordField fx:id="password" promptText="Password" />
+            <DatePicker fx:id="datan" prefHeight="25.0" prefWidth="149.0" promptText="Data di nascita" />
+            <TextField fx:id="domicilio" promptText="Luogo del domicilio" />
             <ComboBox fx:id="cmbx_rl" prefWidth="150.0" promptText="Ruolo" visibleRowCount="2">
                 <items>
                     <FXCollections fx:factory="observableArrayList">

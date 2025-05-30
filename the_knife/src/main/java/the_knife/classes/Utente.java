@@ -1,6 +1,6 @@
 package the_knife.classes;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +10,7 @@ public class Utente implements Serializable {
     String cognome;
     String username;
     String password;
-    Date dataNascita;
+    LocalDate dataNascita;
     String luogoDomicilio;
     Boolean IsRistoratore;
     List<Integer> ristoranti; //preferiti per utente e i propri per ristoratore
@@ -43,10 +43,10 @@ public class Utente implements Serializable {
     public void setPassword(String newPassword) {
         this.password = newPassword;
     }
-    public Date getDataNascita() {
+    public LocalDate getDataNascita() {
         return dataNascita;
     }
-    public void setDataNascita(Date newDataNascita) {
+    public void setDataNascita(LocalDate newDataNascita) {
         this.dataNascita = newDataNascita;
     }
     public String getLuogoDomicilio() {
@@ -68,7 +68,7 @@ public class Utente implements Serializable {
     public Utente() {
         
     }
-    public Utente(int id,String nome, String cognome, String username, String password, Date dataNascita, String luogoDomicilio, Boolean isRistoratore) {
+    public Utente(int id,String nome, String cognome, String username, String password, LocalDate dataNascita, String luogoDomicilio, Boolean isRistoratore) {
         this.id = id;
         this.nome = nome;
         this.cognome = cognome;

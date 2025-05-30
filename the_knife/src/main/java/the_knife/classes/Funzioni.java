@@ -3,7 +3,7 @@ package the_knife.classes;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
@@ -92,12 +92,12 @@ public class Funzioni {
             String password = scanner.nextLine();
 
             System.out.println("Inserisci la data di nascita (formato: yyyy-MM-dd):");
-            Date dataNascita = null;
+            LocalDate dataNascita = null;
             while (dataNascita == null) {
                 String dataInput = scanner.nextLine();
                 try {
-                    dataNascita = new SimpleDateFormat("yyyy-MM-dd").parse(dataInput);
-                } catch (ParseException e) {
+                    dataNascita = LocalDate.parse(dataInput, java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                } catch (Exception e) {
                     System.out.println("Formato data non valido. Riprova:");
                 }
             }
