@@ -31,6 +31,14 @@ public class LoginController {
         String username = N_Utente.getText();
         String password = N_Password.getText();
 
+        if(username.isEmpty() || password.isEmpty()) 
+        {
+            System.out.println("Compila tutti i campi!");
+            N_Utente.setStyle("-fx-border-color: red;");
+            N_Password.setStyle("-fx-border-color: red;");
+            return;
+        }
+
         List<?> objects = (List<?>) FileMenager.readFromFile("Utenti.bin");
         List<Utente> utenti = new ArrayList<>();
         for (Object obj : objects) {

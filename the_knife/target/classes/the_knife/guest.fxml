@@ -19,8 +19,8 @@
                <font>
                   <Font name="Open Sans" size="18.0" />
                </font></Label>
-            <TextField promptText="Nome" />
-            <TextField promptText="Luogo" />
+            <TextField fx:id="nome" promptText="Nome" />
+            <TextField fx:id="luogo" promptText="Luogo" />
             <Button mnemonicParsing="false" onAction="#switchToHome" style="-fx-background-color: #127067;" text="Cerca" textFill="WHITE" />
             <Button mnemonicParsing="false" onAction="#switchToPrimary" style="-fx-background-color: white;" text="Indietro" underline="true">
                <font>

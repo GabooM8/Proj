@@ -125,6 +125,13 @@ public class RegisterController {
         if(U_nome.isEmpty() || U_cognome.isEmpty() || U_username.isEmpty() || U_password.isEmpty() || U_datan == null || U_domicilio.isEmpty() || U_rls == null) 
         {
             System.out.println("Compila tutti i campi!");
+            nome.setStyle("-fx-border-color: red;");
+            cognome.setStyle("-fx-border-color: red;");
+            username.setStyle("-fx-border-color: red;");
+            password.setStyle("-fx-border-color: red;");
+            datan.setStyle("-fx-border-color: red;");
+            domicilio.setStyle("-fx-border-color: red;");
+            cmbx_rl.setStyle("-fx-border-color: red;");
             return;
         }
         Boolean U_rl = (U_rls.equals("Ristoratore")) ? true : false;
@@ -142,7 +149,15 @@ public class RegisterController {
         for(Utente u : utenti)
         {
             if(u.getUsername().equals(U_username) || u.getNome().equals(U_nome) && u.getCognome().equals(U_cognome) || u.getDataNascita().equals(U_datan) || u.getLuogoDomicilio().equals(U_domicilio) || u.getIsRistoratore().equals(U_rl) || u.getPassword().equals(U_password)) {
-                System.out.println("Utente già esistente!");                    
+                System.out.println("Utente già esistente!");   
+                System.out.println("Compila tutti i campi!");
+                nome.setStyle("-fx-border-color: red;");
+                cognome.setStyle("-fx-border-color: red;");
+                username.setStyle("-fx-border-color: red;");
+                password.setStyle("-fx-border-color: red;");
+                datan.setStyle("-fx-border-color: red;");
+                domicilio.setStyle("-fx-border-color: red;");
+                cmbx_rl.setStyle("-fx-border-color: red;");                 
                 return;
             }
         }       
