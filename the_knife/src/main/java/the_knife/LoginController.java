@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import the_knife.classes.Utente;
 import java.util.List;
@@ -33,9 +34,11 @@ public class LoginController {
 
         if(username.isEmpty() || password.isEmpty()) 
         {
-            System.out.println("Compila tutti i campi!");
-            N_Utente.setStyle("-fx-border-color: red;");
-            N_Password.setStyle("-fx-border-color: red;");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Errore");
+            alert.setHeaderText(null);
+            alert.setContentText("Compila tutti i campi");
+            alert.showAndWait();
             return;
         }
 
@@ -47,7 +50,7 @@ public class LoginController {
             }
         }
 
-        Utente u;
+        Utente u= new Utente();
         boolean found = false;
         for (Utente utente : utenti) {
             if (utente.getUsername().equals(username) && utente.getPassword().equals(password)) {
@@ -59,13 +62,16 @@ public class LoginController {
 
         if(found) {
             //App.setRoot("Home", username, u.getLuogoDomicilio(), u.getIsRistoratore());
-            App.setRoot("Home");
+            App.setRoot("Home",u);
         } else {
-            System.out.println("username o password errati.");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Errore");
+            alert.setHeaderText(null);
+            alert.setContentText("Username o password errati");
+            alert.showAndWait();
+            
             N_Utente.clear();
             N_Password.clear();
-            N_Utente.setStyle("-fx-border-color: red;");
-            N_Password.setStyle("-fx-border-color: red;");
         }
     }
 }

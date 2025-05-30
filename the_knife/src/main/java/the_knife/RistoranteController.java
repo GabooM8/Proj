@@ -3,12 +3,16 @@ package the_knife;
 import java.io.IOException;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import the_knife.classes.Ristorante;
+import the_knife.classes.Utente;
+import javafx.scene.control.Button;
 
 public class RistoranteController {
 
     private Ristorante ristoranteCorrente;
+    Utente u=new Utente();
 
     @FXML private Label nomeRistoranteLabel;
     @FXML private Label indirizzoRistoranteLabel;
@@ -19,13 +23,23 @@ public class RistoranteController {
     @FXML private Label deliveryLabel;
     @FXML private Label prenotazioneLabel;
 
+    @FXML private Button addrec;
+    @FXML private Button pref;
+
     /**
      * Metodo per ricevere i dati del ristorante dal controller precedente.
      * @param ristorante L'oggetto Ristorante da visualizzare.
      */
-    public void initData(Ristorante ristorante) {
+    public void initData(Ristorante ristorante,Utente u) {
         this.ristoranteCorrente = ristorante;
-        System.out.println("Dati ricevuti per il ristorante: " + this.ristoranteCorrente.getNome());
+        this.u = u;
+        if(u.getIsRistoratore() == null) {
+            pref.setDisable(true);
+            addrec.setDisable(true);
+        } else if(u.getIsRistoratore()) {
+            pref.setDisable(true);
+        }
+        //System.out.println("Dati ricevuti per il ristorante: " + this.ristoranteCorrente.getNome());
         visualizzaRistorante();
     }
 
@@ -44,7 +58,7 @@ public class RistoranteController {
 
     @FXML
     private void switchToHome() throws IOException {
-        App.setRoot("Home");
+        App.setRoot("Home",u);
     }
 
     /*

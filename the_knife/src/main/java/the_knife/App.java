@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import the_knife.classes.Ristorante;
+import the_knife.classes.Utente;
 
 /**
  * JavaFX App
@@ -37,6 +38,9 @@ public class App extends Application {
     static void setRoot(String fxml, Object data) throws IOException {
         scene.setRoot(loadFXML(fxml, data));
     }
+    static void setRoot(String fxml, Object data, Object data2) throws IOException {
+        scene.setRoot(loadFXML(fxml, data, data2));
+    }
 
     private static Parent loadFXML(String fxml, Object data) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
@@ -44,8 +48,29 @@ public class App extends Application {
         
         if (data != null) {
             Object controller = fxmlLoader.getController();
+            
+            if (controller instanceof HomeController && data instanceof Utente) {
+                ((HomeController) controller).initData((Utente) data);
+            }
+            if(controller instanceof ProfiloUtControlle && data instanceof Utente) {
+                ((ProfiloUtControlle) controller).initData((Utente) data);
+            }
+            if(controller instanceof RistoratoreController && data instanceof Utente) {
+                ((RistoratoreController) controller).initData((Utente) data);
+            }
+        }
+        return parent;
+    }
+
+    private static Parent loadFXML(String fxml, Object data, Object data2) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
+        Parent parent = fxmlLoader.load();
+        
+        if (data != null && data2 != null) {
+            Object controller = fxmlLoader.getController();
+            
             if (controller instanceof RistoranteController && data instanceof Ristorante) {
-                ((RistoranteController) controller).initData((Ristorante) data);
+                ((RistoranteController) controller).initData((Ristorante) data, (Utente)data2);
             }
         }
         return parent;

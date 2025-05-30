@@ -68,6 +68,12 @@ public class Utente implements Serializable {
     public Utente() {
         
     }
+    public Utente(String nome, String luogo)
+    {
+        this.nome = nome;
+        this.luogoDomicilio = luogo;
+        this.IsRistoratore = null;
+    }
     public Utente(int id,String nome, String cognome, String username, String password, LocalDate dataNascita, String luogoDomicilio, Boolean isRistoratore) {
         this.id = id;
         this.nome = nome;
@@ -95,7 +101,7 @@ public class Utente implements Serializable {
                 "Cognome: " + cognome + "\n" +
                 "Username: " + username + "\n" +
                 "Password: " + password + "\n" +
-                "Data di Nascita: " + dataNascita.toString() + "\n" +
+                //"Data di Nascita: " + dataNascita.toString() + "\n" +
                 "Luogo di Domicilio: " + luogoDomicilio + "\n" +
                 "Is Admin: " + IsRistoratore + "\n";
     }

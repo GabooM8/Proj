@@ -9,6 +9,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import the_knife.classes.Utente;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import java.time.LocalDate;
 
@@ -124,14 +125,11 @@ public class RegisterController {
 
         if(U_nome.isEmpty() || U_cognome.isEmpty() || U_username.isEmpty() || U_password.isEmpty() || U_datan == null || U_domicilio.isEmpty() || U_rls == null) 
         {
-            System.out.println("Compila tutti i campi!");
-            nome.setStyle("-fx-border-color: red;");
-            cognome.setStyle("-fx-border-color: red;");
-            username.setStyle("-fx-border-color: red;");
-            password.setStyle("-fx-border-color: red;");
-            datan.setStyle("-fx-border-color: red;");
-            domicilio.setStyle("-fx-border-color: red;");
-            cmbx_rl.setStyle("-fx-border-color: red;");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Errore");
+            alert.setHeaderText(null);
+            alert.setContentText("Compila tutti i campi");
+            alert.showAndWait();
             return;
         }
         Boolean U_rl = (U_rls.equals("Ristoratore")) ? true : false;
@@ -149,15 +147,11 @@ public class RegisterController {
         for(Utente u : utenti)
         {
             if(u.getUsername().equals(U_username) || u.getNome().equals(U_nome) && u.getCognome().equals(U_cognome) || u.getDataNascita().equals(U_datan) || u.getLuogoDomicilio().equals(U_domicilio) || u.getIsRistoratore().equals(U_rl) || u.getPassword().equals(U_password)) {
-                System.out.println("Utente già esistente!");   
-                System.out.println("Compila tutti i campi!");
-                nome.setStyle("-fx-border-color: red;");
-                cognome.setStyle("-fx-border-color: red;");
-                username.setStyle("-fx-border-color: red;");
-                password.setStyle("-fx-border-color: red;");
-                datan.setStyle("-fx-border-color: red;");
-                domicilio.setStyle("-fx-border-color: red;");
-                cmbx_rl.setStyle("-fx-border-color: red;");                 
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Errore");
+                alert.setHeaderText(null);
+                alert.setContentText("Utente già esistente");
+                alert.showAndWait();                
                 return;
             }
         }       
@@ -166,7 +160,11 @@ public class RegisterController {
         utenti.add(u);
         List<Object> utentiObj = new ArrayList<>(utenti);
         FileMenager.addToFile(utentiObj, "Utenti.bin");
-        System.out.println("Registrazione completata con successo!");
-        App.setRoot("Home");
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Successo");
+        alert.setHeaderText(null);
+        alert.setContentText("Registrazione avvenuta con successo");
+        alert.showAndWait();
+        App.setRoot("Home",u);
     }
 }

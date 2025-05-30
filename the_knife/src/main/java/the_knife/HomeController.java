@@ -1,5 +1,6 @@
 package the_knife;
 
+import java.io.DataInput;
 import java.io.IOException;
 import java.util.List;
 
@@ -7,6 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.chart.PieChart.Data;
 import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -17,9 +19,13 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import the_knife.classes.Funzioni;
 import the_knife.classes.Ristorante;
+import the_knife.classes.Utente;
 
 public class HomeController {
-    Boolean Ristoratore;
+    
+    Utente u=new Utente();
+
+    String Ruolo;
     String Username;
     String Luogo;
 
@@ -63,6 +69,16 @@ public class HomeController {
         "Tre stelle (***)"
     );
     
+    public void initData(Utente u) {
+        this.u = u;
+        this.Luogo = u.getLuogoDomicilio();
+        this.Username = u.getUsername();
+        if(u.getIsRistoratore() == null) {
+            this.Ruolo = "guest";
+        } else {
+            this.Ruolo = (u.getIsRistoratore() ? "ristoratore" : "cliente");
+        }
+    }
 
     /**
      * Metodo chiamato automaticamente dopo che i campi FXML sono stati iniettati.
@@ -249,23 +265,23 @@ public class HomeController {
 
     @FXML
     private void switchToProfiloUT() throws IOException {
-        /*
-        if(ruolo.equals("Utente")) {
-            App.setRoot("profiloUt");
-        } else if(ruolo.equals("Ristoratore")) {
-            App.setRoot("profiloRist");
-        } else if(ruolo.equals("Guest")) {     
+
+        if(Ruolo.equals("cliente")) {
+            App.setRoot("profiloUt",u);
+        } else if(Ruolo.equals("ristoratore")) {
+            App.setRoot("ristoratore",u);
+        } else if(Ruolo.equals("guest")) {     
             App.setRoot("Register");
-        }*/
-        App.setRoot("profiloUt");
+        }
     }
 
     @FXML
     private void switchToRistorante() throws IOException {
+
         Ristorante selectedRistorante = ristoranteListView.getSelectionModel().getSelectedItem();
         if (selectedRistorante != null) {
             //System.out.println("Navigazione alla vista del ristorante: " + selectedRistorante.getNome());
-            App.setRoot("ristorante", selectedRistorante); // Passa l'oggetto Ristorante selezionato
+            App.setRoot("ristorante", selectedRistorante,u); // Passa l'oggetto Ristorante selezionato
         }
     }
 }
