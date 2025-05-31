@@ -67,12 +67,12 @@
                               <ColumnConstraints percentWidth="50" />
                            </columnConstraints>
                            <children>
-                              <TextField promptText="Nome" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                              <TextField promptText="Cognome" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                              <TextField promptText="Username" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                              <PasswordField promptText="Password" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <DatePicker promptText="Data di nascita" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                              <TextField promptText="Luogo del domicilio" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <TextField fx:id="nome" promptText="Nome" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                              <TextField fx:id="cognome" promptText="Cognome" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                              <TextField fx:id="username" promptText="Username" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                              <PasswordField fx:id="password" promptText="Password" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <DatePicker fx:id="datan" promptText="Data di nascita" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                              <TextField fx:id="luogo" promptText="Luogo del domicilio" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                            </children>
                            <rowConstraints>
                               <RowConstraints />
