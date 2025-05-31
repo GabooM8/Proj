@@ -27,6 +27,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import the_knife.classes.Funzioni;
+import the_knife.classes.Recensione;
 import the_knife.classes.Ristorante;
 import the_knife.classes.Utente;
 
@@ -48,6 +49,8 @@ public class RistoratoreController {
     private TextField luogo;
     @FXML
     private ListView<Ristorante> list_rist;
+    @FXML
+    private ListView<Recensione> list_rece;
 
     @FXML
     private void switchToHome() throws IOException {
@@ -80,9 +83,30 @@ public class RistoratoreController {
             }
         }
 
+        List<Integer> idRecensioni = u.getRecensioni();
+        List<Recensione> allrecensioni = new ArrayList<>();
+        List<?> recObjects = (List<?>) FileMenager.readFromFile("Recensioni.bin");
+        for (Object obj : recObjects) {
+            if (obj instanceof Recensione) {
+                Recensione recensione = (Recensione) obj;
+                allrecensioni.add(recensione);
+            }
+        }
+
+        List<Recensione> recensioniTrovate = new ArrayList<>();
+
+        for(Recensione r : allrecensioni) {
+            if(idRecensioni.contains(r.getId())) {
+                recensioniTrovate.add(r);
+            }
+        }
+
 
         ObservableList<Ristorante> observableRistoranti = FXCollections.observableArrayList(ristorantiTrovati);
         list_rist.setItems(observableRistoranti);
+
+        ObservableList<Recensione> observableRecensioni = FXCollections.observableArrayList(recensioniTrovate);
+        list_rece.setItems(observableRecensioni);
         
         if (list_rist != null) {
             list_rist.setCellFactory(param -> new ListCell<Ristorante>() {

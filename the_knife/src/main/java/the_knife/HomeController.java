@@ -19,6 +19,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import the_knife.classes.Funzioni;
 import the_knife.classes.Ristorante;
+import the_knife.classes.Recensione;
 import the_knife.classes.Utente;
 
 public class HomeController {
