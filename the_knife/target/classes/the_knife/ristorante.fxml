@@ -77,7 +77,7 @@
                      </font>
                   </Label>
                   <HBox prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                  <Button fx:id="addrec" mnemonicParsing="false" style="-fx-background-color: #fbf7ef;">
+                  <Button fx:id="addrec" mnemonicParsing="false" onAction="#addRecensione" style="-fx-background-color: #fbf7ef;">
                      <graphic>
                         <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                            <image>

@@ -1,13 +1,24 @@
 package the_knife;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import the_knife.classes.Ristorante;
 import the_knife.classes.Utente;
+import the_knife.classes.Recensione;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Dialog;
 
 public class RistoranteController {
 
@@ -54,6 +65,107 @@ public class RistoranteController {
             if (deliveryLabel != null) deliveryLabel.setText("Delivery: " + (ristoranteCorrente.getDelivery() ? "Sì" : "No"));
             if (prenotazioneLabel != null) prenotazioneLabel.setText("Prenotazione Online: " + (ristoranteCorrente.getPrenotazione() ? "Sì" : "No"));
         }
+    }
+
+    public void addRecensione() {
+
+        Dialog<Void> dialog = new Dialog<>();
+        dialog.setTitle("Aggiungi Recensione");
+        dialog.setHeaderText("Inserisci i dettagli della recensione");
+
+        ButtonType confermaType = new ButtonType("Conferma", ButtonBar.ButtonData.OK_DONE);
+        ButtonType annullaType = new ButtonType("Annulla", ButtonBar.ButtonData.CANCEL_CLOSE);
+        dialog.getDialogPane().getButtonTypes().addAll(confermaType, annullaType);
+
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 150, 10, 10));
+
+        TextField testo = new TextField();
+        testo.setPromptText("Testo");
+        ComboBox<String> numStelle = new ComboBox<>();
+        numStelle.getItems().addAll("1 Stella", "2 Stelle", "3 Stelle", "4 Stelle", "5 Stelle");
+
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == confermaType) {
+                if (testo.getText().isEmpty() || numStelle.getValue().isEmpty()) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Errore");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Tutti i campi sono obbligatori.");
+                    alert.showAndWait();
+                    return null;
+                }
+                String testoRecensione = testo.getText();
+                int numStelleRecensione=0;
+                switch (numStelle.getValue()) {
+                    case "1 Stella":
+                        numStelleRecensione = 1;
+                        break;
+                    case "2 Stelle":
+                        numStelleRecensione = 2;
+                        break;
+                    case "3 Stelle":
+                        numStelleRecensione = 3;
+                        break;
+                    case "4 Stelle":
+                        numStelleRecensione = 4;
+                        break;
+                    case "5 Stelle":
+                        numStelleRecensione = 5;
+                        break;
+                    default:
+                        numStelleRecensione = 0; // Default in caso di errore
+                }
+
+                List<Recensione> recensioni = new ArrayList<>();
+                List<?> objects = (List<?>) FileMenager.readFromFile("recensioni.bin");
+                for( Object obj : objects) {
+                    if (obj instanceof Recensione) {
+                        recensioni.add((Recensione) obj);
+                    }
+                }
+
+                int id_rece = recensioni.size() + 1;
+
+                Recensione n_recensione = new Recensione(id_rece, numStelleRecensione, testoRecensione, u.getId());
+
+                recensioni.add(n_recensione);
+                List<Object> recensioniObj = new ArrayList<>(recensioni);
+                FileMenager.addToFile(recensioniObj, "recensioni.bin");
+
+                List<?> objs = (List<?>) FileMenager.readFromFile("Utenti.bin");
+                List<Utente> utentis = new ArrayList<>();
+                for (Object obj : objs) {
+                    if (obj instanceof Utente) {
+                        utentis.add((Utente) obj);
+                    }
+                }
+
+                Utente ut = utentis.get(u.getId() -1);
+
+                ut.addRecensione(id_rece);
+
+                u=ut;
+
+                List<Object> utentiObj = new ArrayList<>(utentis);
+
+                FileMenager.addToFile(utentiObj,"Utenti.bin");
+
+                dialog.close();
+                return null;
+            }
+            return null;
+        });
+
+
+        grid.add(testo, 0, 0);
+        grid.add(numStelle, 1, 0);
+        
+        dialog.getDialogPane().setContent(grid);
+
+        dialog.showAndWait();
     }
 
     @FXML

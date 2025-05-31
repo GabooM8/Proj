@@ -1,6 +1,7 @@
 package the_knife.classes;
+import java.io.Serializable;
 
-public class SottoRecensione {
+public class SottoRecensione implements Serializable {
     private int id;
     private int id_padre;
     private String testo;
