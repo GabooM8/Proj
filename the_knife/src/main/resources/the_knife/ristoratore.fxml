@@ -39,7 +39,7 @@
                   <Insets left="46.0" />
                </padding>
             </Label>
-            <Button mnemonicParsing="false" style="-fx-background-color: #fbf7ef;">
+            <Button mnemonicParsing="false" onAction="#addRistorante" style="-fx-background-color: #fbf7ef;">
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -85,7 +85,7 @@
           </Tab>
             <Tab style="-fx-background-color: #fbf7ef;" text="I miei ristoranti">
                <content>
-                  <ListView prefHeight="200.0" prefWidth="200.0" />
+                  <ListView fx:id="list_rist" prefHeight="200.0" prefWidth="200.0" />
                </content>
             </Tab>
             <Tab style="-fx-background-color: #fbf7ef;" text="Recensioni">

@@ -3,12 +3,30 @@ package the_knife;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
+import javafx.util.Pair;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import the_knife.classes.Funzioni;
+import the_knife.classes.Ristorante;
 import the_knife.classes.Utente;
 
 public class RistoratoreController {
@@ -27,6 +45,8 @@ public class RistoratoreController {
     private PasswordField password;
     @FXML
     private TextField luogo;
+    @FXML
+    private ListView<Ristorante> list_rist;
 
     @FXML
     private void switchToHome() throws IOException {
@@ -34,13 +54,34 @@ public class RistoratoreController {
     }
 
     public void initData(Utente u) {
+        //inizializza utente
         this.u = u;
+
+        //inizializza campi del profilo
         nome.setText(u.getNome());
         cognome.setText(u.getCognome());
         username.setText(u.getUsername());
         datan.setValue(u.getDataNascita());
         password.setText(u.getPassword());
         luogo.setText(u.getLuogoDomicilio());
+
+        //inizializza lista dei ristoranti
+        List<Integer> ristorantiUt = u.getRistoranti();
+
+        List<Ristorante> ristorantiTrovati = new ArrayList<>();
+        List<?> objects = (List<?>) FileMenager.readFromFile("ristoranti.bin");
+        for (Object obj : objects) {
+            if (obj instanceof Ristorante) {
+                Ristorante ristorante = (Ristorante) obj;
+                if(ristorantiUt.contains(ristorante.getId())) {
+                    ristorantiTrovati.add(ristorante);
+                }
+            }
+        }
+
+
+        ObservableList<Ristorante> observableRistoranti = FXCollections.observableArrayList(ristorantiTrovati);
+        list_rist.setItems(observableRistoranti);
     }
 
     public void updateProfile() {
@@ -74,5 +115,149 @@ public class RistoratoreController {
         alert.setHeaderText(null);
         alert.setContentText("Profilo aggiornato con successo");
         alert.showAndWait();
+    }
+
+    public void addRistorante() {
+
+        Dialog<Void> dialog = new Dialog<>();
+        dialog.setTitle("Aggiungi Ristorante");
+        dialog.setHeaderText("Inserisci i dettagli del ristorante");
+
+        ButtonType confermaType = new ButtonType("Conferma", ButtonBar.ButtonData.OK_DONE);
+        ButtonType annullaType = new ButtonType("Annulla", ButtonBar.ButtonData.CANCEL_CLOSE);
+        dialog.getDialogPane().getButtonTypes().addAll(confermaType, annullaType);
+
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 150, 10, 10));
+
+        TextField nome = new TextField();
+        nome.setPromptText("Nome");
+        TextField indirizzo = new TextField();
+        indirizzo.setPromptText("Indirizzo");
+        TextField nazione = new TextField();
+        nazione.setPromptText("Nazione");
+        TextField citta = new TextField();
+        citta.setPromptText("Citta");
+        ComboBox prezzo = new ComboBox<>();
+        prezzo.setPromptText("Prezzo");
+        prezzo.getItems().addAll("Bassa (€)","Media (€€)","Alta (€€€)","Molto Alta (€€€€)");
+        TextField cucina = new TextField();
+        cucina.setPromptText("Tipo di Cucina");
+        TextField latitudine = new TextField();
+        latitudine.setPromptText("Latitudine");
+
+        latitudine.textProperty().addListener((obs, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*(\\.\\d*)?")) {
+                latitudine.setText(oldValue);
+            }
+        });
+
+        TextField longitudine = new TextField();
+        longitudine.setPromptText("Longitudine");
+
+        longitudine.textProperty().addListener((obs, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*(\\.\\d*)?")) {
+                longitudine.setText(oldValue);
+            }
+        });
+
+        //delivery & prenotazione
+        CheckBox delivery = new CheckBox("Delivery");
+        CheckBox prenotazione = new CheckBox("Prenotazione");
+
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == confermaType) {
+                if (nome.getText().isEmpty() || indirizzo.getText().isEmpty() || nazione.getText().isEmpty() || citta.getText().isEmpty() || prezzo.getValue() == null || cucina.getText().isEmpty() || latitudine.getText().isEmpty() || longitudine.getText().isEmpty()) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Errore");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Tutti i campi sono obbligatori.");
+                    alert.showAndWait();
+                    return null;
+                }
+                String nomeRistorante = nome.getText();
+                String indirizzoRistorante = indirizzo.getText();
+                String nazioneRistorante = nazione.getText();
+                String cittaRistorante = citta.getText();
+                int prezzoRist;
+                switch ((String) prezzo.getValue()) {
+                    case "Bassa (€)":
+                        prezzoRist = 1;
+                        break;
+                    case "Media (€€)":
+                        prezzoRist = 2;
+                        break;
+                    case "Alta (€€€)":
+                        prezzoRist = 3;
+                        break;
+                    case "Molto Alta (€€€€)":
+                        prezzoRist = 4;
+                        break;
+                    default:
+                        prezzoRist = 0; // Default in caso di errore
+                }
+                String cucinaRistorante = cucina.getText();
+                double latitudineRistorante = Double.parseDouble(latitudine.getText());
+                double longitudineRistorante = Double.parseDouble(longitudine.getText());
+                boolean deliveryRistorante = delivery.isSelected();
+                boolean prenotazioneRistorante = prenotazione.isSelected();
+
+                List<Ristorante> ristoranti = new ArrayList<>();
+                List<?> objects = (List<?>) FileMenager.readFromFile("ristoranti.bin");
+                for( Object obj : objects) {
+                    if (obj instanceof Ristorante) {
+                        ristoranti.add((Ristorante) obj);
+                    }
+                }
+
+                int id_rist = ristoranti.size() + 1;
+
+                Ristorante n_ristorante = new Ristorante(id_rist, nomeRistorante, indirizzoRistorante, nazioneRistorante, cittaRistorante, prezzoRist, 0, cucinaRistorante, latitudineRistorante, longitudineRistorante, deliveryRistorante, prenotazioneRistorante);
+
+                ristoranti.add(n_ristorante);
+                List<Object> ristorantiObj = new ArrayList<>(ristoranti);
+                FileMenager.addToFile(ristorantiObj, "ristoranti.bin");
+
+                List<?> objs = (List<?>) FileMenager.readFromFile("Utenti.bin");
+                List<Utente> utentis = new ArrayList<>();
+                for (Object obj : objs) {
+                    if (obj instanceof Utente) {
+                        utentis.add((Utente) obj);
+                    }
+                }
+
+                Utente ut = utentis.get(u.getId() -1);
+
+                ut.addRistorante(id_rist);
+
+                u=ut;
+
+                List<Object> utentiObj = new ArrayList<>(utentis);
+
+                FileMenager.addToFile(utentiObj,"Utenti.bin");
+
+                dialog.close();
+                return null;
+            }
+            return null;
+        });
+
+
+        grid.add(nome, 0, 0);
+        grid.add(indirizzo, 1, 0);
+        grid.add(nazione, 0, 1);
+        grid.add(citta, 1, 1);
+        grid.add(prezzo, 0, 2);
+        grid.add(cucina, 1, 2);
+        grid.add(latitudine, 0, 3);
+        grid.add(longitudine, 1, 3);
+        grid.add(delivery, 0, 4);
+        grid.add(prenotazione, 1, 4);
+        
+        dialog.getDialogPane().setContent(grid);
+
+        dialog.showAndWait();
     }
 }

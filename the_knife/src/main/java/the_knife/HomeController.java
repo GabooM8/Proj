@@ -279,6 +279,7 @@ public class HomeController {
     private void switchToRistorante() throws IOException {
 
         Ristorante selectedRistorante = ristoranteListView.getSelectionModel().getSelectedItem();
+
         if (selectedRistorante != null) {
             //System.out.println("Navigazione alla vista del ristorante: " + selectedRistorante.getNome());
             App.setRoot("ristorante", selectedRistorante,u); // Passa l'oggetto Ristorante selezionato
