@@ -101,7 +101,7 @@ public class Utente implements Serializable {
                 "Cognome: " + cognome + "\n" +
                 "Username: " + username + "\n" +
                 "Password: " + password + "\n" +
-                //"Data di Nascita: " + dataNascita.toString() + "\n" +
+                "Data di Nascita: " + dataNascita.toString() + "\n" +
                 "Luogo di Domicilio: " + luogoDomicilio + "\n" +
                 "Is Admin: " + IsRistoratore + "\n";
     }

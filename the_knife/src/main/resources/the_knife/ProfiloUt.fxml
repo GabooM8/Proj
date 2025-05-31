@@ -82,7 +82,7 @@
                         </GridPane>
 
                         <!-- Bottone -->
-                        <Button maxWidth="250" style="-fx-background-color: #267067; -fx-text-fill: white;" text="Aggiorna i dati" />
+                        <Button maxWidth="250" onAction="#updateProfile" style="-fx-background-color: #267067; -fx-text-fill: white;" text="Aggiorna i dati" />
                      </VBox>
                   </content>
                </Tab>

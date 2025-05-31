@@ -95,7 +95,7 @@
             </Tab>
         </tabs>
       </TabPane>
-      <Button mnemonicParsing="false" style="-fx-background-color: #167067;" text="Aggiorna" textFill="WHITE">
+      <Button mnemonicParsing="false" onAction="#updateProfile" style="-fx-background-color: #167067;" text="Aggiorna" textFill="WHITE">
          <VBox.margin>
             <Insets bottom="20.0" />
          </VBox.margin>
