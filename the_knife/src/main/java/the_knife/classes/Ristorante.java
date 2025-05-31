@@ -154,12 +154,31 @@ public class Ristorante implements Serializable {
 
     @Override
     public String toString() {
+        String prz;
+        switch (prezzo) {
+            case 1:
+                prz = "Bassa (€)";
+                break;
+            case 2:
+                prz = "Media (€€)";
+                break;
+            case 3:
+                prz = "Alta (€€€)";
+                break;
+            case 4:
+                prz = "Molto Alta (€€€€)";
+                break;
+            default:
+                prz = "Non specificato";
+                break;
+        }
+        
         return "Id: " + id + "\n" +
                 "Nome: " + nome + "\n" +
                 "Indirizzo: " + indirizzo + "\n" +
                 "Nazione: " + nazione + "\n" +
                 "Citta: " + citta + "\n" +
-                "Prezzo: " + prezzo + "\n" +
+                "Prezzo: " + prz + "\n" +
                 "Numero Stelle: " + numStelle + "\n" +
                 "Cucina: " + cucina + "\n" +
                 "Latitudine: " + latitudine + "\n" +

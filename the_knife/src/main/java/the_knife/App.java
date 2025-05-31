@@ -72,6 +72,9 @@ public class App extends Application {
             if (controller instanceof RistoranteController && data instanceof Ristorante) {
                 ((RistoranteController) controller).initData((Ristorante) data, (Utente)data2);
             }
+            if (controller instanceof RistoratoreController && data instanceof Utente) {
+                ((RistoratoreController) controller).initData((Utente) data);
+            }
         }
         return parent;
     }

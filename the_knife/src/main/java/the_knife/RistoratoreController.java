@@ -22,6 +22,7 @@ import javafx.util.Pair;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
@@ -82,6 +83,40 @@ public class RistoratoreController {
 
         ObservableList<Ristorante> observableRistoranti = FXCollections.observableArrayList(ristorantiTrovati);
         list_rist.setItems(observableRistoranti);
+        
+        if (list_rist != null) {
+            list_rist.setCellFactory(param -> new ListCell<Ristorante>() {
+                @Override
+                protected void updateItem(Ristorante item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || item == null || item.getNome() == null) {
+                        setText(null);
+                        setGraphic(null);
+                    } else {
+                        setText(item.getNome() + " - " + item.getCitta() + " (" + item.getCucina() + ")");
+                    }
+                }
+            });
+
+            
+            list_rist.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+                if (newSelection != null) {
+                    //System.out.println("Ristorante selezionato: " + newSelection.getNome());
+                    // Chiama il metodo per cambiare la vista al dettaglio del ristorante
+                    try {
+                        switchToRistorante();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        // Mostra un alert all'utente in caso di errore di caricamento
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Errore di Navigazione");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Impossibile caricare la vista del ristorante: " + e.getMessage());
+                        alert.showAndWait();
+                    }
+                }
+            });
+        }
     }
 
     public void updateProfile() {
@@ -260,4 +295,16 @@ public class RistoratoreController {
 
         dialog.showAndWait();
     }
+
+        @FXML
+        private void switchToRistorante() throws IOException {
+
+            Ristorante selectedRistorante = list_rist.getSelectionModel().getSelectedItem();
+
+            if (selectedRistorante != null) {
+                //System.out.println("Navigazione alla vista del ristorante: " + selectedRistorante.getNome());
+                App.setRoot("ristorante", selectedRistorante,u); // Passa l'oggetto Ristorante selezionato
+            }
+        }
+
 }
