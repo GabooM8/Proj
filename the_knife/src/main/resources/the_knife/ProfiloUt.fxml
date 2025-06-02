@@ -21,7 +21,7 @@
 
 <StackPane prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #fbf7ef;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="the_knife.ProfiloUtControlle">
    <children>
-      <VBox alignment="TOP_CENTER" maxWidth="700" prefHeight="550" prefWidth="700" spacing="20">
+      <VBox alignment="TOP_CENTER" maxWidth="700" prefHeight="600.0" prefWidth="700" spacing="20">
          <padding>
             <Insets bottom="30" left="20" right="20" top="30" />
          </padding>

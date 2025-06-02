@@ -31,7 +31,7 @@
                         <Font name="Open Sans" size="18.0" />
                      </font>
                   </Label>
-                  <Button fx:id="pref" mnemonicParsing="false" style="-fx-background-color: #fbf7ef;">
+                  <Button fx:id="pref" mnemonicParsing="false" onAction="#addPreferito" style="-fx-background-color: #fbf7ef;">
                      <graphic>
                         <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                            <image>
