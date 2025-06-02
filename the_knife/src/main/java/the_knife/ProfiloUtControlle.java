@@ -15,6 +15,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import the_knife.classes.Funzioni;
+import the_knife.classes.Recensione;
 import the_knife.classes.Ristorante;
 import the_knife.classes.Utente;
 
@@ -36,7 +37,7 @@ public class ProfiloUtControlle {
     private TextField luogo;
 
     @FXML private ListView<Ristorante> prefListView;
-    @FXML private ListView<Ristorante> recensioniListView;
+    @FXML private ListView<Recensione> recensioniListView;
 
     @FXML
     private void switchToHome() throws IOException {
@@ -99,7 +100,6 @@ public class ProfiloUtControlle {
 
         prefListView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
-                System.out.println("Ristorante preferito selezionato: " + newSelection.getNome());
 
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Informazione");
@@ -131,6 +131,29 @@ public class ProfiloUtControlle {
                 alert.showAndWait();
             }
         });
+
+        // listview per le recensioni
+        if (recensioniListView == null) {
+            System.err.println("ERRORE FATALE: recensioniListView non è stato iniettato correttamente in initialize(). Controllare il file FXML.");
+            return;
+        }
+        recensioniListView.setCellFactory(param -> new ListCell<Recensione>() {
+            @Override
+            protected void updateItem(Recensione recensione, boolean empty) {
+                super.updateItem(recensione, empty);
+                if (empty || recensione == null) {
+                    setText(null);
+                    setGraphic(null); // È buona norma pulire anche il graphic
+                } else {
+                    setText("Recensione di Utente ID " + recensione.getIdUtente() + ": " + recensione.getTesto() + " (" + recensione.getNumStelle() + " stelle)");
+                }
+            }
+        });
+        recensioniListView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                System.out.println("Recensione selezionata: " + newSelection.getTesto());
+            }
+        });
     }
 
     public void initData(Utente u) {
@@ -143,7 +166,7 @@ public class ProfiloUtControlle {
         datan.setValue(u.getDataNascita());
         password.setText(u.getPassword());
         luogo.setText(u.getLuogoDomicilio());
-        
+
         Funzioni funzioni = new Funzioni();
         List<Ristorante> ristorantiTrovati = funzioni.visualizzaPreferiti(this.u.getId());
 

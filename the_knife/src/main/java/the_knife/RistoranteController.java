@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
@@ -13,6 +15,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import the_knife.classes.Funzioni;
@@ -37,6 +41,9 @@ public class RistoranteController {
     @FXML private Button addrec;
     @FXML private Button pref;
 
+    @FXML private ListView<Recensione> recensioniListView;
+
+
     /**
      * Metodo per ricevere i dati del ristorante dal controller precedente.
      * @param ristorante L'oggetto Ristorante da visualizzare.
@@ -50,11 +57,7 @@ public class RistoranteController {
         } else if(u.getIsRistoratore()) {
             pref.setDisable(true);
         }
-        //System.out.println("Dati ricevuti per il ristorante: " + this.ristoranteCorrente.getNome());
-        visualizzaRistorante();
-    }
 
-    private void visualizzaRistorante() {
         if (ristoranteCorrente != null) {
             if (nomeRistoranteLabel != null) nomeRistoranteLabel.setText(ristoranteCorrente.getNome());
             if (indirizzoRistoranteLabel != null) indirizzoRistoranteLabel.setText(ristoranteCorrente.getIndirizzo());
@@ -64,6 +67,8 @@ public class RistoranteController {
             if (stelleLabel != null) stelleLabel.setText("Stelle: " + ristoranteCorrente.getNumStelle());
             if (deliveryLabel != null) deliveryLabel.setText("Delivery: " + (ristoranteCorrente.getDelivery() ? "Sì" : "No"));
             if (prenotazioneLabel != null) prenotazioneLabel.setText("Prenotazione Online: " + (ristoranteCorrente.getPrenotazione() ? "Sì" : "No"));
+
+            visualizzaRecensioni();
         }
     }
 
@@ -72,7 +77,7 @@ public class RistoranteController {
         Funzioni funzioni = new Funzioni();
         List<Utente> utenti = new ArrayList<>();
         utenti = funzioni.getUtenti();
-        int id = utenti.size() + 1;
+        // int id = utenti.size() + 1;
 
         Utente utente = utenti.get(u.getId() -1);
 
@@ -144,11 +149,11 @@ public class RistoranteController {
                         numStelleRecensione = 5;
                         break;
                     default:
-                        numStelleRecensione = 0; // Default in caso di errore
+                        numStelleRecensione = 0;
                 }
 
                 List<Recensione> recensioni = new ArrayList<>();
-                List<?> objects = (List<?>) FileMenager.readFromFile("recensioni.bin");
+                List<?> objects = FileMenager.readFromFile("recensioni.bin");
                 for( Object obj : objects) {
                     if (obj instanceof Recensione) {
                         recensioni.add((Recensione) obj);
@@ -163,7 +168,7 @@ public class RistoranteController {
                 List<Object> recensioniObj = new ArrayList<>(recensioni);
                 FileMenager.addToFile(recensioniObj, "recensioni.bin");
 
-                List<?> objs = (List<?>) FileMenager.readFromFile("Utenti.bin");
+                List<?> objs = FileMenager.readFromFile("Utenti.bin");
                 List<Utente> utentis = new ArrayList<>();
                 for (Object obj : objs) {
                     if (obj instanceof Utente) {
@@ -172,14 +177,36 @@ public class RistoranteController {
                 }
 
                 Utente ut = utentis.get(u.getId() -1);
-
                 ut.addRecensione(id_rece);
-
                 u=ut;
-
                 List<Object> utentiObj = new ArrayList<>(utentis);
-
                 FileMenager.addToFile(utentiObj,"Utenti.bin");
+
+                ristoranteCorrente.addRecensione(id_rece);
+                
+                List<Object> allRistorantiObjects = FileMenager.readFromFile("ristoranti.bin");
+                List<Ristorante> allRistoranti = new ArrayList<>();
+                for (Object obj : allRistorantiObjects) {
+                    if (obj instanceof Ristorante) {
+                        allRistoranti.add((Ristorante) obj);
+                    }
+                }
+
+                boolean foundRestaurant = false;
+                for (int i = 0; i < allRistoranti.size(); i++) {
+                    if (allRistoranti.get(i).getId() == ristoranteCorrente.getId()) {
+                        allRistoranti.set(i, ristoranteCorrente);
+                        foundRestaurant = true;
+                        break;
+                    }
+                }
+
+                if (foundRestaurant) {
+                    FileMenager.addToFile(new ArrayList<>(allRistoranti), "ristoranti.bin");
+                } else {
+                    System.err.println("Errore: Ristorante corrente non trovato per l'aggiornamento delle recensioni.");
+                }
+                visualizzaRecensioni();
 
                 dialog.close();
                 return null;
@@ -196,37 +223,54 @@ public class RistoranteController {
         dialog.showAndWait();
     }
 
+    private void visualizzaRecensioni() {
+        if (ristoranteCorrente == null || recensioniListView == null) {
+            if (recensioniListView != null) {
+                recensioniListView.setItems(FXCollections.observableArrayList());
+            }
+            return;
+        }
+
+        List<Integer> idsRecensioniRistorante = ristoranteCorrente.getRecensioni();
+        if (idsRecensioniRistorante == null || idsRecensioniRistorante.isEmpty()) {
+            recensioniListView.setItems(FXCollections.observableArrayList());
+            return;
+        }
+
+        List<?> allRecensioniObjects = FileMenager.readFromFile("recensioni.bin");
+        List<Recensione> recensioniFiltrate = new ArrayList<>();
+
+        for (Object obj : allRecensioniObjects) {
+            if (obj instanceof Recensione) {
+                Recensione rec = (Recensione) obj;
+                if (idsRecensioniRistorante.contains(rec.getId())) {
+                    recensioniFiltrate.add(rec);
+                }
+            }
+        }
+        ObservableList<Recensione> observableRecensioni = FXCollections.observableArrayList(recensioniFiltrate);
+        recensioniListView.setItems(observableRecensioni);
+    }
+    
+    @FXML
+    public void initialize() {
+        recensioniListView.setCellFactory(param -> new ListCell<Recensione>() {
+            @Override
+            protected void updateItem(Recensione recensione, boolean empty) {
+                super.updateItem(recensione, empty);
+                if (empty || recensione == null) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    setText("Recensione di Utente ID " + recensione.getIdUtente() + ": " + recensione.getTesto() + " (" + recensione.getNumStelle() + " stelle)");
+                }
+            }
+        });
+    }
+
     @FXML
     private void switchToHome() throws IOException {
         App.setRoot("Home",u);
     }
 
-    /*
-    @FXML private ListView<Ristorante> recensioniListView;
-
-    @FXML
-    public void initialize() {
-        if (recensioniListView != null) {
-            recensioniListView.setCellFactory(param -> new ListCell<Ristorante>() {
-                @Override
-                protected void updateItem(Ristorante item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (empty || item == null || item.getNome() == null) {
-                        setText(null);
-                        setGraphic(null);
-                    } else {
-                        setText(item.getNome() + " - " + item.getCitta() + " (" + item.getCucina() + ")");
-                    }
-                }
-            });
-
-            
-            recensioniListView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-                if (newSelection != null) {
-                    System.out.println("Recensione selezionata: " + newSelection.getNome());
-                }
-            });
-        }
-    }
-    */
 }
