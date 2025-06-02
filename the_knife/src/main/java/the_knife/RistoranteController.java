@@ -18,6 +18,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import the_knife.classes.Funzioni;
 import the_knife.classes.Recensione;
@@ -37,6 +39,7 @@ public class RistoranteController {
     @FXML private Label stelleLabel;
     @FXML private Label deliveryLabel;
     @FXML private Label prenotazioneLabel;
+    @FXML private ImageView img_pref;
 
     @FXML private Button addrec;
     @FXML private Button pref;
@@ -67,6 +70,11 @@ public class RistoranteController {
             if (stelleLabel != null) stelleLabel.setText("Stelle: " + ristoranteCorrente.getNumStelle());
             if (deliveryLabel != null) deliveryLabel.setText("Delivery: " + (ristoranteCorrente.getDelivery() ? "Sì" : "No"));
             if (prenotazioneLabel != null) prenotazioneLabel.setText("Prenotazione Online: " + (ristoranteCorrente.getPrenotazione() ? "Sì" : "No"));
+            if(u.getRistoranti().contains(ristoranteCorrente.getId())) {
+                img_pref.setImage(new Image(getClass().getResourceAsStream("/the_knife/images/bookmark_saved.png")));
+            } else {
+                img_pref.setImage(new Image(getClass().getResourceAsStream("/the_knife/images/bookmark_save.png")));
+            }
 
             visualizzaRecensioni();
         }
@@ -82,21 +90,29 @@ public class RistoranteController {
         Utente utente = utenti.get(u.getId() -1);
 
         if(utente.getRistoranti().contains(ristoranteCorrente.getId())) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            utente.getRistoranti().remove(Integer.valueOf(ristoranteCorrente.getId()));
+            u=utente;
+            List<Object> utentiObj = new ArrayList<>(utenti);
+            FileMenager.addToFile(utentiObj,"Utenti.bin");
+
+            /*Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Informazione");
             alert.setHeaderText(null);
-            alert.setContentText("Ristorante già presente nei preferiti.");
-            alert.showAndWait();
+            alert.setContentText("Ristorante rimosso dai preferiti.");
+            alert.showAndWait();*/
+            img_pref.setImage(new Image(getClass().getResourceAsStream("/the_knife/images/bookmark_save.png")));
         } else {
             utente.addRistorante(ristoranteCorrente.getId());
             u=utente;
             List<Object> utentiObj = new ArrayList<>(utenti);
             FileMenager.addToFile(utentiObj,"Utenti.bin");
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
+            /*Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Informazione");
             alert.setHeaderText(null);
             alert.setContentText("Ristorante aggiunto ai preferiti.");
-            alert.showAndWait();
+            alert.showAndWait();*/
+            img_pref.setImage(new Image(getClass().getResourceAsStream("/the_knife/images/bookmark_saved.png")));
         }
     }
 
