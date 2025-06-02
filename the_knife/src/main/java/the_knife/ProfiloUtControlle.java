@@ -91,7 +91,7 @@ public class ProfiloUtControlle {
                 super.updateItem(ristorante, empty);
                 if (empty || ristorante == null) {
                     setText(null);
-                    setGraphic(null); // È buona norma pulire anche il graphic
+                    setGraphic(null);
                 } else {
                     setText(ristorante.getNome() + " - " + ristorante.getIndirizzo());
                 }
@@ -143,9 +143,9 @@ public class ProfiloUtControlle {
                 super.updateItem(recensione, empty);
                 if (empty || recensione == null) {
                     setText(null);
-                    setGraphic(null); // È buona norma pulire anche il graphic
+                    setGraphic(null);
                 } else {
-                    setText("Recensione di Utente ID " + recensione.getIdUtente() + ": " + recensione.getTesto() + " (" + recensione.getNumStelle() + " stelle)");
+                    setText(recensione.getTesto() + " (" + recensione.getNumStelle() + " stelle)");
                 }
             }
         });
@@ -179,6 +179,29 @@ public class ProfiloUtControlle {
             prefListView.setItems(observableRistoranti);
         } else {
             System.err.println("ERRORE: prefListView è null in initData, anche se dovrebbe essere stato inizializzato.");
+        }
+
+        // Carica le recensioni dell'utente
+        List<Integer> idsRecensioniUtente = this.u.getRecensioni();
+        List<Recensione> recensioniDellUtente = new ArrayList<>();
+
+        if (idsRecensioniUtente != null && !idsRecensioniUtente.isEmpty()) {
+            List<?> allRecensioniObjects = FileMenager.readFromFile("recensioni.bin");
+            for (Object obj : allRecensioniObjects) {
+                if (obj instanceof Recensione) {
+                    Recensione rec = (Recensione) obj;
+                    if (idsRecensioniUtente.contains(rec.getId())) {
+                        recensioniDellUtente.add(rec);
+                    }
+                }
+            }
+        }
+
+        if (recensioniListView != null) {
+            ObservableList<Recensione> observableRecensioni = FXCollections.observableArrayList(recensioniDellUtente);
+            recensioniListView.setItems(observableRecensioni);
+        } else {
+            System.err.println("ERRORE: recensioniListView è null in initData.");
         }
     }
 

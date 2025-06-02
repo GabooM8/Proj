@@ -88,7 +88,12 @@ public class Utente implements Serializable {
     }
 
     public void addRecensione(int id_recensione) {
-        recensioni.add(id_recensione);
+        if (this.recensioni == null) { // Controllo di sicurezza, anche se dovrebbe essere inizializzata nel costruttore
+            this.recensioni = new ArrayList<>();
+        }
+        if (!this.recensioni.contains(id_recensione)) { // Aggiungi l'ID solo se non è già presente
+            this.recensioni.add(id_recensione);
+        }
     }
     public void addRistorante(int id_ristorante) {
         ristoranti.add(id_ristorante);
