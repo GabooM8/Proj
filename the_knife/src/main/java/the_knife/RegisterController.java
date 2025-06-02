@@ -1,17 +1,18 @@
 package the_knife;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import the_knife.classes.Utente;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
-import java.time.LocalDate;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import the_knife.classes.Funzioni;
+import the_knife.classes.Utente;
 
 public class RegisterController {
 
@@ -134,24 +135,20 @@ public class RegisterController {
         }
         Boolean U_rl = (U_rls.equals("Ristoratore")) ? true : false;
 
-        List<?> objects = (List<?>) FileMenager.readFromFile("Utenti.bin");
+        Funzioni funzioni = new Funzioni();
         List<Utente> utenti = new ArrayList<>();
-        for (Object obj : objects) {
-            if (obj instanceof Utente) {
-                utenti.add((Utente) obj);
-            }
-        }
+        utenti = funzioni.getUtenti();
         int id = utenti.size() + 1;
 
-        
+     
         for(Utente u : utenti)
         {
-            if(u.getUsername().equals(U_username) || u.getNome().equals(U_nome) && u.getCognome().equals(U_cognome) || u.getDataNascita().equals(U_datan) || u.getLuogoDomicilio().equals(U_domicilio) || u.getIsRistoratore().equals(U_rl) || u.getPassword().equals(U_password)) {
+            if(u.getUsername().equals(U_username)) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Errore");
                 alert.setHeaderText(null);
-                alert.setContentText("Utente già esistente");
-                alert.showAndWait();                
+                alert.setContentText("Username già esistente");
+                alert.showAndWait();    
                 return;
             }
         }       

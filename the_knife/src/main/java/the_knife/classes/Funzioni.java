@@ -1,9 +1,7 @@
 package the_knife.classes;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -122,7 +120,7 @@ public class Funzioni {
                 }
             }
             
-            String filename = "utenti.bin";
+            String filename = "Utenti.bin";
             List<Object> utenti = FileMenager.readFromFile(filename);
 
             Utente u = (Utente)utenti.getLast();
@@ -136,7 +134,7 @@ public class Funzioni {
     }
 
     public void addPreferito(int idRistorante, int idUtente) {
-        String filename = "utenti.bin";
+        String filename = "Utenti.bin";
         List<Object> utenti = FileMenager.readFromFile(filename);
         for(Object obj : utenti) {
             Utente utente = (Utente) obj;
@@ -147,16 +145,22 @@ public class Funzioni {
     }
 
     public List<Ristorante> visualizzaPreferiti(int idUtente) {
-        String filename= "utenti.bin";
+        String filename= "Utenti.bin";
         Utente utente= null;
         List<Object> utenti = FileMenager.readFromFile(filename);
         for(Object obj : utenti) {
             Utente u = (Utente) obj;
+            System.out.println(u.getId() + " " + idUtente);
             if (u.getId() == idUtente) {
                 utente=u;
                 break;
             }
         }
+        if (utente == null) {
+            System.out.println("Utente non trovato.");
+            return new ArrayList<>();
+        }
+        System.out.println("Ristoranti preferiti per l'utente " + utente.getNome() + ":");
         List<Ristorante> preferiti = new ArrayList<>();
         String ristoranteFile = "ristoranti.bin";
         List<Object> ristoranti = FileMenager.readFromFile(ristoranteFile);
@@ -170,7 +174,7 @@ public class Funzioni {
     }
 
     public void DeletePreferito(int idRistorante, int idUtente) {
-        String filename = "utenti.bin";
+        String filename = "Utenti.bin";
         List<Object> utenti = FileMenager.readFromFile(filename);
         for(Object obj : utenti) {
             Utente utente = (Utente) obj;
@@ -183,5 +187,16 @@ public class Funzioni {
             }
         }
         FileMenager.addToFile(utenti, filename);
+    }
+
+    public List<Utente> getUtenti() {
+        List<?> objects = (List<?>) FileMenager.readFromFile("Utenti.bin");
+        List<Utente> utenti = new ArrayList<>();
+        for (Object obj : objects) {
+            if (obj instanceof Utente) {
+                utenti.add((Utente) obj);
+            }
+        }
+        return utenti;
     }
 }

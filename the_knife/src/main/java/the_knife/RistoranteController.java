@@ -7,18 +7,18 @@ import java.util.List;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
-import the_knife.classes.Ristorante;
-import the_knife.classes.Utente;
-import the_knife.classes.Recensione;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
+import the_knife.classes.Funzioni;
+import the_knife.classes.Recensione;
+import the_knife.classes.Ristorante;
+import the_knife.classes.Utente;
 
 public class RistoranteController {
 
@@ -64,6 +64,34 @@ public class RistoranteController {
             if (stelleLabel != null) stelleLabel.setText("Stelle: " + ristoranteCorrente.getNumStelle());
             if (deliveryLabel != null) deliveryLabel.setText("Delivery: " + (ristoranteCorrente.getDelivery() ? "Sì" : "No"));
             if (prenotazioneLabel != null) prenotazioneLabel.setText("Prenotazione Online: " + (ristoranteCorrente.getPrenotazione() ? "Sì" : "No"));
+        }
+    }
+
+    public void addPreferito() {
+
+        Funzioni funzioni = new Funzioni();
+        List<Utente> utenti = new ArrayList<>();
+        utenti = funzioni.getUtenti();
+        int id = utenti.size() + 1;
+
+        Utente utente = utenti.get(u.getId() -1);
+
+        if(utente.getRistoranti().contains(ristoranteCorrente.getId())) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Informazione");
+            alert.setHeaderText(null);
+            alert.setContentText("Ristorante già presente nei preferiti.");
+            alert.showAndWait();
+        } else {
+            utente.addRistorante(ristoranteCorrente.getId());
+            u=utente;
+            List<Object> utentiObj = new ArrayList<>(utenti);
+            FileMenager.addToFile(utentiObj,"Utenti.bin");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Informazione");
+            alert.setHeaderText(null);
+            alert.setContentText("Ristorante aggiunto ai preferiti.");
+            alert.showAndWait();
         }
     }
 

@@ -94,7 +94,7 @@
                         <padding>
                            <Insets bottom="20" left="20" right="20" top="20" />
                         </padding>
-                        <ListView prefHeight="360" prefWidth="640" />
+                        <ListView fx:id="prefListView" prefHeight="360" prefWidth="640" />
                      </VBox>
                   </content>
                </Tab>
@@ -106,7 +106,7 @@
                         <padding>
                            <Insets bottom="20" left="20" right="20" top="20" />
                         </padding>
-                        <ListView prefHeight="360" prefWidth="640" />
+                        <ListView fx:id="recensioniListView" prefHeight="360" prefWidth="640" />
                      </VBox>
                   </content>
                </Tab>
