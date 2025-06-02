@@ -199,4 +199,15 @@ public class Funzioni {
         }
         return utenti;
     }
+
+    public List<Recensione> getRecensioni() {
+        List<?> objects = (List<?>) FileMenager.readFromFile("recensioni.bin");
+        List<Recensione> recensioni = new ArrayList<>();
+        for (Object obj : objects) {
+            if (obj instanceof Recensione) {
+                recensioni.add((Recensione) obj);
+            }
+        }
+        return recensioni;
+    }
 }

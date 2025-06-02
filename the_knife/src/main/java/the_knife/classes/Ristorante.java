@@ -3,6 +3,7 @@ package the_knife.classes;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import the_knife.classes.Funzioni;
 
 public class Ristorante implements Serializable {
     int id;
@@ -150,6 +151,20 @@ public class Ristorante implements Serializable {
 
     public void addRecensione(int id_recensione) {
         this.recensioni.add(id_recensione);
+
+        Funzioni f = new Funzioni();
+        List<Recensione> recensioni = f.getRecensioni();
+        List<Recensione> ristoranteRecensioni = new ArrayList<>();
+        for (Recensione r : recensioni) {
+            if (r.getId() == id_recensione) {
+                ristoranteRecensioni.add(r);
+            }
+        }
+        int sum = 0;
+        for (Recensione r : ristoranteRecensioni) {
+            sum += r.getNumStelle();
+        }
+        numStelle = (sum)/(ristoranteRecensioni.size());
     }
 
     @Override
