@@ -250,6 +250,8 @@ public class RistoranteController {
         }
         ObservableList<Recensione> observableRecensioni = FXCollections.observableArrayList(recensioniFiltrate);
         recensioniListView.setItems(observableRecensioni);
+
+        
     }
     
     @FXML
@@ -262,7 +264,10 @@ public class RistoranteController {
                     setText(null);
                     setGraphic(null);
                 } else {
-                    setText("Recensione di Utente ID " + recensione.getIdUtente() + ": " + recensione.getTesto() + " (" + recensione.getNumStelle() + " stelle)");
+                    List<Utente> utenti = new Funzioni().getUtenti();
+                    Utente ut = utenti.get(recensione.getIdUtente() - 1);
+
+                    setText(ut.getUsername() + ": " + recensione.getTesto() + " (" + recensione.getNumStelle() + " stelle)");
                 }
             }
         });
