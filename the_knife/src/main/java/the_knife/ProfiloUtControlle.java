@@ -7,17 +7,24 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import the_knife.classes.Funzioni;
 import the_knife.classes.Recensione;
 import the_knife.classes.Ristorante;
 import the_knife.classes.Utente;
+import the_knife.classes.SottoRecensione;
 
 public class ProfiloUtControlle {
     
@@ -151,7 +158,40 @@ public class ProfiloUtControlle {
         });
         recensioniListView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
-                System.out.println("Recensione selezionata: " + newSelection.getTesto());
+                Dialog<Void> dialog = new Dialog<>();
+
+                dialog.setTitle("Risposte");
+
+                dialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
+
+
+                GridPane grid = new GridPane();
+                grid.setHgap(10);
+                grid.setVgap(10);
+                grid.setPadding(new Insets(20, 150, 10, 10));
+
+                Label testo = new Label();
+
+                List<SottoRecensione> risposte = new ArrayList<>();
+                List<?> allSottoRecensioniObjects = FileMenager.readFromFile("risposte.bin");
+                for (Object obj : allSottoRecensioniObjects) {
+                    if (obj instanceof SottoRecensione) {
+                        SottoRecensione risposta = (SottoRecensione) obj;
+                        if (risposta.getIdPadre() == newSelection.getId()) {
+                            risposte.add(risposta);
+                        }
+                    }
+                }
+
+                for (SottoRecensione risposta : risposte) {
+                    testo.setText(testo.getText() + risposta.getTesto() + "\n");
+                }
+
+                grid.add(testo, 0, 0);
+                            
+                dialog.getDialogPane().setContent(grid);
+
+                dialog.showAndWait();
             }
         });
     }

@@ -24,6 +24,7 @@ import javafx.scene.layout.GridPane;
 import the_knife.classes.Funzioni;
 import the_knife.classes.Recensione;
 import the_knife.classes.Ristorante;
+import the_knife.classes.SottoRecensione;
 import the_knife.classes.Utente;
 
 public class RistoranteController {
@@ -285,6 +286,44 @@ public class RistoranteController {
 
                     setText(ut.getUsername() + ": " + recensione.getTesto() + " (" + recensione.getNumStelle() + " stelle)");
                 }
+            }
+        });
+        recensioniListView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                Dialog<Void> dialog = new Dialog<>();
+
+                dialog.setTitle("Risposte");
+
+                dialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
+
+
+                GridPane grid = new GridPane();
+                grid.setHgap(10);
+                grid.setVgap(10);
+                grid.setPadding(new Insets(20, 150, 10, 10));
+
+                Label testo = new Label();
+
+                List<SottoRecensione> risposte = new ArrayList<>();
+                List<?> allSottoRecensioniObjects = FileMenager.readFromFile("risposte.bin");
+                for (Object obj : allSottoRecensioniObjects) {
+                    if (obj instanceof SottoRecensione) {
+                        SottoRecensione risposta = (SottoRecensione) obj;
+                        if (risposta.getIdPadre() == newSelection.getId()) {
+                            risposte.add(risposta);
+                        }
+                    }
+                }
+
+                for (SottoRecensione risposta : risposte) {
+                    testo.setText(testo.getText() + risposta.getTesto() + "\n");
+                }
+
+                grid.add(testo, 0, 0);
+                            
+                dialog.getDialogPane().setContent(grid);
+
+                dialog.showAndWait();
             }
         });
     }

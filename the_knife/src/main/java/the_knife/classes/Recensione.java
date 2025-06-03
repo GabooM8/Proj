@@ -5,7 +5,7 @@ public class Recensione implements Serializable {
     int id;
     int num_stelle;
     String testo;
-    int id_utente; // Aggiunto per riferimento all'utente che ha scritto la recensione
+    int id_utente;
 
     public Recensione(int id, int num_stelle, String testo, int id_utente) {
         this.id = id;

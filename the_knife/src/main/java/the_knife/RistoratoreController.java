@@ -29,6 +29,7 @@ import javafx.scene.control.ButtonBar;
 import the_knife.classes.Funzioni;
 import the_knife.classes.Recensione;
 import the_knife.classes.Ristorante;
+import the_knife.classes.SottoRecensione;
 import the_knife.classes.Utente;
 
 public class RistoratoreController {
@@ -83,13 +84,19 @@ public class RistoratoreController {
             }
         }
 
-        List<Integer> idRecensioni = u.getRecensioni();
         List<Recensione> allrecensioni = new ArrayList<>();
-        List<?> recObjects = (List<?>) FileMenager.readFromFile("Recensioni.bin");
+        List<?> recObjects = (List<?>) FileMenager.readFromFile("recensioni.bin");
         for (Object obj : recObjects) {
             if (obj instanceof Recensione) {
                 Recensione recensione = (Recensione) obj;
                 allrecensioni.add(recensione);
+            }
+        }
+
+        List<Integer> idRecensioni = new ArrayList<>();
+        for(Ristorante r : ristorantiTrovati) {
+            if(r.getRecensioni() != null) {
+                idRecensioni.addAll(r.getRecensioni());
             }
         }
 
@@ -107,6 +114,84 @@ public class RistoratoreController {
 
         ObservableList<Recensione> observableRecensioni = FXCollections.observableArrayList(recensioniTrovate);
         list_rece.setItems(observableRecensioni);
+    }
+
+    @FXML
+    public void initialize() {
+        if(list_rece != null) {
+            list_rece.setCellFactory(param -> new ListCell<Recensione>() {
+                @Override
+                protected void updateItem(Recensione item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || item == null || item.getTesto() == null) {
+                        setText(null);
+                        setGraphic(null);
+                    } else {
+                        setText(item.getTesto() + " ( " + item.getNumStelle() + " stelle )");
+                        setOnMouseClicked(event -> {
+                            Dialog<Void> dialog = new Dialog<>();
+                            dialog.setTitle("Rispondi a Recensione");
+                            dialog.setHeaderText("Inserisci i dettagli della risposta");
+
+                            ButtonType confermaType = new ButtonType("Invia", ButtonBar.ButtonData.OK_DONE);
+                            ButtonType annullaType = new ButtonType("Annulla", ButtonBar.ButtonData.CANCEL_CLOSE);
+                            dialog.getDialogPane().getButtonTypes().addAll(confermaType, annullaType);
+
+                            GridPane grid = new GridPane();
+                            grid.setHgap(10);
+                            grid.setVgap(10);
+                            grid.setPadding(new Insets(20, 150, 10, 10));
+
+                            TextField testo = new TextField();
+                            testo.setPromptText("Testo");
+
+                            dialog.setResultConverter(dialogButton -> {
+                                if (dialogButton == confermaType) {
+                                    if (testo.getText().isEmpty()) {
+                                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                                        alert.setTitle("Errore");
+                                        alert.setHeaderText(null);
+                                        alert.setContentText("Tutti i campi sono obbligatori.");
+                                        alert.showAndWait();
+                                        return null;
+                                    }
+                                    
+                                    String testoRecensione = testo.getText();
+
+                                    List<SottoRecensione> risposte = new ArrayList<>();
+                                    List<?> objects = FileMenager.readFromFile("risposte.bin");
+                                    for( Object obj : objects) {
+                                        if (obj instanceof SottoRecensione) {
+                                            risposte.add((SottoRecensione) obj);
+                                        }
+                                    }
+
+                                    int id_srece = risposte.size() + 1;
+
+                                    SottoRecensione n_srecensione = new SottoRecensione(id_srece, item.getId(), testoRecensione, u.getId());
+
+                                    risposte.add(n_srecensione);
+                                    List<Object> risposteObj = new ArrayList<>(risposte);
+                                    FileMenager.addToFile(risposteObj, "risposte.bin");
+                                    
+                                    dialog.close();
+                                    return null;
+                                }
+                                return null;
+                            });
+
+
+                            grid.add(testo, 0, 0);
+                            
+                            dialog.getDialogPane().setContent(grid);
+
+                            dialog.showAndWait();
+                        });
+                    }
+                }
+            });
+        }
+
         
         if (list_rist != null) {
             list_rist.setCellFactory(param -> new ListCell<Ristorante>() {
@@ -320,8 +405,8 @@ public class RistoratoreController {
         dialog.showAndWait();
     }
 
-        @FXML
-        private void switchToRistorante() throws IOException {
+    @FXML
+    private void switchToRistorante() throws IOException {
 
             Ristorante selectedRistorante = list_rist.getSelectionModel().getSelectedItem();
 
