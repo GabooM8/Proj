@@ -60,6 +60,7 @@ public class RistoranteController {
             addrec.setDisable(true);
         } else if(u.getIsRistoratore()) {
             pref.setDisable(true);
+            addrec.setDisable(true);
         }
 
         if (ristoranteCorrente != null) {
