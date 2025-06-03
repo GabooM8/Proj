@@ -71,7 +71,7 @@ public class RistoranteController {
             if (stelleLabel != null) stelleLabel.setText("Stelle: " + ristoranteCorrente.getNumStelle());
             if (deliveryLabel != null) deliveryLabel.setText("Delivery: " + (ristoranteCorrente.getDelivery() ? "Sì" : "No"));
             if (prenotazioneLabel != null) prenotazioneLabel.setText("Prenotazione Online: " + (ristoranteCorrente.getPrenotazione() ? "Sì" : "No"));
-            if(u.getRistoranti().contains(ristoranteCorrente.getId()) && !u.getIsRistoratore()) {
+            if(u.getRistoranti() !=null && u.getRistoranti().contains(ristoranteCorrente.getId()) && u.getIsRistoratore()!=true) {
                 img_pref.setImage(new Image(getClass().getResourceAsStream("/the_knife/images/bookmark_saved.png")));
             } else {
                 img_pref.setImage(new Image(getClass().getResourceAsStream("/the_knife/images/bookmark_save.png")));
