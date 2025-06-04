@@ -8,7 +8,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -101,34 +100,18 @@ public class ProfiloUtControlle {
         prefListView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
 
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Informazione");
-                alert.setHeaderText(null);
-                alert.setContentText("Cosa vuoi fare con il ristorante selezionato: " + newSelection.getNome() + "?");
+                try {
+                    App.setRoot("ristorante", newSelection, u);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Errore di Navigazione");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Impossibile caricare la vista del ristorante: " + e.getMessage());
+                    alert.showAndWait();
+                }
 
-                ButtonType dettagliButton = new ButtonType("Visualizza");
-                ButtonType eliminaButton = new ButtonType("Rimuovi");
-                ButtonType annullaButton = new ButtonType("Annulla");
-
-                alert.getButtonTypes().setAll(dettagliButton, eliminaButton, annullaButton);
-
-                alert.setOnHidden(event -> {
-                    if (alert.getResult() == dettagliButton) {
-                        try {
-                            switchToRistorante();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    } else if (alert.getResult() == eliminaButton) {
-                        Funzioni funzioni = new Funzioni();
-                        funzioni.DeletePreferito(newSelection.getId(), u.getId());
-                        initData(u);
-                    } else {
-                        System.out.println("Operazione annullata.");
-                    }
-                });
-
-                alert.showAndWait();
+                
             }
         });
 
