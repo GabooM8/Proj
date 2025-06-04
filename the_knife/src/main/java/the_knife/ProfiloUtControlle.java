@@ -7,24 +7,17 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
 import the_knife.classes.Funzioni;
 import the_knife.classes.Recensione;
 import the_knife.classes.Ristorante;
 import the_knife.classes.Utente;
-import the_knife.classes.SottoRecensione;
 
 public class ProfiloUtControlle {
     
@@ -158,6 +151,7 @@ public class ProfiloUtControlle {
         });
         recensioniListView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
+                /*
                 Dialog<Void> dialog = new Dialog<>();
 
                 dialog.setTitle("Risposte");
@@ -192,6 +186,36 @@ public class ProfiloUtControlle {
                 dialog.getDialogPane().setContent(grid);
 
                 dialog.showAndWait();
+                */
+
+                // Trova il ristorante associato alla recensione selezionata
+                Ristorante ristoranteAssociato = null;
+                List<?> allRistorantiObjects = FileMenager.readFromFile("ristoranti.bin");
+                for (Object obj : allRistorantiObjects) {
+                    if (obj instanceof Ristorante) {
+                        Ristorante r = (Ristorante) obj;
+                        if (r.getRecensioni() != null && r.getRecensioni().contains(newSelection.getId())) {
+                            ristoranteAssociato = r;
+                            break;
+                        }
+                    }
+                }
+
+                if (ristoranteAssociato != null) {
+                    try {
+                        App.setRoot("ristorante", ristoranteAssociato, u);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Errore di Navigazione");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Impossibile caricare la vista del ristorante: " + e.getMessage());
+                        alert.showAndWait();
+                    }
+                } else {
+                    // Gestisci il caso in cui il ristorante non viene trovato (dovrebbe essere raro se i dati sono consistenti)
+                    System.err.println("Errore: Ristorante non trovato per la recensione con ID: " + newSelection.getId());
+                }
             }
         });
     }
