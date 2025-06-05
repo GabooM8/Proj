@@ -1,6 +1,5 @@
 package the_knife;
 
-import java.io.DataInput;
 import java.io.IOException;
 import java.util.List;
 
@@ -8,7 +7,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.chart.PieChart.Data;
 import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -19,7 +17,6 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import the_knife.classes.Funzioni;
 import the_knife.classes.Ristorante;
-import the_knife.classes.Recensione;
 import the_knife.classes.Utente;
 
 public class HomeController {

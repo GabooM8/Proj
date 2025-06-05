@@ -3,7 +3,6 @@ package the_knife.classes;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import the_knife.classes.Funzioni;
 
 public class Ristorante implements Serializable {
     int id;
