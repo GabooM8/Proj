@@ -153,10 +153,10 @@ public class Ristorante implements Serializable {
         this.recensioni.add(id_recensione);
 
         Funzioni f = new Funzioni();
-        List<Recensione> recensioni = f.getRecensioni();
+        List<Recensione> recensionis = f.getRecensioni();
         List<Recensione> ristoranteRecensioni = new ArrayList<>();
-        for (Recensione r : recensioni) {
-            if (r.getId() == id_recensione) {
+        for (Recensione r : recensionis) {
+            if (recensioni.contains(r.getId())) {
                 ristoranteRecensioni.add(r);
             }
         }
