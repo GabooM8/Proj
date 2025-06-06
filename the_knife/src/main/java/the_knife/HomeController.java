@@ -69,6 +69,13 @@ public class HomeController {
         "Cinque stelle (*****))"
     );
     
+    // Variabili per latitudine e longitudine dell'utente
+    public double utenteLat = 0.0;
+    public double utenteLon = 0.0;
+
+    // Lista attuale dei ristoranti
+    private List<Ristorante> ristorantiCorrenti = null;
+
     public void initData(Utente u) {
         this.u = u;
         this.Luogo = u.getLuogoDomicilio();
@@ -77,6 +84,12 @@ public class HomeController {
             this.Ruolo = "guest";
         } else {
             this.Ruolo = (u.getIsRistoratore() ? "ristoratore" : "cliente");
+        }
+        Funzioni funzioni = new Funzioni();
+        double[] coord = funzioni.trovaCoordinateUtente(u);
+        if (coord != null) {
+            utenteLat = coord[0];
+            utenteLon = coord[1];
         }
     }
 
@@ -88,12 +101,11 @@ public class HomeController {
     public void initialize() {
 
         Funzioni funzioni = new Funzioni();
-        // Passa i valori dei filtri 'delivery' e 'prenotazione' dalla HomeController
-        List<Ristorante> ristorantiTrovati = funzioni.cercaRistorante("", "", fasciaPrezzo, numStelle, cucina, this.delivery, this.prenotazione);
-        //System.out.println("Ristoranti trovati: " + ristorantiTrovati.size());
+
+        ristorantiCorrenti = funzioni.cercaRistorante("", "", fasciaPrezzo, numStelle, cucina, this.delivery, this.prenotazione);
 
         if (ristoranteListView != null) {
-            ObservableList<Ristorante> observableRistoranti = FXCollections.observableArrayList(ristorantiTrovati);
+            ObservableList<Ristorante> observableRistoranti = FXCollections.observableArrayList(ristorantiCorrenti);
             ristoranteListView.setItems(observableRistoranti);
         }
 
@@ -148,12 +160,61 @@ public class HomeController {
 
     @FXML
     private void sortButtonAction(ActionEvent event) {
-        String selectedOption = sortButton.getText();
-        if (selectedOption != null) {
-            System.out.println("Opzione di ordinamento selezionata: " + selectedOption);
-        } else {
-            System.out.println("Nessuna opzione di ordinamento selezionata.");
+        if (ristorantiCorrenti == null || ristorantiCorrenti.isEmpty()) return;
+
+        Funzioni funzioni = new Funzioni();
+
+        MenuItem selectedMenuItem = (MenuItem) event.getSource();
+        String id = selectedMenuItem.getId();
+
+        switch (id) {
+            case "nearestItem":
+                if (utenteLat == 0.0 && utenteLon == 0.0) {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Coordinate non trovate");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Non ci sono ristoranti che corrispondono al domicilio inserito dall'utente.");
+                    alert.showAndWait();
+                    return;
+                }
+                ristorantiCorrenti.sort((r1, r2) -> {
+                    double d1 = funzioni.calcolaDistanza(utenteLat, utenteLon, r1.getLatitudine(), r1.getLongitudine());
+                    double d2 = funzioni.calcolaDistanza(utenteLat, utenteLon, r2.getLatitudine(), r2.getLongitudine());
+                    return Double.compare(d1, d2);
+                });
+                break;
+            case "farthestItem":
+                if (utenteLat == 0.0 && utenteLon == 0.0) {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Coordinate non trovate");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Non ci sono ristoranti che corrispondono al domicilio inserito dall'utente.");
+                    alert.showAndWait();
+                    return;
+                }
+                ristorantiCorrenti.sort((r1, r2) -> {
+                    double d1 = funzioni.calcolaDistanza(utenteLat, utenteLon, r1.getLatitudine(), r1.getLongitudine());
+                    double d2 = funzioni.calcolaDistanza(utenteLat, utenteLon, r2.getLatitudine(), r2.getLongitudine());
+                    return Double.compare(d2, d1);
+                });
+                break;
+            case "cheapestItem":
+                ristorantiCorrenti.sort((r1, r2) -> Integer.compare(r1.getPrezzo(), r2.getPrezzo()));
+                break;
+            case "mostExpensiveItem":
+                ristorantiCorrenti.sort((r1, r2) -> Integer.compare(r2.getPrezzo(), r1.getPrezzo()));
+                break;
+            case "bestRatedItem":
+                ristorantiCorrenti.sort((r1, r2) -> Integer.compare(r2.getNumStelle(), r1.getNumStelle()));
+                break;
+            case "worstRatedItem":
+                ristorantiCorrenti.sort((r1, r2) -> Integer.compare(r1.getNumStelle(), r2.getNumStelle()));
+                break;
+            default:
+                break;
         }
+
+        ristoranteListView.setItems(FXCollections.observableArrayList(ristorantiCorrenti));
     }
 
     @FXML
@@ -236,7 +297,10 @@ public class HomeController {
         // Aggiorna la lista dei ristoranti senza filtri
         Funzioni funzioni = new Funzioni();
         List<Ristorante> ristorantiTrovati = funzioni.cercaRistorante("", "", 0, 0, "", false, false);
-        //System.out.println("Ristoranti trovati dopo reset: " + ristorantiTrovati.size());
+
+        // AGGIUNGI QUESTA RIGA:
+        ristorantiCorrenti = ristorantiTrovati;
+
         if (ristoranteListView != null) {
             ObservableList<Ristorante> observableRistoranti = FXCollections.observableArrayList(ristorantiTrovati);
             ristoranteListView.setItems(observableRistoranti);
@@ -250,9 +314,10 @@ public class HomeController {
 
         if (location != null && !location.isEmpty()) {
             Funzioni funzioni = new Funzioni();
-            // Passa i valori dei filtri 'delivery' e 'prenotazione' dalla HomeController
             List<Ristorante> ristorantiTrovati = funzioni.cercaRistorante(input, location, fasciaPrezzo, numStelle, cucina, this.delivery, this.prenotazione);
-            //System.out.println("Ristoranti trovati: " + ristorantiTrovati.size());
+
+            // AGGIUNGI QUESTA RIGA:
+            ristorantiCorrenti = ristorantiTrovati;
 
             if (ristoranteListView != null) {
                 ObservableList<Ristorante> observableRistoranti = FXCollections.observableArrayList(ristorantiTrovati);

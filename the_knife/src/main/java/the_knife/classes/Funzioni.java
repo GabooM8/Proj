@@ -210,4 +210,38 @@ public class Funzioni {
         }
         return recensioni;
     }
+
+    /**
+     * Cerca la città dell'utente tra i ristoranti e restituisce latitudine e longitudine se trova una corrispondenza.
+     * @param utente L'utente di cui cercare la città.
+     * @return Un array double[2] con latitudine e longitudine, oppure null se non trovata.
+     */
+    public double[] trovaCoordinateUtente(Utente utente) {
+        if (utente == null || utente.getLuogoDomicilio() == null) return null;
+        String cittaUtente = utente.getLuogoDomicilio().trim().toLowerCase();
+        List<Object> ristoranti = FileMenager.readFromFile("ristoranti.bin");
+        for (Object obj : ristoranti) {
+            if (obj instanceof Ristorante) {
+                Ristorante r = (Ristorante) obj;
+                if (r.getCitta() != null && r.getCitta().trim().toLowerCase().equals(cittaUtente)) {
+                    return new double[] { r.getLatitudine(), r.getLongitudine() };
+                }
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * Calcola la distanza (in km) tra due coordinate geografiche usando la formula dell'Haversine.
+     */
+    public double calcolaDistanza(double lat1, double lon1, double lat2, double lon2) {
+        final int R = 6371; // Raggio della Terra in km
+        double latDistance = Math.toRadians(lat2 - lat1);
+        double lonDistance = Math.toRadians(lon2 - lon1);
+        double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+                + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
+                * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return R * c;
+    }
 }

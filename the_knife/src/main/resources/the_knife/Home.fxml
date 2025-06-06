@@ -47,12 +47,12 @@
             <TextField fx:id="searchBar" onAction="#inputSearchBar" prefWidth="300" promptText="Cerca per nome o per cucina..." />
             <MenuButton fx:id="sortButton" onAction="#sortButtonAction">
                <items>
-                  <MenuItem fx:id="nearestItem" text="dal più vicino" />
-                  <MenuItem fx:id="farthestItem" text="dal più lontano" />
-                  <MenuItem fx:id="cheapestItem" text="dal meno costoso" />
-                  <MenuItem fx:id="mostExpensiveItem" text="dal più costoso" />
-                  <MenuItem fx:id="bestRatedItem" text="per numero di stelle (maggiori)" />
-                  <MenuItem fx:id="worstRatedItem" text="per numero di stelle (minori)" />
+                  <MenuItem fx:id="nearestItem" text="dal più vicino" onAction="#sortButtonAction"/>
+                  <MenuItem fx:id="farthestItem" text="dal più lontano" onAction="#sortButtonAction"/>
+                  <MenuItem fx:id="cheapestItem" text="dal meno costoso" onAction="#sortButtonAction"/>
+                  <MenuItem fx:id="mostExpensiveItem" text="dal più costoso" onAction="#sortButtonAction"/>
+                  <MenuItem fx:id="bestRatedItem" text="per numero di stelle (maggiori)" onAction="#sortButtonAction"/>
+                  <MenuItem fx:id="worstRatedItem" text="per numero di stelle (minori)" onAction="#sortButtonAction"/>
                </items>
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
