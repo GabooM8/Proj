@@ -288,11 +288,11 @@ public class HomeController {
     private void resetFilters(ActionEvent event) {
         // Resetta i filtri
         searchBar.clear();
-        locationTextField.clear();
         prezzoComboBox.getSelectionModel().select("Tutte");
         stelleComboBox.getSelectionModel().select("Nessuna");
         deliveryCheckBox.setSelected(false);
         prenotazioneCheckBox.setSelected(false);
+        locationTextField.clear();
         
         // Aggiorna la lista dei ristoranti senza filtri
         Funzioni funzioni = new Funzioni();
