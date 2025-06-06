@@ -64,7 +64,9 @@ public class HomeController {
         "Nessuna",
         "Una stella (*)",
         "Due stelle (**)",
-        "Tre stelle (***)"
+        "Tre stelle (***)",
+        "Quattro stelle (****)",
+        "Cinque stelle (*****))"
     );
     
     public void initData(Utente u) {
@@ -190,6 +192,10 @@ public class HomeController {
                 numStelle = 2;
             } else if (selectedOption.equals("Tre stelle (***)")) {
                 numStelle = 3;
+            } else if (selectedOption.equals("Quattro stelle (****)")) {
+                numStelle = 4;
+            } else if (selectedOption.equals("Cinque stelle (*****))")) {
+                numStelle = 5;
             } else if (selectedOption.equals("Nessuna")) {
                 numStelle = 0; // Nessun filtro per le stelle
             }
