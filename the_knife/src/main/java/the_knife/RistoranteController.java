@@ -318,8 +318,9 @@ public class RistoranteController {
                     
                     ButtonType modificaButton = new ButtonType("Modifica", ButtonBar.ButtonData.OTHER);
                     ButtonType eliminaButton = new ButtonType("Elimina", ButtonBar.ButtonData.OTHER);
+                    ButtonType visualizzaRisposteButton = new ButtonType("Visualizza Risposte", ButtonBar.ButtonData.OTHER);
                     ButtonType annullaButton = new ButtonType("Annulla", ButtonBar.ButtonData.CANCEL_CLOSE);
-                    optionAlert.getButtonTypes().setAll(modificaButton, eliminaButton, annullaButton);
+                    optionAlert.getButtonTypes().setAll(modificaButton, eliminaButton, visualizzaRisposteButton, annullaButton);
                     
                     optionAlert.showAndWait().ifPresent(response -> {
                         if (response == modificaButton) {
@@ -366,46 +367,56 @@ public class RistoranteController {
                                     successAlert.showAndWait();
                                 }
                             });
+                        } else if (response == visualizzaRisposteButton) {
+                            // Visualizza le risposte alla recensione
+                            visualizzaRisposte(newSelection);
                         }
                     });
                 } else {
-                    // Mostra le risposte alla recensione (comportamento esistente)
-                    Dialog<Void> dialog = new Dialog<>();
-
-                    dialog.setTitle("Risposte");
-
-                    dialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
-
-                    GridPane grid = new GridPane();
-                    grid.setHgap(10);
-                    grid.setVgap(10);
-                    grid.setPadding(new Insets(20, 150, 10, 10));
-
-                    Label testo = new Label();
-
-                    List<SottoRecensione> risposte = new ArrayList<>();
-                    List<?> allSottoRecensioniObjects = FileMenager.readFromFile("risposte.bin");
-                    for (Object obj : allSottoRecensioniObjects) {
-                        if (obj instanceof SottoRecensione) {
-                            SottoRecensione risposta = (SottoRecensione) obj;
-                            if (risposta.getIdPadre() == newSelection.getId()) {
-                                risposte.add(risposta);
-                            }
-                        }
-                    }
-
-                    for (SottoRecensione risposta : risposte) {
-                        testo.setText(testo.getText() + risposta.getTesto() + "\n");
-                    }
-
-                    grid.add(testo, 0, 0);
-                            
-                    dialog.getDialogPane().setContent(grid);
-
-                    dialog.showAndWait();
+                    // Se la recensione non appartiene all'utente corrente, mostra direttamente le risposte
+                    visualizzaRisposte(newSelection);
                 }
             }
         });
+    }
+
+    private void visualizzaRisposte(Recensione recensione) {
+        Dialog<Void> dialog = new Dialog<>();
+        dialog.setTitle("Risposte");
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
+
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 150, 10, 10));
+
+        Label testo = new Label();
+
+        List<SottoRecensione> risposte = new ArrayList<>();
+        List<?> allSottoRecensioniObjects = FileMenager.readFromFile("risposte.bin");
+        for (Object obj : allSottoRecensioniObjects) {
+            if (obj instanceof SottoRecensione) {
+                SottoRecensione risposta = (SottoRecensione) obj;
+                if (risposta.getIdPadre() == recensione.getId()) {
+                    risposte.add(risposta);
+                }
+            }
+        }
+
+        StringBuilder testoRisposte = new StringBuilder();
+        for (SottoRecensione risposta : risposte) {
+            testoRisposte.append(risposta.getTesto()).append("\n");
+        }
+        
+        if (testoRisposte.length() == 0) {
+            testoRisposte.append("Nessuna risposta disponibile per questa recensione.");
+        }
+        
+        testo.setText(testoRisposte.toString());
+
+        grid.add(testo, 0, 0);
+        dialog.getDialogPane().setContent(grid);
+        dialog.showAndWait();
     }
 
     private void modificaRecensione(Recensione recensione) {
