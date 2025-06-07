@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -372,9 +373,15 @@ public class RistoranteController {
                             visualizzaRisposte(newSelection);
                         }
                     });
+                    
+                    // Deseleziona l'elemento in modo asincrono dopo aver gestito l'alert
+                    Platform.runLater(() -> recensioniListView.getSelectionModel().clearSelection());
                 } else {
                     // Se la recensione non appartiene all'utente corrente, mostra direttamente le risposte
                     visualizzaRisposte(newSelection);
+                    
+                    // Deseleziona l'elemento in modo asincrono dopo aver visualizzato le risposte
+                    Platform.runLater(() -> recensioniListView.getSelectionModel().clearSelection());
                 }
             }
         });
