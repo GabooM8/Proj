@@ -119,7 +119,6 @@ public class RistoranteController {
     }
 
     public void addRecensione() {
-
         Dialog<Void> dialog = new Dialog<>();
         dialog.setTitle("Aggiungi Recensione");
         dialog.setHeaderText("Inserisci i dettagli della recensione");
@@ -140,7 +139,7 @@ public class RistoranteController {
 
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == confermaType) {
-                if (testo.getText().isEmpty() || numStelle.getValue().isEmpty()) {
+                if (testo.getText().isEmpty() || numStelle.getValue() == null || numStelle.getValue().isEmpty()) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Errore");
                     alert.setHeaderText(null);
@@ -178,7 +177,17 @@ public class RistoranteController {
                     }
                 }
 
-                int id_rece = recensioni.size() + 1;
+                // Calcola l'ID correttamente trovando il massimo ID esistente
+                int id_rece = 1;
+                if (!recensioni.isEmpty()) {
+                    int maxId = 0;
+                    for (Recensione rec : recensioni) {
+                        if (rec.getId() > maxId) {
+                            maxId = rec.getId();
+                        }
+                    }
+                    id_rece = maxId + 1;
+                }
 
                 Recensione n_recensione = new Recensione(id_rece, numStelleRecensione, testoRecensione, u.getId());
 
@@ -221,6 +230,14 @@ public class RistoranteController {
 
                 if (foundRestaurant) {
                     FileMenager.addToFile(new ArrayList<>(allRistoranti), "ristoranti.bin");
+                    
+                    // Ricalcola le stelle del ristorante corrente
+                    ricalcolaStelle(ristoranteCorrente);
+                    
+                    // Aggiorna le stelle visualizzate
+                    if (stelleLabel != null) {
+                        stelleLabel.setText("Stelle: " + ristoranteCorrente.getNumStelle());
+                    }
                 } else {
                     System.err.println("Errore: Ristorante corrente non trovato per l'aggiornamento delle recensioni.");
                 }
@@ -291,42 +308,243 @@ public class RistoranteController {
         });
         recensioniListView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
-                Dialog<Void> dialog = new Dialog<>();
+                // Controlla se la recensione appartiene all'utente corrente
+                if (newSelection.getIdUtente() == u.getId()) {
+                    // Mostra dialog con opzioni per modificare o eliminare la recensione
+                    Alert optionAlert = new Alert(Alert.AlertType.CONFIRMATION);
+                    optionAlert.setTitle("Gestisci Recensione");
+                    optionAlert.setHeaderText(null);
+                    optionAlert.setContentText("Cosa vuoi fare con questa recensione?");
+                    
+                    ButtonType modificaButton = new ButtonType("Modifica", ButtonBar.ButtonData.OTHER);
+                    ButtonType eliminaButton = new ButtonType("Elimina", ButtonBar.ButtonData.OTHER);
+                    ButtonType annullaButton = new ButtonType("Annulla", ButtonBar.ButtonData.CANCEL_CLOSE);
+                    optionAlert.getButtonTypes().setAll(modificaButton, eliminaButton, annullaButton);
+                    
+                    optionAlert.showAndWait().ifPresent(response -> {
+                        if (response == modificaButton) {
+                            // Mostra dialog per modificare la recensione
+                            modificaRecensione(newSelection);
+                        } else if (response == eliminaButton) {
+                            // Mostra dialog di conferma per eliminare la recensione
+                            Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION);
+                            confirmAlert.setTitle("Elimina Recensione");
+                            confirmAlert.setHeaderText(null);
+                            confirmAlert.setContentText("Sei sicuro di voler eliminare questa recensione? Questa azione non può essere annullata.");
+                            
+                            ButtonType confermaEliminaButton = new ButtonType("Elimina", ButtonBar.ButtonData.OK_DONE);
+                            ButtonType annullaEliminaButton = new ButtonType("Annulla", ButtonBar.ButtonData.CANCEL_CLOSE);
+                            confirmAlert.getButtonTypes().setAll(confermaEliminaButton, annullaEliminaButton);
+                            
+                            confirmAlert.showAndWait().ifPresent(confirmResponse -> {
+                                if (confirmResponse == confermaEliminaButton) {
+                                    // Elimina la recensione
+                                    Funzioni funzioni = new Funzioni();
+                                    funzioni.eliminaRecensione(newSelection.getId());
+                                    
+                                    // Rimuovi la recensione dalla lista locale del ristorante corrente
+                                    if (ristoranteCorrente.getRecensioni() != null) {
+                                        ristoranteCorrente.getRecensioni().remove(Integer.valueOf(newSelection.getId()));
+                                    }
+                                    
+                                    // Ricalcola le stelle del ristorante corrente
+                                    ricalcolaStelle(ristoranteCorrente);
+                                    
+                                    // Aggiorna la visualizzazione
+                                    visualizzaRecensioni();
+                                    
+                                    // Aggiorna le stelle visualizzate
+                                    if (stelleLabel != null) {
+                                        stelleLabel.setText("Stelle: " + ristoranteCorrente.getNumStelle());
+                                    }
+                                    
+                                    // Mostra messaggio di conferma
+                                    Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+                                    successAlert.setTitle("Recensione Eliminata");
+                                    successAlert.setHeaderText(null);
+                                    successAlert.setContentText("La recensione è stata eliminata con successo.");
+                                    successAlert.showAndWait();
+                                }
+                            });
+                        }
+                    });
+                } else {
+                    // Mostra le risposte alla recensione (comportamento esistente)
+                    Dialog<Void> dialog = new Dialog<>();
 
-                dialog.setTitle("Risposte");
+                    dialog.setTitle("Risposte");
 
-                dialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
+                    dialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
 
+                    GridPane grid = new GridPane();
+                    grid.setHgap(10);
+                    grid.setVgap(10);
+                    grid.setPadding(new Insets(20, 150, 10, 10));
 
-                GridPane grid = new GridPane();
-                grid.setHgap(10);
-                grid.setVgap(10);
-                grid.setPadding(new Insets(20, 150, 10, 10));
+                    Label testo = new Label();
 
-                Label testo = new Label();
-
-                List<SottoRecensione> risposte = new ArrayList<>();
-                List<?> allSottoRecensioniObjects = FileMenager.readFromFile("risposte.bin");
-                for (Object obj : allSottoRecensioniObjects) {
-                    if (obj instanceof SottoRecensione) {
-                        SottoRecensione risposta = (SottoRecensione) obj;
-                        if (risposta.getIdPadre() == newSelection.getId()) {
-                            risposte.add(risposta);
+                    List<SottoRecensione> risposte = new ArrayList<>();
+                    List<?> allSottoRecensioniObjects = FileMenager.readFromFile("risposte.bin");
+                    for (Object obj : allSottoRecensioniObjects) {
+                        if (obj instanceof SottoRecensione) {
+                            SottoRecensione risposta = (SottoRecensione) obj;
+                            if (risposta.getIdPadre() == newSelection.getId()) {
+                                risposte.add(risposta);
+                            }
                         }
                     }
-                }
 
-                for (SottoRecensione risposta : risposte) {
-                    testo.setText(testo.getText() + risposta.getTesto() + "\n");
-                }
+                    for (SottoRecensione risposta : risposte) {
+                        testo.setText(testo.getText() + risposta.getTesto() + "\n");
+                    }
 
-                grid.add(testo, 0, 0);
+                    grid.add(testo, 0, 0);
                             
-                dialog.getDialogPane().setContent(grid);
+                    dialog.getDialogPane().setContent(grid);
 
-                dialog.showAndWait();
+                    dialog.showAndWait();
+                }
             }
         });
+    }
+
+    private void modificaRecensione(Recensione recensione) {
+        Dialog<Void> dialog = new Dialog<>();
+        dialog.setTitle("Modifica Recensione");
+        dialog.setHeaderText("Modifica i dettagli della recensione");
+
+        ButtonType confermaType = new ButtonType("Conferma", ButtonBar.ButtonData.OK_DONE);
+        ButtonType annullaType = new ButtonType("Annulla", ButtonBar.ButtonData.CANCEL_CLOSE);
+        dialog.getDialogPane().getButtonTypes().addAll(confermaType, annullaType);
+
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 150, 10, 10));
+
+        TextField testo = new TextField();
+        testo.setPromptText("Testo");
+        testo.setText(recensione.getTesto()); // Precompila con il testo esistente
+        
+        ComboBox<String> numStelle = new ComboBox<>();
+        numStelle.getItems().addAll("1 Stella", "2 Stelle", "3 Stelle", "4 Stelle", "5 Stelle");
+        
+        // Preseleziona il valore corrente
+        switch (recensione.getNumStelle()) {
+            case 1:
+                numStelle.setValue("1 Stella");
+                break;
+            case 2:
+                numStelle.setValue("2 Stelle");
+                break;
+            case 3:
+                numStelle.setValue("3 Stelle");
+                break;
+            case 4:
+                numStelle.setValue("4 Stelle");
+                break;
+            case 5:
+                numStelle.setValue("5 Stelle");
+                break;
+        }
+
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == confermaType) {
+                if (testo.getText().isEmpty() || numStelle.getValue() == null || numStelle.getValue().isEmpty()) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Errore");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Tutti i campi sono obbligatori.");
+                    alert.showAndWait();
+                    return null;
+                }
+                
+                String nuovoTesto = testo.getText();
+                int nuoveStelle = 0;
+                switch (numStelle.getValue()) {
+                    case "1 Stella":
+                        nuoveStelle = 1;
+                        break;
+                    case "2 Stelle":
+                        nuoveStelle = 2;
+                        break;
+                    case "3 Stelle":
+                        nuoveStelle = 3;
+                        break;
+                    case "4 Stelle":
+                        nuoveStelle = 4;
+                        break;
+                    case "5 Stelle":
+                        nuoveStelle = 5;
+                        break;
+                }
+
+                // Modifica la recensione
+                Funzioni funzioni = new Funzioni();
+                funzioni.modificaRecensione(recensione.getId(), nuovoTesto, nuoveStelle);
+                
+                // Ricalcola le stelle del ristorante corrente
+                ricalcolaStelle(ristoranteCorrente);
+                
+                // Aggiorna la visualizzazione
+                visualizzaRecensioni();
+                
+                // Aggiorna le stelle visualizzate
+                if (stelleLabel != null) {
+                    stelleLabel.setText("Stelle: " + ristoranteCorrente.getNumStelle());
+                }
+                
+                // Mostra messaggio di conferma
+                Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+                successAlert.setTitle("Recensione Modificata");
+                successAlert.setHeaderText(null);
+                successAlert.setContentText("La recensione è stata modificata con successo.");
+                successAlert.showAndWait();
+                
+                dialog.close();
+                return null;
+            }
+            return null;
+        });
+
+        grid.add(new Label("Testo:"), 0, 0);
+        grid.add(testo, 1, 0);
+        grid.add(new Label("Stelle:"), 0, 1);
+        grid.add(numStelle, 1, 1);
+        
+        dialog.getDialogPane().setContent(grid);
+
+        dialog.showAndWait();
+    }
+
+    /**
+     * Metodo di supporto per ricalcolare le stelle di un ristorante locale
+     */
+    private void ricalcolaStelle(Ristorante ristorante) {
+        if (ristorante.getRecensioni() == null || ristorante.getRecensioni().isEmpty()) {
+            ristorante.setNumStelle(0);
+            return;
+        }
+        
+        List<Recensione> recensioniRistorante = new ArrayList<>();
+        Funzioni funzioni = new Funzioni();
+        List<Recensione> tutteRecensioni = funzioni.getRecensioni();
+        
+        for (Recensione r : tutteRecensioni) {
+            if (ristorante.getRecensioni().contains(r.getId())) {
+                recensioniRistorante.add(r);
+            }
+        }
+        
+        if (recensioniRistorante.isEmpty()) {
+            ristorante.setNumStelle(0);
+        } else {
+            int sum = 0;
+            for (Recensione r : recensioniRistorante) {
+                sum += r.getNumStelle();
+            }
+            ristorante.setNumStelle(sum / recensioniRistorante.size());
+        }
     }
 
     @FXML

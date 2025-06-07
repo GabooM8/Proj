@@ -244,4 +244,166 @@ public class Funzioni {
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         return R * c;
     }
+
+    public void eliminaRecensione(int idRecensione) {
+        // 1. Rimuovi la recensione dal file recensioni.bin
+        List<?> objects = FileMenager.readFromFile("recensioni.bin");
+        List<Recensione> recensioni = new ArrayList<>();
+        Recensione recensioneDaEliminare = null;
+        
+        for (Object obj : objects) {
+            if (obj instanceof Recensione) {
+                Recensione rec = (Recensione) obj;
+                if (rec.getId() == idRecensione) {
+                    recensioneDaEliminare = rec;
+                } else {
+                    recensioni.add(rec);
+                }
+            }
+        }
+        
+        if (recensioneDaEliminare == null) {
+            System.out.println("Recensione con ID " + idRecensione + " non trovata.");
+            return;
+        }
+        
+        // Salva il file recensioni aggiornato
+        List<Object> recensioniObj = new ArrayList<>(recensioni);
+        FileMenager.addToFile(recensioniObj, "recensioni.bin");
+        
+        // 2. Rimuovi il collegamento dalla lista recensioni dell'utente
+        List<?> utentiObjects = FileMenager.readFromFile("Utenti.bin");
+        List<Utente> utenti = new ArrayList<>();
+        for (Object obj : utentiObjects) {
+            if (obj instanceof Utente) {
+                Utente utente = (Utente) obj;
+                if (utente.getId() == recensioneDaEliminare.getIdUtente()) {
+                    utente.getRecensioni().remove(Integer.valueOf(idRecensione));
+                }
+                utenti.add(utente);
+            }
+        }
+        
+        // Salva il file utenti aggiornato
+        List<Object> utentiObj = new ArrayList<>(utenti);
+        FileMenager.addToFile(utentiObj, "Utenti.bin");
+        
+        // 3. Rimuovi il collegamento dalla lista recensioni del ristorante e ricalcola le stelle
+        List<?> ristorantiObjects = FileMenager.readFromFile("ristoranti.bin");
+        List<Ristorante> ristoranti = new ArrayList<>();
+        for (Object obj : ristorantiObjects) {
+            if (obj instanceof Ristorante) {
+                Ristorante ristorante = (Ristorante) obj;
+                if (ristorante.getRecensioni().contains(idRecensione)) {
+                    ristorante.getRecensioni().remove(Integer.valueOf(idRecensione));
+                    
+                    // Ricalcola le stelle del ristorante
+                    ricalcolaStelle(ristorante);
+                }
+                ristoranti.add(ristorante);
+            }
+        }
+        
+        // Salva il file ristoranti aggiornato
+        List<Object> ristorantiObj = new ArrayList<>(ristoranti);
+        FileMenager.addToFile(ristorantiObj, "ristoranti.bin");
+        
+        // 4. Elimina tutte le sottorecensioni (risposte) collegate a questa recensione
+        List<?> risposteObjects = FileMenager.readFromFile("risposte.bin");
+        List<SottoRecensione> risposte = new ArrayList<>();
+        for (Object obj : risposteObjects) {
+            if (obj instanceof SottoRecensione) {
+                SottoRecensione risposta = (SottoRecensione) obj;
+                // Mantieni solo le risposte che NON sono collegate alla recensione eliminata
+                if (risposta.getIdPadre() != idRecensione) {
+                    risposte.add(risposta);
+                }
+            }
+        }
+        
+        // Salva il file risposte aggiornato
+        List<Object> risposteObj = new ArrayList<>(risposte);
+        FileMenager.addToFile(risposteObj, "risposte.bin");
+        
+        System.out.println("Recensione con ID " + idRecensione + " eliminata con successo insieme a tutte le sue risposte.");
+    }
+
+    /**
+     * Metodo di supporto per ricalcolare le stelle di un ristorante
+     */
+    private void ricalcolaStelle(Ristorante ristorante) {
+        if (ristorante.getRecensioni().isEmpty()) {
+            ristorante.setNumStelle(0);
+            return;
+        }
+        
+        List<Recensione> recensioniRistorante = new ArrayList<>();
+        List<Recensione> tutteRecensioni = getRecensioni();
+        
+        for (Recensione r : tutteRecensioni) {
+            if (ristorante.getRecensioni().contains(r.getId())) {
+                recensioniRistorante.add(r);
+            }
+        }
+        
+        if (recensioniRistorante.isEmpty()) {
+            ristorante.setNumStelle(0);
+        } else {
+            int sum = 0;
+            for (Recensione r : recensioniRistorante) {
+                sum += r.getNumStelle();
+            }
+            ristorante.setNumStelle(sum / recensioniRistorante.size());
+        }
+    }
+
+    public void modificaRecensione(int idRecensione, String nuovoTesto, int nuoveStelle) {
+        // 1. Modifica la recensione nel file recensioni.bin
+        List<?> objects = FileMenager.readFromFile("recensioni.bin");
+        List<Recensione> recensioni = new ArrayList<>();
+        boolean recensioneTrovata = false;
+        
+        for (Object obj : objects) {
+            if (obj instanceof Recensione) {
+                Recensione rec = (Recensione) obj;
+                if (rec.getId() == idRecensione) {
+                    // Crea una nuova recensione con i dati modificati
+                    Recensione recensioneModificata = new Recensione(rec.getId(), nuoveStelle, nuovoTesto, rec.getIdUtente());
+                    recensioni.add(recensioneModificata);
+                    recensioneTrovata = true;
+                } else {
+                    recensioni.add(rec);
+                }
+            }
+        }
+        
+        if (!recensioneTrovata) {
+            System.out.println("Recensione con ID " + idRecensione + " non trovata.");
+            return;
+        }
+        
+        // Salva il file recensioni aggiornato
+        List<Object> recensioniObj = new ArrayList<>(recensioni);
+        FileMenager.addToFile(recensioniObj, "recensioni.bin");
+        
+        // 2. Ricalcola le stelle di tutti i ristoranti che hanno questa recensione
+        List<?> ristorantiObjects = FileMenager.readFromFile("ristoranti.bin");
+        List<Ristorante> ristoranti = new ArrayList<>();
+        for (Object obj : ristorantiObjects) {
+            if (obj instanceof Ristorante) {
+                Ristorante ristorante = (Ristorante) obj;
+                if (ristorante.getRecensioni().contains(idRecensione)) {
+                    // Ricalcola le stelle del ristorante
+                    ricalcolaStelle(ristorante);
+                }
+                ristoranti.add(ristorante);
+            }
+        }
+        
+        // Salva il file ristoranti aggiornato
+        List<Object> ristorantiObj = new ArrayList<>(ristoranti);
+        FileMenager.addToFile(ristorantiObj, "ristoranti.bin");
+        
+        System.out.println("Recensione con ID " + idRecensione + " modificata con successo.");
+    }
 }
