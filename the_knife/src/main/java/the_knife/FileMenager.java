@@ -10,9 +10,19 @@ import java.util.List;
 
 public class FileMenager {
 
-    private static final String CARTELLA_FILE = "the_knife/src/main/java/the_knife/files/";
+    /*
+     * Classe per la gestione dei file.
+     * Permette di aggiungere e leggere liste di oggetti da file.
+     */
+
+    private static final String CARTELLA_FILE = "the_knife/src/main/java/the_knife/files/"; // Percorso della cartella dei file
 
     public static void addToFile(List<Object> list, String fileName) {
+        /*
+         * Aggiunge una lista di oggetti a un file.
+         * Se il file non esiste, lo crea.
+         * Se esiste, sovrascrive il contenuto.
+         */
         String filePath = CARTELLA_FILE + fileName;
         File dir = new File(CARTELLA_FILE);
         if (!dir.exists()) {
@@ -27,6 +37,10 @@ public class FileMenager {
     }
 
     public static List<Object> readFromFile(String fileName) {
+        /*
+         * Legge una lista di oggetti da un file.
+         * Se il file non esiste, restituisce una lista vuota.
+         */
         String filePath = CARTELLA_FILE + fileName;
         File file = new File(filePath);
 

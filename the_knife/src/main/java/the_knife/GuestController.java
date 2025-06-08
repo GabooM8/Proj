@@ -25,6 +25,7 @@ public class GuestController {
 
         if(G_nome.isEmpty() || G_luogo.isEmpty()) 
         {
+            // Mostra un alert se i campi non sono compilati
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Errore");
             alert.setHeaderText(null);

@@ -134,12 +134,16 @@ public class Funzioni {
     }
 
     public void addPreferito(int idRistorante, int idUtente) {
+        /*
+         * Funzione che permette di aggiungere un ristorante ai preferiti di un utente.
+        */
         String filename = "Utenti.bin";
-        List<Object> utenti = FileMenager.readFromFile(filename);
+        List<Object> utenti = FileMenager.readFromFile(filename); // Legge gli utenti dal file binario
         for(Object obj : utenti) {
+            //prende ò'utente e controlla se l'id corrisponde a quello passato come parametro
             Utente utente = (Utente) obj;
             if (utente.getId() == idUtente) {
-                utente.addRistorante(idRistorante);
+                utente.addRistorante(idRistorante); // Aggiunge il ristorante alla lista dei preferiti dell'utente
             }
         }
     }
@@ -190,6 +194,7 @@ public class Funzioni {
     }
 
     public List<Utente> getUtenti() {
+        // Legge tutti gli utenti dal file binario e li restituisce come lista di Utente
         List<?> objects = (List<?>) FileMenager.readFromFile("Utenti.bin");
         List<Utente> utenti = new ArrayList<>();
         for (Object obj : objects) {
@@ -201,6 +206,7 @@ public class Funzioni {
     }
 
     public List<Recensione> getRecensioni() {
+        // Legge tutte le recensioni dal file binario e le restituisce come lista di Recensione
         List<?> objects = (List<?>) FileMenager.readFromFile("recensioni.bin");
         List<Recensione> recensioni = new ArrayList<>();
         for (Object obj : objects) {

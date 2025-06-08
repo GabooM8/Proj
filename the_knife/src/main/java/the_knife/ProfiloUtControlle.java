@@ -22,6 +22,8 @@ public class ProfiloUtControlle {
     
     Utente u=new Utente();
 
+    //inizializza i campi FXML per il profilo dell'utente
+
     @FXML
     private TextField nome;
     @FXML
@@ -46,6 +48,8 @@ public class ProfiloUtControlle {
     public void updateProfile() {
         // Logica per aggiornare il profilo dell'utente
 
+
+        //prende la lista di utenti dal file "Utenti.bin" e estrae gli utenti
         List<?> objects = (List<?>) FileMenager.readFromFile("Utenti.bin");
         List<Utente> utenti = new ArrayList<>();
         for (Object obj : objects) {
@@ -54,8 +58,10 @@ public class ProfiloUtControlle {
             }
         }
 
+        //prende l'utente corrente dalla lista degli utenti
         Utente utente = utenti.get(u.getId() -1);
 
+        // Aggiorna i campi dell'utente corrente
         utente.setNome(nome.getText());
         utente.setCognome(cognome.getText());
         utente.setUsername(username.getText());
@@ -67,8 +73,10 @@ public class ProfiloUtControlle {
 
         List<Object> utentiObj = new ArrayList<>(utenti);
 
+        // Aggiunge l'utente aggiornato alla lista e salva su file
         FileMenager.addToFile(utentiObj,"Utenti.bin");
 
+        // Mostra un alert di successo
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Informazione");
         alert.setHeaderText(null);
@@ -207,6 +215,7 @@ public class ProfiloUtControlle {
         this.u = u;
         System.out.println("ProfiloUtControlle initData - id utente: " + this.u.getId());
 
+        // Inizializza i campi del profilo con i dati dell'utente
         nome.setText(u.getNome());
         cognome.setText(u.getCognome());
         username.setText(u.getUsername());
@@ -215,6 +224,7 @@ public class ProfiloUtControlle {
         luogo.setText(u.getLuogoDomicilio());
 
         Funzioni funzioni = new Funzioni();
+        // Carica i ristoranti preferiti dell'utente
         List<Ristorante> ristorantiTrovati = funzioni.visualizzaPreferiti(this.u.getId());
 
         if (ristorantiTrovati == null) {
@@ -255,6 +265,7 @@ public class ProfiloUtControlle {
     @FXML
     private void switchToRistorante() throws IOException {
 
+        //prende il ristorante selezionato dalla ListView
         Ristorante selectedRistorante = prefListView.getSelectionModel().getSelectedItem();
 
         if (selectedRistorante != null) {

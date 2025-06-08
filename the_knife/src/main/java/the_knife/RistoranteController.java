@@ -30,9 +30,13 @@ import the_knife.classes.Utente;
 
 public class RistoranteController {
 
+    // Classe per il controller della pagina di visualizzazione del ristorante
+
+    //inizializza variabili per il ristorante corrente e l'utente
     private Ristorante ristoranteCorrente;
     Utente u=new Utente();
 
+    //inizializza i campi FXML
     @FXML private Label nomeRistoranteLabel;
     @FXML private Label indirizzoRistoranteLabel;
     @FXML private Label cittaRistoranteLabel;
@@ -56,6 +60,8 @@ public class RistoranteController {
     public void initData(Ristorante ristorante,Utente u) {
         this.ristoranteCorrente = ristorante;
         this.u = u;
+
+        //setta i bottoni visibili o meno in base al tipo di utente
         if(u.getIsRistoratore() == null) {
             pref.setDisable(true);
             addrec.setDisable(true);
@@ -64,6 +70,7 @@ public class RistoranteController {
             addrec.setDisable(true);
         }
 
+        // Aggiorna le etichette con i dati del ristorante corrente
         if (ristoranteCorrente != null) {
             if (nomeRistoranteLabel != null) nomeRistoranteLabel.setText(ristoranteCorrente.getNome());
             if (indirizzoRistoranteLabel != null) indirizzoRistoranteLabel.setText(ristoranteCorrente.getIndirizzo());
@@ -84,15 +91,17 @@ public class RistoranteController {
     }
 
     public void addPreferito() {
+        // Metodo per aggiungere o rimuovere un ristorante dai preferiti dell'utente corrente
 
         Funzioni funzioni = new Funzioni();
         List<Utente> utenti = new ArrayList<>();
         utenti = funzioni.getUtenti();
         // int id = utenti.size() + 1;
 
-        Utente utente = utenti.get(u.getId() -1);
+        Utente utente = utenti.get(u.getId() -1); // Recupera l'utente corrente dalla lista degli utenti
 
         if(utente.getRistoranti().contains(ristoranteCorrente.getId())) {
+            // Se il ristorante è già nei preferiti, lo rimuove e aggiorna il file
             utente.getRistoranti().remove(Integer.valueOf(ristoranteCorrente.getId()));
             u=utente;
             List<Object> utentiObj = new ArrayList<>(utenti);
@@ -103,8 +112,9 @@ public class RistoranteController {
             alert.setHeaderText(null);
             alert.setContentText("Ristorante rimosso dai preferiti.");
             alert.showAndWait();*/
-            img_pref.setImage(new Image(getClass().getResourceAsStream("/the_knife/images/bookmark_save.png")));
+            img_pref.setImage(new Image(getClass().getResourceAsStream("/the_knife/images/bookmark_save.png"))); // Cambia l'immagine per indicare che il ristorante non è nei preferiti
         } else {
+            // Se il ristorante non è nei preferiti, lo aggiunge e aggiorna il file
             utente.addRistorante(ristoranteCorrente.getId());
             u=utente;
             List<Object> utentiObj = new ArrayList<>(utenti);
@@ -115,11 +125,14 @@ public class RistoranteController {
             alert.setHeaderText(null);
             alert.setContentText("Ristorante aggiunto ai preferiti.");
             alert.showAndWait();*/
-            img_pref.setImage(new Image(getClass().getResourceAsStream("/the_knife/images/bookmark_saved.png")));
+            img_pref.setImage(new Image(getClass().getResourceAsStream("/the_knife/images/bookmark_saved.png"))); // Cambia l'immagine per indicare che il ristorante è nei preferiti
         }
     }
 
     public void addRecensione() {
+        // Metodo per aggiungere una recensione al ristorante corrente
+
+        //crea un dialog per inserire i dettagli della recensione
         Dialog<Void> dialog = new Dialog<>();
         dialog.setTitle("Aggiungi Recensione");
         dialog.setHeaderText("Inserisci i dettagli della recensione");
@@ -133,6 +146,8 @@ public class RistoranteController {
         grid.setVgap(10);
         grid.setPadding(new Insets(20, 150, 10, 10));
 
+
+        // Crea i campi di input per il testo della recensione e il numero di stelle
         TextField testo = new TextField();
         testo.setPromptText("Testo");
         ComboBox<String> numStelle = new ComboBox<>();
@@ -170,6 +185,7 @@ public class RistoranteController {
                         numStelleRecensione = 0;
                 }
 
+                // preleva le recensioni esistenti dal file
                 List<Recensione> recensioni = new ArrayList<>();
                 List<?> objects = FileMenager.readFromFile("recensioni.bin");
                 for( Object obj : objects) {
@@ -190,12 +206,14 @@ public class RistoranteController {
                     id_rece = maxId + 1;
                 }
 
-                Recensione n_recensione = new Recensione(id_rece, numStelleRecensione, testoRecensione, u.getId());
+                Recensione n_recensione = new Recensione(id_rece, numStelleRecensione, testoRecensione, u.getId()); // Crea una nuova recensione con l'ID, il numero di stelle, il testo e l'ID dell'utente corrente
 
+                // Aggiunge la nuova recensione alla lista delle recensioni
                 recensioni.add(n_recensione);
                 List<Object> recensioniObj = new ArrayList<>(recensioni);
                 FileMenager.addToFile(recensioniObj, "recensioni.bin");
 
+                //prende tutti gli utenti dal file
                 List<?> objs = FileMenager.readFromFile("Utenti.bin");
                 List<Utente> utentis = new ArrayList<>();
                 for (Object obj : objs) {
@@ -204,14 +222,16 @@ public class RistoranteController {
                     }
                 }
 
+                // Aggiunge l'ID della recensione alla lista delle recensioni fatte dall'utente corrente
                 Utente ut = utentis.get(u.getId() -1);
                 ut.addRecensione(id_rece);
                 u=ut;
                 List<Object> utentiObj = new ArrayList<>(utentis);
                 FileMenager.addToFile(utentiObj,"Utenti.bin");
 
-                ristoranteCorrente.addRecensione(id_rece);
+                ristoranteCorrente.addRecensione(id_rece); // Aggiunge l'ID della recensione alla lista delle recensioni del ristorante corrente
                 
+                // Aggiorna il file dei ristoranti con la nuova recensione
                 List<Object> allRistorantiObjects = FileMenager.readFromFile("ristoranti.bin");
                 List<Ristorante> allRistoranti = new ArrayList<>();
                 for (Object obj : allRistorantiObjects) {
@@ -260,6 +280,9 @@ public class RistoranteController {
     }
 
     private void visualizzaRecensioni() {
+        // Metodo per visualizzare le recensioni del ristorante corrente nella ListView
+
+        // Controlla se il ristorante corrente e la ListView delle recensioni sono stati inizializzati
         if (ristoranteCorrente == null || recensioniListView == null) {
             if (recensioniListView != null) {
                 recensioniListView.setItems(FXCollections.observableArrayList());
@@ -267,7 +290,10 @@ public class RistoranteController {
             return;
         }
 
+        // Recupera le recensioni del ristorante corrente
         List<Integer> idsRecensioniRistorante = ristoranteCorrente.getRecensioni();
+
+        // Se non ci sono recensioni, mostra una lista vuota
         if (idsRecensioniRistorante == null || idsRecensioniRistorante.isEmpty()) {
             recensioniListView.setItems(FXCollections.observableArrayList());
             return;
@@ -276,6 +302,7 @@ public class RistoranteController {
         List<?> allRecensioniObjects = FileMenager.readFromFile("recensioni.bin");
         List<Recensione> recensioniFiltrate = new ArrayList<>();
 
+        // Filtra le recensioni per quelle che appartengono al ristorante corrente
         for (Object obj : allRecensioniObjects) {
             if (obj instanceof Recensione) {
                 Recensione rec = (Recensione) obj;
@@ -284,6 +311,7 @@ public class RistoranteController {
                 }
             }
         }
+
         ObservableList<Recensione> observableRecensioni = FXCollections.observableArrayList(recensioniFiltrate);
         recensioniListView.setItems(observableRecensioni);
 
@@ -388,6 +416,8 @@ public class RistoranteController {
     }
 
     private void visualizzaRisposte(Recensione recensione) {
+        // Metodo per visualizzare le risposte a una recensione in un dialog
+
         Dialog<Void> dialog = new Dialog<>();
         dialog.setTitle("Risposte");
         dialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
@@ -397,8 +427,9 @@ public class RistoranteController {
         grid.setVgap(10);
         grid.setPadding(new Insets(20, 150, 10, 10));
 
-        Label testo = new Label();
+        Label testo = new Label(); //label per visualizzare le risposte
 
+        // Preleva le risposte dalla lista delle sotto-recensioni
         List<SottoRecensione> risposte = new ArrayList<>();
         List<?> allSottoRecensioniObjects = FileMenager.readFromFile("risposte.bin");
         for (Object obj : allSottoRecensioniObjects) {
@@ -410,16 +441,18 @@ public class RistoranteController {
             }
         }
 
+        //crea il testo da visualizzare
         StringBuilder testoRisposte = new StringBuilder();
         for (SottoRecensione risposta : risposte) {
             testoRisposte.append(risposta.getTesto()).append("\n");
         }
         
+        // Se non ci sono risposte, mostra un messaggio appropriato
         if (testoRisposte.length() == 0) {
             testoRisposte.append("Nessuna risposta disponibile per questa recensione.");
         }
         
-        testo.setText(testoRisposte.toString());
+        testo.setText(testoRisposte.toString()); // aggiunge il testo alla Label
 
         grid.add(testo, 0, 0);
         dialog.getDialogPane().setContent(grid);

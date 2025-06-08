@@ -95,9 +95,11 @@ public class RegisterController {
     }
 
     public static String[] parseCSVLine(String line) {
+        // Metodo per fare lo split di una riga CSV considerando le virgole tra virgolette
         return line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
     }
 
+    // inizializza i campi FXML
 
     @FXML
     private TextField nome;
@@ -116,6 +118,7 @@ public class RegisterController {
 
     @FXML
     private void switchToHome() throws IOException {
+        // Recupera i valori dai campi di input
         String U_nome=nome.getText();
         String U_cognome=cognome.getText();
         String U_username=username.getText();
@@ -124,8 +127,10 @@ public class RegisterController {
         String U_domicilio=domicilio.getText();
         String U_rls = cmbx_rl.getValue();
 
+        // Controlla se i campi sono vuoti
         if(U_nome.isEmpty() || U_cognome.isEmpty() || U_username.isEmpty() || U_password.isEmpty() || U_datan == null || U_domicilio.isEmpty() || U_rls == null) 
         {
+            // Mostra un alert se i campi non sono compilati
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Errore");
             alert.setHeaderText(null);
@@ -144,6 +149,7 @@ public class RegisterController {
         for(Utente u : utenti)
         {
             if(u.getUsername().equals(U_username)) {
+                // Mostra un alert se l'username è già esistente
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Errore");
                 alert.setHeaderText(null);
@@ -153,15 +159,20 @@ public class RegisterController {
             }
         }       
 
+        // Crea un nuovo oggetto Utente con i valori dei campi di input
         Utente u = new Utente(id, U_nome, U_cognome, U_username, U_password, U_datan, U_domicilio, U_rl);
         utenti.add(u);
         List<Object> utentiObj = new ArrayList<>(utenti);
         FileMenager.addToFile(utentiObj, "Utenti.bin");
+
+        // Mostra un alert di successo
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Successo");
         alert.setHeaderText(null);
         alert.setContentText("Registrazione avvenuta con successo");
         alert.showAndWait();
+
+        // Imposta la root dell'applicazione su "Home" con l'utente appena registrato
         App.setRoot("Home",u);
     }
 }

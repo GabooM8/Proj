@@ -21,6 +21,8 @@ public class LoginController {
         App.setRoot("guest");
     }
 
+    // inizializza i campi FXML di testo per l'username e la password
+
     @FXML
     private TextField N_Utente;
 
@@ -34,6 +36,7 @@ public class LoginController {
 
         if(username.isEmpty() || password.isEmpty()) 
         {
+            // Mostra un alert se i campi non sono compilati
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Errore");
             alert.setHeaderText(null);
@@ -42,6 +45,7 @@ public class LoginController {
             return;
         }
 
+        // Legge la lista di utenti dal file "Utenti.bin" e estrae gli utenti
         List<?> objects = (List<?>) FileMenager.readFromFile("Utenti.bin");
         List<Utente> utenti = new ArrayList<>();
         for (Object obj : objects) {
@@ -50,6 +54,7 @@ public class LoginController {
             }
         }
 
+        // Cerca l'utente con username e password corrispondenti
         Utente u= new Utente();
         boolean found = false;
         for (Utente utente : utenti) {
@@ -60,16 +65,20 @@ public class LoginController {
             }
         }
 
+
+        // Se l'utente è stato trovato, imposta la root dell'applicazione su "Home" con l'utente
         if(found) {
             //App.setRoot("Home", username, u.getLuogoDomicilio(), u.getIsRistoratore());
             App.setRoot("Home",u);
         } else {
+            // Se l'utente non è stato trovato, mostra un alert di errore
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Errore");
             alert.setHeaderText(null);
             alert.setContentText("Username o password errati");
             alert.showAndWait();
             
+            // Pulisce i campi di input
             N_Utente.clear();
             N_Password.clear();
         }

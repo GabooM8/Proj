@@ -21,6 +21,8 @@ import the_knife.classes.Utente;
 
 public class HomeController {
     
+    //variabili per gestire le informazioni dell'utente
+
     Utente u=new Utente();
 
     String Ruolo;
@@ -32,6 +34,8 @@ public class HomeController {
     int fasciaPrezzo = 0;
     int numStelle = 0;
     String cucina = "";
+
+    // Elementi FXML
 
     @FXML private TextField searchBar;
     @FXML private MenuButton sortButton;
@@ -77,6 +81,7 @@ public class HomeController {
     private List<Ristorante> ristorantiCorrenti = null;
 
     public void initData(Utente u) {
+        // Inizializza i campi dell'utente con i dati passati
         this.u = u;
         this.Luogo = u.getLuogoDomicilio();
         this.Username = u.getUsername();
@@ -334,6 +339,7 @@ public class HomeController {
 
     @FXML
     private void switchToProfiloUT() throws IOException {
+        // Controlla il ruolo dell'utente e reindirizza alla vista appropriata
 
         if(Ruolo.equals("cliente")) {
             App.setRoot("profiloUt",u);
@@ -347,11 +353,11 @@ public class HomeController {
     @FXML
     private void switchToRistorante() throws IOException {
 
-        Ristorante selectedRistorante = ristoranteListView.getSelectionModel().getSelectedItem();
+        Ristorante selectedRistorante = ristoranteListView.getSelectionModel().getSelectedItem(); // Ottieni il ristorante selezionato dalla ListView
 
         if (selectedRistorante != null) {
             //System.out.println("Navigazione alla vista del ristorante: " + selectedRistorante.getNome());
-            App.setRoot("ristorante", selectedRistorante,u); // Passa l'oggetto Ristorante selezionato
+            App.setRoot("ristorante", selectedRistorante,u); // Passa l'oggetto Ristorante selezionato e l'utente corrente alla nuova vista
         }
     }
 }

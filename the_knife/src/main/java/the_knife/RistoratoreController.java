@@ -29,6 +29,8 @@ public class RistoratoreController {
     
     Utente u=new Utente();
 
+
+    //inizializza gli elementi FXML
     @FXML
     private TextField nome;
     @FXML
@@ -122,6 +124,8 @@ public class RistoratoreController {
                     } else {
                         setText(item.getTesto() + " ( " + item.getNumStelle() + " stelle )");
                         setOnMouseClicked(event -> {
+
+                            //crea dialog in caso di click sulla recensione per rispondere
                             Dialog<Void> dialog = new Dialog<>();
                             dialog.setTitle("Rispondi a Recensione");
                             dialog.setHeaderText("Inserisci i dettagli della risposta");
@@ -224,6 +228,8 @@ public class RistoratoreController {
     public void updateProfile() {
         // Logica per aggiornare il profilo dell'utente
 
+
+        //prende tutti gli utenti dal file
         List<?> objects = (List<?>) FileMenager.readFromFile("Utenti.bin");
         List<Utente> utenti = new ArrayList<>();
         for (Object obj : objects) {
@@ -232,8 +238,11 @@ public class RistoratoreController {
             }
         }
 
+        //preleva l'utente corrente
         Utente utente = utenti.get(u.getId() -1);
 
+
+        //aggiorna i dati dell'utente con quelli nuovi
         utente.setNome(nome.getText());
         utente.setCognome(cognome.getText());
         utente.setUsername(username.getText());
@@ -241,6 +250,8 @@ public class RistoratoreController {
         utente.setPassword(password.getText());
         utente.setLuogoDomicilio(luogo.getText());
 
+
+        //aggiorna l'utente corrente e il file
         u=utente;
 
         List<Object> utentiObj = new ArrayList<>(utenti);
@@ -255,7 +266,9 @@ public class RistoratoreController {
     }
 
     public void addRistorante() {
+        //Metodo per la creazione del dialog che permette l'inserimento di un nuovo ristorante
 
+        //crea dialog
         Dialog<Void> dialog = new Dialog<>();
         dialog.setTitle("Aggiungi Ristorante");
         dialog.setHeaderText("Inserisci i dettagli del ristorante");
@@ -269,6 +282,7 @@ public class RistoratoreController {
         grid.setVgap(10);
         grid.setPadding(new Insets(20, 150, 10, 10));
 
+        //inizializza elementi form
         TextField nome = new TextField();
         nome.setPromptText("Nome");
         TextField indirizzo = new TextField();
@@ -307,6 +321,7 @@ public class RistoratoreController {
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == confermaType) {
                 if (nome.getText().isEmpty() || indirizzo.getText().isEmpty() || nazione.getText().isEmpty() || citta.getText().isEmpty() || prezzo.getValue() == null || cucina.getText().isEmpty() || latitudine.getText().isEmpty() || longitudine.getText().isEmpty()) {
+                    //visualizza alert in caso non sono compilati tutti i campi
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Errore");
                     alert.setHeaderText(null);
@@ -314,6 +329,7 @@ public class RistoratoreController {
                     alert.showAndWait();
                     return null;
                 }
+                //prendi le informazioni
                 String nomeRistorante = nome.getText();
                 String indirizzoRistorante = indirizzo.getText();
                 String nazioneRistorante = nazione.getText();
@@ -341,6 +357,7 @@ public class RistoratoreController {
                 boolean deliveryRistorante = delivery.isSelected();
                 boolean prenotazioneRistorante = prenotazione.isSelected();
 
+                //prendi tutti i ristoranti dal file
                 List<Ristorante> ristoranti = new ArrayList<>();
                 List<?> objects = (List<?>) FileMenager.readFromFile("ristoranti.bin");
                 for( Object obj : objects) {
@@ -349,14 +366,18 @@ public class RistoratoreController {
                     }
                 }
 
+                //genera nuovo id per il nuovo ristorante
                 int id_rist = ristoranti.size() + 1;
-
+                
+                //crea nuovo ristorante
                 Ristorante n_ristorante = new Ristorante(id_rist, nomeRistorante, indirizzoRistorante, nazioneRistorante, cittaRistorante, prezzoRist, 0, cucinaRistorante, latitudineRistorante, longitudineRistorante, deliveryRistorante, prenotazioneRistorante);
 
+                //aggiugni nuovo ristorante alla lista e aggiorna il file
                 ristoranti.add(n_ristorante);
                 List<Object> ristorantiObj = new ArrayList<>(ristoranti);
                 FileMenager.addToFile(ristorantiObj, "ristoranti.bin");
 
+                //estrai tutti gli utenti dal file
                 List<?> objs = (List<?>) FileMenager.readFromFile("Utenti.bin");
                 List<Utente> utentis = new ArrayList<>();
                 for (Object obj : objs) {
@@ -365,12 +386,14 @@ public class RistoratoreController {
                     }
                 }
 
+                //preleva l'utente corrente
                 Utente ut = utentis.get(u.getId() -1);
 
-                ut.addRistorante(id_rist);
+                ut.addRistorante(id_rist); //aggiungi alla lista dei ristoranti dell'utente il nuovo ristorante
 
-                u=ut;
+                u=ut; //aggiorna utente corrente
 
+                //aggiorna file
                 List<Object> utentiObj = new ArrayList<>(utentis);
 
                 FileMenager.addToFile(utentiObj,"Utenti.bin");
@@ -400,8 +423,7 @@ public class RistoratoreController {
 
     @FXML
     private void switchToRistorante() throws IOException {
-
-            Ristorante selectedRistorante = list_rist.getSelectionModel().getSelectedItem();
+            Ristorante selectedRistorante = list_rist.getSelectionModel().getSelectedItem(); //preleva il ristorante selezionato dalla listview
 
             if (selectedRistorante != null) {
                 //System.out.println("Navigazione alla vista del ristorante: " + selectedRistorante.getNome());
