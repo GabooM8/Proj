@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.BufferedReader;
+import java.io.FileReader;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -13,6 +15,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import the_knife.classes.Funzioni;
 import the_knife.classes.Utente;
+import the_knife.classes.Ristorante;
+
 
 public class RegisterController {
 
