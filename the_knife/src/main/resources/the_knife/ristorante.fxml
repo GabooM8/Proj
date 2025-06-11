@@ -50,6 +50,7 @@
                         <Label fx:id="indirizzoRistoranteLabel" text="Indirizzo" />
                         <Label fx:id="stelleLabel" text="Valutazione media" />
                         <Label fx:id="prezzoLabel" text="Fascia di prezzo" />
+                        <Label fx:id="serviziLabel" layoutX="10.0" layoutY="105.0" text="Servizi" />
                      </children>
                      <padding>
                         <Insets bottom="20.0" top="20.0" />
@@ -63,6 +64,7 @@
                         <Label fx:id="cucinaRistoranteLabel" text="Tipo di cucina" />
                         <Label fx:id="deliveryLabel" text="Delivery" />
                         <Label fx:id="prenotazioneLabel" text="Prenotazione" />
+                        <Label fx:id="prenotazioneLabel1" layoutX="10.0" layoutY="124.0" />
                      </children>
                   </VBox>
                   <VBox prefHeight="200.0" prefWidth="80.0" />

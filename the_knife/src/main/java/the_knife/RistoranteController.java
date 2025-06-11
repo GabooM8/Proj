@@ -47,6 +47,7 @@ public class RistoranteController {
     @FXML private Label stelleLabel;
     @FXML private Label deliveryLabel;
     @FXML private Label prenotazioneLabel;
+    @FXML private Label serviziLabel;
     @FXML private ImageView img_pref;
 
     @FXML private Button addrec;
@@ -82,6 +83,7 @@ public class RistoranteController {
             if (stelleLabel != null) stelleLabel.setText("Stelle: " + ristoranteCorrente.getNumStelle());
             if (deliveryLabel != null) deliveryLabel.setText("Delivery: " + (ristoranteCorrente.getDelivery() ? "Sì" : "No"));
             if (prenotazioneLabel != null) prenotazioneLabel.setText("Prenotazione Online: " + (ristoranteCorrente.getPrenotazione() ? "Sì" : "No"));
+            if (serviziLabel != null) serviziLabel.setText("Servizi: " + (ristoranteCorrente.getServizi()));
             if(u.getRistoranti() !=null && u.getRistoranti().contains(ristoranteCorrente.getId()) && u.getIsRistoratore()!=true) {
                 img_pref.setImage(new Image(getClass().getResourceAsStream("/the_knife/images/bookmark_saved.png")));
             } else {

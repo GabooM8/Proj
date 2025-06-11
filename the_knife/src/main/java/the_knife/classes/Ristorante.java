@@ -18,13 +18,14 @@ public class Ristorante implements Serializable {
     boolean delivery;
     boolean prenotazione;
     ArrayList<Integer> recensioni;
+    String servizi;
     //String telefono; // per delivery
     //String weburl; // per prenotazione online
 
     public Ristorante() {
     }
 
-    public Ristorante(int id,String nome, String indirizzo, String nazione, String citta, int prezzo, int numStelle, String cucina, double latitudine, double longitudine, boolean delivery, boolean prenotazione) {
+    public Ristorante(int id,String nome, String indirizzo, String nazione, String citta, int prezzo, int numStelle, String cucina, double latitudine, double longitudine, boolean delivery, boolean prenotazione, String servizi) {
         this.id = id;
         this.nome = nome;
         this.indirizzo = indirizzo;
@@ -38,6 +39,7 @@ public class Ristorante implements Serializable {
         this.delivery = delivery;
         this.prenotazione = prenotazione;
         this.recensioni = new ArrayList<>();
+        this.servizi = servizi;
         /*if (weburl == null || weburl.isEmpty()) {
             this.weburl = "N/A";
         } else {
@@ -128,6 +130,9 @@ public class Ristorante implements Serializable {
     public List<Integer> getRecensioni() {
         return recensioni;
     }
+    public String getServizi(){
+        return servizi;
+    }
     /*public String getTelefono() {
         return telefono;
     }
@@ -205,6 +210,9 @@ public class Ristorante implements Serializable {
     public void setPrenotazione(boolean prenotazione) {
         this.prenotazione = prenotazione;
     }
+    public void setServizi(String servizi){
+        this.servizi=servizi;
+    }
     /*public void setTelefono(String telefono) {
         if (telefono == null || telefono.isEmpty()) {
             this.telefono = "N/A";
@@ -273,7 +281,8 @@ public class Ristorante implements Serializable {
                 "Latitudine: " + latitudine + "\n" +
                 "Longitudine: " + longitudine + "\n" +
                 "Delivery: " + (delivery ? "Si" : "No") + "\n" +
-                "Prenotazione: " + (prenotazione ? "Si" : "No") + "\n";
+                "Prenotazione: " + (prenotazione ? "Si" : "No") + "\n" +
+                "Servizi: " + servizi + "\n";
                 /*"Telefono: " + telefono + "\n" +
                 "Weburl: " + weburl + "\n";   */
     }

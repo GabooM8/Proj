@@ -77,7 +77,8 @@ public class RegisterController {
                 Double.parseDouble(values[6]),
                 Double.parseDouble(values[5]),
                 delivery,
-                prenotazione
+                prenotazione,
+                values[12]
             );
             ristoranti.add(ristorante);
             cont++;

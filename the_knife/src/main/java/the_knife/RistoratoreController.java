@@ -337,10 +337,11 @@ public class RistoratoreController {
         //delivery & prenotazione
         CheckBox delivery = new CheckBox("Delivery");
         CheckBox prenotazione = new CheckBox("Prenotazione");
+        TextField servizi = new TextField("Servizi");
 
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == confermaType) {
-                if (nome.getText().isEmpty() || indirizzo.getText().isEmpty() || nazione.getText().isEmpty() || citta.getText().isEmpty() || prezzo.getValue() == null || cucina.getText().isEmpty() || latitudine.getText().isEmpty() || longitudine.getText().isEmpty()) {
+                if (nome.getText().isEmpty() || indirizzo.getText().isEmpty() || nazione.getText().isEmpty() || citta.getText().isEmpty() || prezzo.getValue() == null || cucina.getText().isEmpty() || latitudine.getText().isEmpty() || longitudine.getText().isEmpty() || servizi.getText().isEmpty()) {
                     //visualizza alert in caso non sono compilati tutti i campi
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Errore");
@@ -376,6 +377,7 @@ public class RistoratoreController {
                 double longitudineRistorante = Double.parseDouble(longitudine.getText());
                 boolean deliveryRistorante = delivery.isSelected();
                 boolean prenotazioneRistorante = prenotazione.isSelected();
+                String serviziRistorante = servizi.getText();
 
                 //prendi tutti i ristoranti dal file
                 List<Ristorante> ristoranti = new ArrayList<>();
@@ -390,7 +392,7 @@ public class RistoratoreController {
                 int id_rist = ristoranti.size() + 1;
                 
                 //crea nuovo ristorante
-                Ristorante n_ristorante = new Ristorante(id_rist, nomeRistorante, indirizzoRistorante, nazioneRistorante, cittaRistorante, prezzoRist, 0, cucinaRistorante, latitudineRistorante, longitudineRistorante, deliveryRistorante, prenotazioneRistorante);
+                Ristorante n_ristorante = new Ristorante(id_rist, nomeRistorante, indirizzoRistorante, nazioneRistorante, cittaRistorante, prezzoRist, 0, cucinaRistorante, latitudineRistorante, longitudineRistorante, deliveryRistorante, prenotazioneRistorante, serviziRistorante);
 
                 //aggiugni nuovo ristorante alla lista e aggiorna il file
                 ristoranti.add(n_ristorante);
@@ -435,6 +437,7 @@ public class RistoratoreController {
         grid.add(longitudine, 1, 3);
         grid.add(delivery, 0, 4);
         grid.add(prenotazione, 1, 4);
+        grid.add(servizi, 0,5);
         
         dialog.getDialogPane().setContent(grid);
 
