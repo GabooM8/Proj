@@ -158,11 +158,21 @@ public class HomeController {
         }
     }
 
+    /**
+     * Metodo chiamato quando l'utente preme il pulsante di ricerca.
+     * Aggiorna la lista dei ristoranti in base ai filtri applicati.
+     */
     @FXML
     private void inputSearchBar(ActionEvent event) { // Chiamato quando si preme Invio nella searchBar
         aggiornaApplicazioneFiltri();
     }
 
+    /**
+     * Metodo chiamato quando l'utente seleziona un'opzione di ordinamento dal MenuButton.
+     * Ordina la lista dei ristoranti in base all'opzione selezionata.
+     *
+     * @param event L'evento di azione del pulsante di ordinamento.
+     */
     @FXML
     private void sortButtonAction(ActionEvent event) {
         if (ristorantiCorrenti == null || ristorantiCorrenti.isEmpty()) return;
@@ -222,11 +232,23 @@ public class HomeController {
         ristoranteListView.setItems(FXCollections.observableArrayList(ristorantiCorrenti));
     }
 
+    /**
+     * Metodo chiamato quando l'utente inserisce un testo nella casella di ricerca per la località.
+     * Aggiorna la lista dei ristoranti in base alla località inserita.
+     *
+     * @param event L'evento di azione del campo di testo della località.
+     */
     @FXML
     private void locationTextFieldAction(ActionEvent event) {
         aggiornaApplicazioneFiltri();
     }
 
+    /**
+     * Metodo chiamato quando l'utente seleziona un'opzione dal ComboBox del prezzo.
+     * Aggiorna la fascia di prezzo in base all'opzione selezionata.
+     *
+     * @param event L'evento di azione del ComboBox del prezzo.
+     */
     @FXML
     private void prezzoComboBoxAction(ActionEvent event) {
         String selectedOption = prezzoComboBox.getSelectionModel().getSelectedItem();
@@ -247,6 +269,12 @@ public class HomeController {
         aggiornaApplicazioneFiltri();
     }
 
+    /**
+     * Metodo chiamato quando l'utente seleziona un'opzione dal ComboBox delle stelle.
+     * Aggiorna il numero di stelle in base all'opzione selezionata.
+     *
+     * @param event L'evento di azione del ComboBox delle stelle.
+     */
     @FXML
     private void stelleComboBoxAction(ActionEvent event) {
         String selectedOption = stelleComboBox.getSelectionModel().getSelectedItem();
@@ -269,6 +297,12 @@ public class HomeController {
         aggiornaApplicazioneFiltri();
     }
 
+    /**
+     * Metodo chiamato quando l'utente seleziona o deseleziona la casella di controllo per la consegna a domicilio.
+     * Aggiorna lo stato della consegna in base alla selezione.
+     *
+     * @param event L'evento di azione della casella di controllo della consegna.
+     */
     @FXML
     private void deliveryCheckBoxAction(ActionEvent event) {
         if (deliveryCheckBox.isSelected()) {
@@ -279,6 +313,12 @@ public class HomeController {
         aggiornaApplicazioneFiltri();
     }
 
+    /**
+     * Metodo chiamato quando l'utente seleziona o deseleziona la casella di controllo per la prenotazione.
+     * Aggiorna lo stato della prenotazione in base alla selezione.
+     *
+     * @param event L'evento di azione della casella di controllo della prenotazione.
+     */
     @FXML
     private void prenotazioneCheckBoxAction(ActionEvent event) {
         if (prenotazioneCheckBox.isSelected()) {
@@ -289,6 +329,12 @@ public class HomeController {
         aggiornaApplicazioneFiltri();
     }
 
+    /**
+     * Metodo chiamato quando l'utente preme il pulsante di reset dei filtri.
+     * Resetta tutti i filtri e aggiorna la lista dei ristoranti.
+     *
+     * @param event L'evento di azione del pulsante di reset.
+     */
     @FXML
     private void resetFilters(ActionEvent event) {
         // Resetta i filtri
@@ -313,6 +359,10 @@ public class HomeController {
         //System.out.println("Filtri resettati.");
     }
 
+    /**
+     * Metodo privato per aggiornare la lista dei ristoranti in base ai filtri applicati.
+     * Viene chiamato quando l'utente interagisce con i campi di ricerca o i filtri.
+     */
     private void aggiornaApplicazioneFiltri() {
         String input = searchBar.getText();
         String location = locationTextField.getText();
@@ -337,6 +387,12 @@ public class HomeController {
         }
     }
 
+    /**
+     * Metodo chiamato quando l'utente preme il pulsante per tornare alla schermata di login.
+     * Reindirizza l'utente alla schermata di login.
+     *
+     * @throws IOException Se si verifica un errore durante il caricamento della vista di login.
+     */
     @FXML
     private void switchToProfiloUT() throws IOException {
         // Controlla il ruolo dell'utente e reindirizza alla vista appropriata
@@ -350,6 +406,12 @@ public class HomeController {
         }
     }
 
+    /**
+     * Metodo chiamato quando l'utente seleziona un ristorante dalla ListView.
+     * Reindirizza l'utente alla vista del ristorante selezionato.
+     *
+     * @throws IOException Se si verifica un errore durante il caricamento della vista del ristorante.
+     */
     @FXML
     private void switchToRistorante() throws IOException {
 

@@ -17,6 +17,13 @@ public class App extends Application {
 
     private static Scene scene;
 
+    /**
+     * Metodo che viene chiamato all'avvio dell'applicazione.
+     * Inizializza la scena principale e carica il file FXML per la schermata di login.
+     *
+     * @param stage Il palcoscenico principale dell'applicazione.
+     * @throws IOException Se si verifica un errore durante il caricamento del file FXML.
+     */
     @Override
     public void start(Stage stage) throws IOException {
         scene = new Scene(loadFXML("Login", null), 900, 600); // Modificato per coerenza con loadFXML
@@ -30,6 +37,13 @@ public class App extends Application {
         stage.show();
     }
 
+    /**
+     * Metodo per caricare un file FXML e restituire il nodo radice.
+     *
+     * @param fxml Il nome del file FXML da caricare (senza estensione).
+     * @return Il nodo radice della scena.
+     * @throws IOException Se si verifica un errore durante il caricamento del file FXML.
+     */
     static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml, null)); // Passa null per i dati
     }
@@ -42,6 +56,11 @@ public class App extends Application {
         scene.setRoot(loadFXML(fxml, data, data2));
     }
 
+    /**
+     * Metodo per ottenere il nodo radice della scena corrente.
+     *
+     * @return Il nodo radice della scena corrente.
+     */
     private static Parent loadFXML(String fxml, Object data) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         Parent parent = fxmlLoader.load();
@@ -62,6 +81,15 @@ public class App extends Application {
         return parent;
     }
 
+    /**
+     * Metodo per caricare un file FXML e restituire il nodo radice, con dati aggiuntivi.
+     *
+     * @param fxml Il nome del file FXML da caricare (senza estensione).
+     * @param data Dati da passare al controller della nuova scena.
+     * @param data2 Dati aggiuntivi da passare al controller della nuova scena.
+     * @return Il nodo radice della scena.
+     * @throws IOException Se si verifica un errore durante il caricamento del file FXML.
+     */
     private static Parent loadFXML(String fxml, Object data, Object data2) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         Parent parent = fxmlLoader.load();
@@ -79,6 +107,11 @@ public class App extends Application {
         return parent;
     }
 
+    /**
+     * Metodo principale per avviare l'applicazione JavaFX.
+     *
+     * @param args Gli argomenti della riga di comando (non utilizzati in questo caso).
+     */
     public static void main(String[] args) {
         
         launch();

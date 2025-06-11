@@ -148,14 +148,19 @@ public class Funzioni {
         }
     }
 
+    /**
+     * Visualizza i ristoranti preferiti di un utente.
+     * @param idUtente L'ID dell'utente di cui visualizzare i preferiti.
+     * @return Una lista di ristoranti preferiti dall'utente.
+     */
     public List<Ristorante> visualizzaPreferiti(int idUtente) {
         String filename= "Utenti.bin";
         Utente utente= null;
         List<Object> utenti = FileMenager.readFromFile(filename);
-        for(Object obj : utenti) {
+        for(Object obj : utenti) { // Itera attraverso gli utenti per trovare quello con l'ID specificato
             Utente u = (Utente) obj;
             System.out.println(u.getId() + " " + idUtente);
-            if (u.getId() == idUtente) {
+            if (u.getId() == idUtente) { // Controlla se l'ID dell'utente corrisponde a quello passato come parametro
                 utente=u;
                 break;
             }
@@ -168,23 +173,28 @@ public class Funzioni {
         List<Ristorante> preferiti = new ArrayList<>();
         String ristoranteFile = "ristoranti.bin";
         List<Object> ristoranti = FileMenager.readFromFile(ristoranteFile);
-        for (Object obj : ristoranti) {
+        for (Object obj : ristoranti) { // Itera attraverso i ristoranti per trovare quelli preferiti dall'utente
             Ristorante ristorante = (Ristorante) obj;
-            if (utente.getRistoranti().contains(ristorante.getId())) {
+            if (utente.getRistoranti().contains(ristorante.getId())) { // Controlla se l'ID del ristorante è nella lista dei preferiti dell'utente
                 preferiti.add(ristorante);
             }
         }
         return preferiti;
     }
 
+    /**
+     * Elimina un ristorante dai preferiti di un utente.
+     * @param idRistorante L'ID del ristorante da eliminare dai preferiti.
+     * @param idUtente L'ID dell'utente da cui eliminare il ristorante.
+     */
     public void DeletePreferito(int idRistorante, int idUtente) {
         String filename = "Utenti.bin";
         List<Object> utenti = FileMenager.readFromFile(filename);
-        for(Object obj : utenti) {
+        for(Object obj : utenti) { // Itera attraverso gli utenti per trovare quello con l'ID specificato
             Utente utente = (Utente) obj;
-            if (utente.getId() == idUtente) {
+            if (utente.getId() == idUtente) { // Controlla se l'ID dell'utente corrisponde a quello passato come parametro
                 List<Integer> ristoranti = utente.getRistoranti();
-                if(ristoranti.contains(idRistorante)) {
+                if(ristoranti.contains(idRistorante)) { // Controlla se l'ID del ristorante è nella lista dei preferiti dell'utente
                     ristoranti.remove(idRistorante);
                 }
                 break;
@@ -251,6 +261,11 @@ public class Funzioni {
         return R * c;
     }
 
+    /**
+     * Elimina una recensione e tutte le sue risposte collegate.
+     * 
+     * @param idRecensione L'ID della recensione da eliminare.
+     */
     public void eliminaRecensione(int idRecensione) {
         // 1. Rimuovi la recensione dal file recensioni.bin
         List<?> objects = FileMenager.readFromFile("recensioni.bin");
@@ -363,6 +378,13 @@ public class Funzioni {
         }
     }
 
+    /**
+     * Modifica una recensione esistente e ricalcola le stelle del ristorante associato.
+     * 
+     * @param idRecensione L'ID della recensione da modificare.
+     * @param nuovoTesto Il nuovo testo della recensione.
+     * @param nuoveStelle Il nuovo numero di stelle della recensione.
+     */
     public void modificaRecensione(int idRecensione, String nuovoTesto, int nuoveStelle) {
         // 1. Modifica la recensione nel file recensioni.bin
         List<?> objects = FileMenager.readFromFile("recensioni.bin");

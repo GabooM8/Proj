@@ -41,7 +41,7 @@ public class ProfiloUtControlle {
     @FXML private ListView<Recensione> recensioniListView;
 
     @FXML
-    private void switchToHome() throws IOException {
+    private void switchToHome() throws IOException { // Metodo per passare alla schermata "Home"
         App.setRoot("Home",u);
     }
 
@@ -84,6 +84,11 @@ public class ProfiloUtControlle {
         alert.showAndWait();
     }
 
+    /**
+     * Metodo che viene chiamato all'inizializzazione del controller.
+     * Inizializza le ListView per i ristoranti preferiti e le recensioni,
+     * e imposta i listener per la selezione degli elementi.
+     */
     @FXML
     public void initialize() {
         System.out.println("ProfiloUtControlle initialize - id utente (prima di initData): " + (this.u != null ? this.u.getId() : "utente nullo"));
@@ -92,7 +97,7 @@ public class ProfiloUtControlle {
             System.err.println("ERRORE FATALE: prefListView non è stato iniettato correttamente in initialize(). Controllare il file FXML.");
             return;
         }
-        prefListView.setCellFactory(param -> new ListCell<Ristorante>() {
+        prefListView.setCellFactory(param -> new ListCell<Ristorante>() { // Imposta il contenuto della cella per i ristoranti
             @Override
             protected void updateItem(Ristorante ristorante, boolean empty) {
                 super.updateItem(ristorante, empty);
@@ -105,7 +110,7 @@ public class ProfiloUtControlle {
             }
         });
 
-        prefListView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+        prefListView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> { // Listener per la selezione di un ristorante preferito
             if (newSelection != null) {
 
                 try {
@@ -128,7 +133,7 @@ public class ProfiloUtControlle {
             System.err.println("ERRORE FATALE: recensioniListView non è stato iniettato correttamente in initialize(). Controllare il file FXML.");
             return;
         }
-        recensioniListView.setCellFactory(param -> new ListCell<Recensione>() {
+        recensioniListView.setCellFactory(param -> new ListCell<Recensione>() { // Imposta il contenuto della cella per le recensioni
             @Override
             protected void updateItem(Recensione recensione, boolean empty) {
                 super.updateItem(recensione, empty);
@@ -140,7 +145,7 @@ public class ProfiloUtControlle {
                 }
             }
         });
-        recensioniListView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+        recensioniListView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> { // Listener per la selezione di una recensione
             if (newSelection != null) {
                 /*
                 Dialog<Void> dialog = new Dialog<>();
@@ -192,6 +197,7 @@ public class ProfiloUtControlle {
                     }
                 }
 
+                // Se il ristorante associato è stato trovato, naviga alla sua vista
                 if (ristoranteAssociato != null) {
                     try {
                         App.setRoot("ristorante", ristoranteAssociato, u);
@@ -211,6 +217,12 @@ public class ProfiloUtControlle {
         });
     }
 
+    /**
+     * Metodo che viene chiamato per inizializzare i dati del profilo dell'utente.
+     * Imposta i campi del profilo con i dati dell'utente e carica i ristoranti preferiti e le recensioni.
+     *
+     * @param u L'utente il cui profilo deve essere visualizzato.
+     */
     public void initData(Utente u) {
         this.u = u;
         System.out.println("ProfiloUtControlle initData - id utente: " + this.u.getId());
@@ -262,6 +274,12 @@ public class ProfiloUtControlle {
         }
     }
 
+    /**
+     * Metodo che viene chiamato quando l'utente preme il pulsante per visualizzare il ristorante selezionato.
+     * Naviga alla vista del ristorante selezionato nella ListView dei preferiti.
+     *
+     * @throws IOException Se si verifica un errore durante la navigazione alla vista del ristorante.
+     */
     @FXML
     private void switchToRistorante() throws IOException {
 

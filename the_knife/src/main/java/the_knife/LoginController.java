@@ -1,23 +1,23 @@
 package the_knife;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.TextField;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import the_knife.classes.Utente;
-import java.util.List;
-import java.util.ArrayList;
 
 public class LoginController {
 
     @FXML
-    private void switchToSecondary() throws IOException {
+    private void switchToSecondary() throws IOException { // Metodo per passare alla schermata di registrazione
         App.setRoot("Register");
     }
     @FXML
-    private void switchToGuest() throws IOException {
+    private void switchToGuest() throws IOException { // Metodo per passare alla schermata di navigazione come ospite
         App.setRoot("guest");
     }
 
@@ -29,6 +29,14 @@ public class LoginController {
     @FXML
     private PasswordField N_Password;
 
+    /**
+     * Metodo che viene chiamato quando l'utente preme il pulsante di login.
+     * Controlla se i campi di input sono compilati, legge la lista di utenti dal file "Utenti.bin",
+     * verifica le credenziali dell'utente e, se corrette, passa alla schermata "Home".
+     * Se le credenziali non sono corrette, mostra un alert di errore.
+     *
+     * @throws IOException Se si verifica un errore durante il caricamento della schermata "Home".
+     */
     @FXML
     private void switchToHome() throws IOException {
         String username = N_Utente.getText();

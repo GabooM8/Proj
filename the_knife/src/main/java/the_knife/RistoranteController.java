@@ -318,6 +318,10 @@ public class RistoranteController {
         
     }
     
+    /**
+     * Metodo che viene chiamato all'inizializzazione del controller.
+     * Imposta la cell factory per la ListView delle recensioni e gestisce la selezione delle recensioni.
+     */
     @FXML
     public void initialize() {
         recensioniListView.setCellFactory(param -> new ListCell<Recensione>() {
