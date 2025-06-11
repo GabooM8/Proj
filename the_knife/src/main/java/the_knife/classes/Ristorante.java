@@ -50,42 +50,81 @@ public class Ristorante implements Serializable {
         }*/
     }
 
+    /** 
+     * @return int
+     */
     public int getId() {
         return id;
     }
+    /** 
+     * @return String
+     */
     public String getNome() {
         return nome;
     }
+    /** 
+     * @return String
+     */
     public String getIndirizzo() {
         return indirizzo;
     }
+    /** 
+     * @return String
+     */
     public String getNazione() {
         return nazione;
     }
+    /** 
+     * @return String
+     */
     public String getCitta() {
         return citta;
     }
+    /** 
+     * @return int
+     */
     public int getPrezzo() {
         return prezzo;
     }
+    /** 
+     * @return int
+     */
     public int getNumStelle() {
         return numStelle;
     }
+    /** 
+     * @return String
+     */
     public String getCucina() {
         return cucina;
     }
+    /** 
+     * @return double
+     */
     public double getLatitudine() {
         return latitudine;
     }
+    /** 
+     * @return double
+     */
     public double getLongitudine() {
         return longitudine;
     }
+    /** 
+     * @return boolean
+     */
     public boolean getDelivery() {
         return delivery;
     }
+    /** 
+     * @return boolean
+     */
     public boolean getPrenotazione() {
         return prenotazione;
     }
+    /** 
+     * @return List<Integer>
+     */
     public List<Integer> getRecensioni() {
         return recensioni;
     }
@@ -99,37 +138,70 @@ public class Ristorante implements Serializable {
     public void setId(int id) {
         this.id = id;
     }
+    /** 
+     * @param nome
+     */
     public void setNome(String nome) {
         this.nome = nome;
     }
+    /** 
+     * @param indirizzo
+     */
     public void setIndirizzo(String indirizzo) {
         this.indirizzo = indirizzo;
     }
+    /** 
+     * @param nazione
+     */
     public void setNazione(String nazione) {
         this.nazione = nazione;
     }
+    /** 
+     * @param citta
+     */
     public void setCitta(String citta) {
         this.citta = citta;
     }
+    /** 
+     * @param prezzo
+     */
     public void setPrezzo(int prezzo) {
         this.prezzo = prezzo;
     }
 
+    /** 
+     * @param numStelle
+     */
     public void setNumStelle(int numStelle) {
         this.numStelle = numStelle;
     }
+    /** 
+     * @param cucina
+     */
     public void setCucina(String cucina) {
         this.cucina = cucina;
     }
+    /** 
+     * @param longitudine
+     */
     public void setLongitudine(double longitudine) {
         this.longitudine = longitudine;
     }
+    /** 
+     * @param latitudine
+     */
     public void setLatitudine(double latitudine) {
         this.latitudine = latitudine;
     }
+    /** 
+     * @param delivery
+     */
     public void setDelivery(boolean delivery) {
         this.delivery = delivery;
     }
+    /** 
+     * @param prenotazione
+     */
     public void setPrenotazione(boolean prenotazione) {
         this.prenotazione = prenotazione;
     }
@@ -166,6 +238,9 @@ public class Ristorante implements Serializable {
         numStelle = (sum)/(ristoranteRecensioni.size());
     }
 
+    /** 
+     * @return String
+     */
     @Override
     public String toString() {
         String prz;

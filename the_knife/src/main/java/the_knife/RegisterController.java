@@ -16,6 +16,9 @@ import the_knife.classes.Utente;
 
 public class RegisterController {
 
+    /** 
+     * @throws IOException
+     */
     @FXML
     private void switchToPrimary() throws IOException {
         App.setRoot("Login");
@@ -94,6 +97,10 @@ public class RegisterController {
         */
     }
 
+    /** 
+     * @param line
+     * @return String[]
+     */
     public static String[] parseCSVLine(String line) {
         // Metodo per fare lo split di una riga CSV considerando le virgole tra virgolette
         return line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
@@ -116,6 +123,9 @@ public class RegisterController {
     @FXML
     private ComboBox<String> cmbx_rl;
 
+    /** 
+     * @throws IOException
+     */
     @FXML
     private void switchToHome() throws IOException {
         // Recupera i valori dai campi di input

@@ -40,6 +40,12 @@ public class ProfiloUtControlle {
     @FXML private ListView<Ristorante> prefListView;
     @FXML private ListView<Recensione> recensioniListView;
 
+    /** 
+     * @param IOExceptionApp.setRoot("Home"
+     * @param updateProfile(
+     * @throws IOExceptionApp.setRoot("Home"
+     * @throws u);}public void updateProfile()
+     */
     @FXML
     private void switchToHome() throws IOException { // Metodo per passare alla schermata "Home"
         App.setRoot("Home",u);

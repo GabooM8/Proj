@@ -80,6 +80,9 @@ public class HomeController {
     // Lista attuale dei ristoranti
     private List<Ristorante> ristorantiCorrenti = null;
 
+    /** 
+     * @param u
+     */
     public void initData(Utente u) {
         // Inizializza i campi dell'utente con i dati passati
         this.u = u;

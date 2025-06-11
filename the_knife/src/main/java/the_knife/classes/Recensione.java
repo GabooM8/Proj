@@ -21,19 +21,34 @@ public class Recensione implements Serializable {
         this.id_utente = id_utente;
     }
 
+    /** 
+     * @return int
+     */
     public int getId() {
         return id;
     }
+    /** 
+     * @return int
+     */
     public int getNumStelle() {
         return num_stelle;
     }
+    /** 
+     * @return String
+     */
     public String getTesto() {
         return testo;
     }
+    /** 
+     * @return int
+     */
     public int getIdUtente() {
         return id_utente;
     }
 
+    /** 
+     * @return String
+     */
     @Override
     public String toString() {
         return "id:" + id + "\n" +

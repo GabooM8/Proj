@@ -9,6 +9,9 @@ import the_knife.classes.Utente;
 
 public class GuestController {
 
+    /** 
+     * @throws IOException
+     */
     @FXML
     private void switchToPrimary() throws IOException {
         App.setRoot("Login");
@@ -18,6 +21,9 @@ public class GuestController {
     private TextField nome;
     @FXML
     private TextField luogo;
+    /** 
+     * @throws IOException
+     */
     @FXML
     private void switchToHome() throws IOException {
         String G_nome=nome.getText();

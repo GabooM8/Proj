@@ -14,19 +14,34 @@ public class SottoRecensione implements Serializable {
         this.id_utente = id_utente;
     }
 
+    /** 
+     * @return int
+     */
     public int getId() {
         return id;
     }
+    /** 
+     * @return int
+     */
     public int getIdPadre() {
         return id_padre;
     }
+    /** 
+     * @return String
+     */
     public String getTesto() {
         return testo;
     }
+    /** 
+     * @return int
+     */
     public int getIdUtente() {
         return id_utente;
     }
 
+    /** 
+     * @return String
+     */
     @Override
     public String toString() {
         return "id=" + getId() + "\n" +

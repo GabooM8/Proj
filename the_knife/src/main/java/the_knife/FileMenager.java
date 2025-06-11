@@ -17,6 +17,10 @@ public class FileMenager {
 
     private static final String CARTELLA_FILE = "the_knife/src/main/java/the_knife/files/"; // Percorso della cartella dei file
 
+    /** 
+     * @param list
+     * @param fileName
+     */
     public static void addToFile(List<Object> list, String fileName) {
         /*
          * Aggiunge una lista di oggetti a un file.
@@ -36,6 +40,10 @@ public class FileMenager {
         }
     }
 
+    /** 
+     * @param fileName
+     * @return List<Object>
+     */
     public static List<Object> readFromFile(String fileName) {
         /*
          * Legge una lista di oggetti da un file.

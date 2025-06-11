@@ -12,10 +12,18 @@ import the_knife.classes.Utente;
 
 public class LoginController {
 
+    /** 
+     * @param switchToHome(
+     * @throws IOException
+     */
     @FXML
     private void switchToSecondary() throws IOException { // Metodo per passare alla schermata di registrazione
         App.setRoot("Register");
     }
+    /** 
+     * @param switchToHome(
+     * @throws IOException
+     */
     @FXML
     private void switchToGuest() throws IOException { // Metodo per passare alla schermata di navigazione come ospite
         App.setRoot("guest");

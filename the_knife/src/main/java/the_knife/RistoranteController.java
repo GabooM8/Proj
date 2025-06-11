@@ -419,6 +419,9 @@ public class RistoranteController {
         });
     }
 
+    /** 
+     * @param recensione
+     */
     private void visualizzaRisposte(Recensione recensione) {
         // Metodo per visualizzare le risposte a una recensione in un dialog
 
@@ -463,6 +466,9 @@ public class RistoranteController {
         dialog.showAndWait();
     }
 
+    /** 
+     * @param recensione
+     */
     private void modificaRecensione(Recensione recensione) {
         Dialog<Void> dialog = new Dialog<>();
         dialog.setTitle("Modifica Recensione");
@@ -602,6 +608,9 @@ public class RistoranteController {
         }
     }
 
+    /** 
+     * @throws IOException
+     */
     @FXML
     private void switchToHome() throws IOException {
         App.setRoot("Home",u);

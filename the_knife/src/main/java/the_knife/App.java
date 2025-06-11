@@ -48,10 +48,21 @@ public class App extends Application {
         scene.setRoot(loadFXML(fxml, null)); // Passa null per i dati
     }
 
+    /** 
+     * @param fxml
+     * @param data
+     * @throws IOException
+     */
     // Nuovo metodo sovraccaricato per passare dati al controller della nuova scena
     static void setRoot(String fxml, Object data) throws IOException {
         scene.setRoot(loadFXML(fxml, data));
     }
+    /** 
+     * @param fxml
+     * @param data
+     * @param data2
+     * @throws IOException
+     */
     static void setRoot(String fxml, Object data, Object data2) throws IOException {
         scene.setRoot(loadFXML(fxml, data, data2));
     }

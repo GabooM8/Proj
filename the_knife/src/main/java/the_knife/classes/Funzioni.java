@@ -8,6 +8,16 @@ import java.util.Scanner;
 import the_knife.FileMenager;
 
 public class Funzioni {
+    /** 
+     * @param inputSearchBar
+     * @param inputLocationFilter
+     * @param fasciaPrezzoFiltro
+     * @param numStelleFiltro
+     * @param cucinaFiltro
+     * @param deliveryFiltro
+     * @param prenotazioneFiltro
+     * @return List<Ristorante>
+     */
     public List<Ristorante> cercaRistorante(String inputSearchBar, String inputLocationFilter, int fasciaPrezzoFiltro, int numStelleFiltro, String cucinaFiltro, boolean deliveryFiltro, boolean prenotazioneFiltro) {
         String filename = "ristoranti.bin";
         List<Ristorante> risultati = new ArrayList<>();
@@ -133,6 +143,10 @@ public class Funzioni {
         }
     }
 
+    /** 
+     * @param idRistorante
+     * @param idUtente
+     */
     public void addPreferito(int idRistorante, int idUtente) {
         /*
          * Funzione che permette di aggiungere un ristorante ai preferiti di un utente.
@@ -203,6 +217,9 @@ public class Funzioni {
         FileMenager.addToFile(utenti, filename);
     }
 
+    /** 
+     * @return List<Utente>
+     */
     public List<Utente> getUtenti() {
         // Legge tutti gli utenti dal file binario e li restituisce come lista di Utente
         List<?> objects = (List<?>) FileMenager.readFromFile("Utenti.bin");
@@ -215,6 +232,9 @@ public class Funzioni {
         return utenti;
     }
 
+    /** 
+     * @return List<Recensione>
+     */
     public List<Recensione> getRecensioni() {
         // Legge tutte le recensioni dal file binario e le restituisce come lista di Recensione
         List<?> objects = (List<?>) FileMenager.readFromFile("recensioni.bin");

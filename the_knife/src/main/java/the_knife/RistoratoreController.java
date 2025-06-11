@@ -48,11 +48,17 @@ public class RistoratoreController {
     @FXML
     private ListView<Recensione> list_rece;
 
+    /** 
+     * @throws IOException
+     */
     @FXML
     private void switchToHome() throws IOException {
         App.setRoot("Home",u);
     }
 
+    /** 
+     * @param u
+     */
     public void initData(Utente u) {
         //inizializza utente
         this.u = u;
@@ -421,6 +427,9 @@ public class RistoratoreController {
         dialog.showAndWait();
     }
 
+    /** 
+     * @throws IOException
+     */
     @FXML
     private void switchToRistorante() throws IOException {
             Ristorante selectedRistorante = list_rist.getSelectionModel().getSelectedItem(); //preleva il ristorante selezionato dalla listview
