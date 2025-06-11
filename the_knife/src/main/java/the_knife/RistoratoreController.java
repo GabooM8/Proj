@@ -158,7 +158,7 @@ public class RistoratoreController {
                                         alert.showAndWait();
                                         return null;
                                     }
-                                    
+
                                     String testoRecensione = testo.getText();
 
                                     List<SottoRecensione> risposte = new ArrayList<>();
@@ -166,6 +166,20 @@ public class RistoratoreController {
                                     for( Object obj : objects) {
                                         if (obj instanceof SottoRecensione) {
                                             risposte.add((SottoRecensione) obj);
+                                        }
+                                    }
+
+                                    //controllo se la recensione ha già una risposta
+                                    for(SottoRecensione r : risposte)
+                                    {
+                                        if(r.getIdPadre() == item.getId())
+                                        {
+                                            Alert alert = new Alert(Alert.AlertType.ERROR);
+                                            alert.setTitle("Errore");
+                                            alert.setHeaderText(null);
+                                            alert.setContentText("Questa recensione ha già una risposta.");
+                                            alert.showAndWait();
+                                            return null;
                                         }
                                     }
 
