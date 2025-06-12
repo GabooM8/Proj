@@ -10,22 +10,30 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import the_knife.classes.Utente;
 
+/**
+ * Controller per la schermata di login.
+ * Gestisce l'interazione dell'utente con i campi di input e la navigazione tra le schermate.
+ */
 public class LoginController {
 
-    /** 
+    /**
+     * Metodo per passare alla schermata di registrazione utente
+     * 
      * @param switchToHome(
      * @throws IOException
      */
     @FXML
-    private void switchToSecondary() throws IOException { // Metodo per passare alla schermata di registrazione
+    private void switchToSecondary() throws IOException {
         App.setRoot("Register");
     }
-    /** 
+    /**
+     *  Metodo per passare alla schermata di registrazione guest
+     * 
      * @param switchToHome(
      * @throws IOException
      */
     @FXML
-    private void switchToGuest() throws IOException { // Metodo per passare alla schermata di navigazione come ospite
+    private void switchToGuest() throws IOException {
         App.setRoot("guest");
     }
 

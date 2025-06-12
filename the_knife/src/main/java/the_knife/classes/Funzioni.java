@@ -1,21 +1,21 @@
 package the_knife.classes;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 import the_knife.FileMenager;
 
 public class Funzioni {
     /** 
-     * @param inputSearchBar
-     * @param inputLocationFilter
-     * @param fasciaPrezzoFiltro
-     * @param numStelleFiltro
-     * @param cucinaFiltro
-     * @param deliveryFiltro
-     * @param prenotazioneFiltro
+     * Metodo che cerca ristoranti in base ai filtri specificati.
+     * 
+     * @param inputSearchBar Filtro testuale per nome o cucina del ristorante.
+     * @param inputLocationFilter Filtro testuale per indirizzo, città o nazione del ristorante.
+     * @param fasciaPrezzoFiltro Filtro per fascia di prezzo del ristorante (1-5).
+     * @param numStelleFiltro Filtro per numero di stelle del ristorante (1-5).
+     * @param cucinaFiltro Filtro per tipo di cucina del ristorante (es. "Italiana", "Cinese").
+     * @param deliveryFiltro Filtro booleano per ristoranti che offrono servizio di delivery.
+     * @param prenotazioneFiltro Filtro booleano per ristoranti che accettano prenotazioni.
      * @return List<Ristorante>
      */
     public List<Ristorante> cercaRistorante(String inputSearchBar, String inputLocationFilter, int fasciaPrezzoFiltro, int numStelleFiltro, String cucinaFiltro, boolean deliveryFiltro, boolean prenotazioneFiltro) {
@@ -85,67 +85,11 @@ public class Funzioni {
         return risultati;
     }
 
-    public void registrazione() {
-        try (Scanner scanner = new Scanner(System.in)) {
-            System.out.println("Inserisci il nome:");
-            String nome = scanner.nextLine();
-
-            System.out.println("Inserisci il cognome:");
-            String cognome = scanner.nextLine();
-
-            System.out.println("Inserisci il username:");
-            String username = scanner.nextLine();
-
-            System.out.println("Inserisci la password:");
-            String password = scanner.nextLine();
-
-            System.out.println("Inserisci la data di nascita (formato: yyyy-MM-dd):");
-            LocalDate dataNascita = null;
-            while (dataNascita == null) {
-                String dataInput = scanner.nextLine();
-                try {
-                    dataNascita = LocalDate.parse(dataInput, java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-                } catch (Exception e) {
-                    System.out.println("Formato data non valido. Riprova:");
-                }
-            }
-
-            System.out.println("Inserisci il luogo di domicilio:");
-            String luogoDomicilio = scanner.nextLine();
-
-            Boolean isRistoratore = null;
-            while (isRistoratore == null) {
-                System.out.println("Sei un ristoratore? (true/false):");
-                String input = scanner.nextLine().trim().toLowerCase();
-                switch (input) {
-                    case "true":
-                        isRistoratore = true;
-                        break;
-                    case "false":
-                        isRistoratore = false;
-                        break;
-                    default:
-                        System.out.println("Input non valido. Inserisci 'true' o 'false'.");
-                        break;
-                }
-            }
-            
-            String filename = "Utenti.bin";
-            List<Object> utenti = FileMenager.readFromFile(filename);
-
-            Utente u = (Utente)utenti.getLast();
-
-            int id = u.getId() + 1; // Incrementa l'ID dell'ultimo utente
-
-            utenti.add(new Utente(id,nome, cognome, username, password, dataNascita, luogoDomicilio, isRistoratore));
-            FileMenager.addToFile(utenti, filename);
-            System.out.println("Registrazione completata con successo!");
-        }
-    }
-
     /** 
-     * @param idRistorante
-     * @param idUtente
+     * Aggiunge un ristorante ai preferiti di un utente.
+     * 
+     * @param idRistorante L'ID del ristorante da aggiungere ai preferiti.
+     * @param idUtente L'ID dell'utente a cui aggiungere il ristorante preferito.
      */
     public void addPreferito(int idRistorante, int idUtente) {
         /*
@@ -164,6 +108,7 @@ public class Funzioni {
 
     /**
      * Visualizza i ristoranti preferiti di un utente.
+     * 
      * @param idUtente L'ID dell'utente di cui visualizzare i preferiti.
      * @return Una lista di ristoranti preferiti dall'utente.
      */
@@ -198,6 +143,7 @@ public class Funzioni {
 
     /**
      * Elimina un ristorante dai preferiti di un utente.
+     * 
      * @param idRistorante L'ID del ristorante da eliminare dai preferiti.
      * @param idUtente L'ID dell'utente da cui eliminare il ristorante.
      */
@@ -218,10 +164,11 @@ public class Funzioni {
     }
 
     /** 
+     * Legge tutti gli utenti dal file binario e li restituisce come lista di Utente
+     * 
      * @return List<Utente>
      */
     public List<Utente> getUtenti() {
-        // Legge tutti gli utenti dal file binario e li restituisce come lista di Utente
         List<?> objects = (List<?>) FileMenager.readFromFile("Utenti.bin");
         List<Utente> utenti = new ArrayList<>();
         for (Object obj : objects) {
@@ -233,10 +180,11 @@ public class Funzioni {
     }
 
     /** 
+     * Legge tutte le recensioni dal file binario e le restituisce come lista di Recensione
+     * 
      * @return List<Recensione>
      */
     public List<Recensione> getRecensioni() {
-        // Legge tutte le recensioni dal file binario e le restituisce come lista di Recensione
         List<?> objects = (List<?>) FileMenager.readFromFile("recensioni.bin");
         List<Recensione> recensioni = new ArrayList<>();
         for (Object obj : objects) {
@@ -249,6 +197,7 @@ public class Funzioni {
 
     /**
      * Cerca la città dell'utente tra i ristoranti e restituisce latitudine e longitudine se trova una corrispondenza.
+     * 
      * @param utente L'utente di cui cercare la città.
      * @return Un array double[2] con latitudine e longitudine, oppure null se non trovata.
      */
@@ -269,6 +218,12 @@ public class Funzioni {
     
     /**
      * Calcola la distanza (in km) tra due coordinate geografiche usando la formula dell'Haversine.
+     * 
+     * @param lat1 Latitudine del primo punto.
+     * @param lon1 Longitudine del primo punto.
+     * @param lat2 Latitudine del secondo punto.
+     * @param lon2 Longitudine del secondo punto.
+     * @return La distanza tra i due punti in chilometri.
      */
     public double calcolaDistanza(double lat1, double lon1, double lat2, double lon2) {
         final int R = 6371; // Raggio della Terra in km
@@ -371,6 +326,8 @@ public class Funzioni {
 
     /**
      * Metodo di supporto per ricalcolare le stelle di un ristorante
+     * 
+     * @param ristorante Il ristorante di cui ricalcolare le stelle.
      */
     private void ricalcolaStelle(Ristorante ristorante) {
         if (ristorante.getRecensioni().isEmpty()) {

@@ -7,9 +7,15 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import the_knife.classes.Utente;
 
+/**
+ * Controller per la schermata Guest.
+ * Gestisce l'interazione dell'utente con i campi di input e la navigazione tra le schermate.
+ */
 public class GuestController {
 
-    /** 
+    /**
+     * Metodo per tornare alla schermata di login. 
+     * 
      * @throws IOException
      */
     @FXML
@@ -21,7 +27,9 @@ public class GuestController {
     private TextField nome;
     @FXML
     private TextField luogo;
-    /** 
+    /**
+     * Metodo per passare alla schermata Home. 
+     * 
      * @throws IOException
      */
     @FXML
