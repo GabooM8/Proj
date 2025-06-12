@@ -18,6 +18,10 @@ import the_knife.classes.Recensione;
 import the_knife.classes.Ristorante;
 import the_knife.classes.Utente;
 
+/**
+ * Controller per la schermata del profilo dell'utente.
+ * Gestisce l'interazione dell'utente con i campi di input e la visualizzazione dei ristoranti preferiti e delle recensioni.
+ */
 public class ProfiloUtControlle {
     
     Utente u=new Utente();
@@ -40,19 +44,22 @@ public class ProfiloUtControlle {
     @FXML private ListView<Ristorante> prefListView;
     @FXML private ListView<Recensione> recensioniListView;
 
-    /** 
-     * @param IOExceptionApp.setRoot("Home"
-     * @param updateProfile(
-     * @throws IOExceptionApp.setRoot("Home"
-     * @throws u);}public void updateProfile()
+    /**
+     * Metodo per passare alla schermata Home 
+     * 
+     * @throws IOException
      */
     @FXML
-    private void switchToHome() throws IOException { // Metodo per passare alla schermata "Home"
+    private void switchToHome() throws IOException {
         App.setRoot("Home",u);
     }
 
+    /**
+     * Metodo che viene chiamato quando l'utente preme il pulsante per aggiornare il profilo.
+     * Controlla se i campi di input sono compilati, aggiorna i dati dell'utente e salva le modifiche su file.
+     * Se i campi non sono compilati, mostra un alert di errore.
+     */
     public void updateProfile() {
-        // Logica per aggiornare il profilo dell'utente
 
 
         //prende la lista di utenti dal file "Utenti.bin" e estrae gli utenti

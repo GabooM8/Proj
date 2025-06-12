@@ -19,6 +19,10 @@ import the_knife.classes.Funzioni;
 import the_knife.classes.Ristorante;
 import the_knife.classes.Utente;
 
+/**
+ * Controller per la schermata Home.
+ * Gestisce l'interazione dell'utente con i campi di input e la navigazione tra le schermate.
+ */
 public class HomeController {
     
     //variabili per gestire le informazioni dell'utente
@@ -81,7 +85,9 @@ public class HomeController {
     private List<Ristorante> ristorantiCorrenti = null;
 
     /** 
-     * @param u
+     * Inizializza i dati dell'utente e i campi della schermata Home.
+     * 
+     * @param u L'utente da inizializzare nella schermata Home.
      */
     public void initData(Utente u) {
         // Inizializza i campi dell'utente con i dati passati
@@ -164,6 +170,8 @@ public class HomeController {
     /**
      * Metodo chiamato quando l'utente preme il pulsante di ricerca.
      * Aggiorna la lista dei ristoranti in base ai filtri applicati.
+     * 
+     * @param event L'evento di azione del pulsante di ricerca.
      */
     @FXML
     private void inputSearchBar(ActionEvent event) { // Chiamato quando si preme Invio nella searchBar

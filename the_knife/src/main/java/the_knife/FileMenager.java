@@ -18,15 +18,14 @@ public class FileMenager {
     private static final String CARTELLA_FILE = "the_knife/src/main/java/the_knife/files/"; // Percorso della cartella dei file
 
     /** 
+     * Aggiunge una lista di oggetti a un file.
+     * Se il file non esiste, lo crea.
+     * Se esiste, sovrascrive il contenuto.
+     * 
      * @param list
      * @param fileName
      */
     public static void addToFile(List<Object> list, String fileName) {
-        /*
-         * Aggiunge una lista di oggetti a un file.
-         * Se il file non esiste, lo crea.
-         * Se esiste, sovrascrive il contenuto.
-         */
         String filePath = CARTELLA_FILE + fileName;
         File dir = new File(CARTELLA_FILE);
         if (!dir.exists()) {
@@ -41,14 +40,13 @@ public class FileMenager {
     }
 
     /** 
+     * Legge una lista di oggetti da un file.
+     * Se il file non esiste, restituisce una lista vuota.
+     * 
      * @param fileName
      * @return List<Object>
      */
     public static List<Object> readFromFile(String fileName) {
-        /*
-         * Legge una lista di oggetti da un file.
-         * Se il file non esiste, restituisce una lista vuota.
-         */
         String filePath = CARTELLA_FILE + fileName;
         File file = new File(filePath);
 

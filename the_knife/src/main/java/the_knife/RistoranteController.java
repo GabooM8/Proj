@@ -9,7 +9,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
-import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
@@ -23,16 +22,16 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import the_knife.classes.Funzioni;
 import the_knife.classes.Recensione;
 import the_knife.classes.Ristorante;
 import the_knife.classes.SottoRecensione;
 import the_knife.classes.Utente;
 
+/**
+ * Controller per la pagina di visualizzazione del ristorante.
+ */
 public class RistoranteController {
-
-    // Classe per il controller della pagina di visualizzazione del ristorante
 
     //inizializza variabili per il ristorante corrente e l'utente
     private Ristorante ristoranteCorrente;
@@ -58,7 +57,9 @@ public class RistoranteController {
 
     /**
      * Metodo per ricevere i dati del ristorante dal controller precedente.
+     * 
      * @param ristorante L'oggetto Ristorante da visualizzare.
+     * @param u L'oggetto Utente che rappresenta l'utente corrente.
      */
     public void initData(Ristorante ristorante,Utente u) {
         this.ristoranteCorrente = ristorante;
@@ -94,8 +95,11 @@ public class RistoranteController {
         }
     }
 
+    /**
+     * Metodo per aggiungere o rimuovere il ristorante corrente dai preferiti dell'utente.
+     * Cambia l'immagine del pulsante in base allo stato dei preferiti.
+     */
     public void addPreferito() {
-        // Metodo per aggiungere o rimuovere un ristorante dai preferiti dell'utente corrente
 
         Funzioni funzioni = new Funzioni();
         List<Utente> utenti = new ArrayList<>();
@@ -133,8 +137,11 @@ public class RistoranteController {
         }
     }
 
+    /**
+     * Metodo per aggiungere una recensione al ristorante corrente.
+     * Aggiorna inoltre il numero di stelle del ristorante e la label corrispondente.
+     */
     public void addRecensione() {
-        // Metodo per aggiungere una recensione al ristorante corrente
 
         //crea un dialog per inserire i dettagli della recensione
         Dialog<Void> dialog = new Dialog<>();
@@ -421,11 +428,12 @@ public class RistoranteController {
         });
     }
 
-    /** 
+    /**
+     * Metodo per visualizzare le risposte a una recensione in un dialog.
+     * 
      * @param recensione
      */
     private void visualizzaRisposte(Recensione recensione) {
-        // Metodo per visualizzare le risposte a una recensione in un dialog
 
         Dialog<Void> dialog = new Dialog<>();
         dialog.setTitle("Risposte");
@@ -468,7 +476,9 @@ public class RistoranteController {
         dialog.showAndWait();
     }
 
-    /** 
+    /**
+     * Metodo per modificare una recensione esistente. 
+     * 
      * @param recensione
      */
     private void modificaRecensione(Recensione recensione) {
@@ -582,6 +592,8 @@ public class RistoranteController {
 
     /**
      * Metodo di supporto per ricalcolare le stelle di un ristorante locale
+     * 
+     * @param ristorante Il ristorante per il quale ricalcolare le stelle.
      */
     private void ricalcolaStelle(Ristorante ristorante) {
         if (ristorante.getRecensioni() == null || ristorante.getRecensioni().isEmpty()) {
@@ -610,7 +622,9 @@ public class RistoranteController {
         }
     }
 
-    /** 
+    /**
+     * Metodo per passare alla schermata "Home". 
+     * 
      * @throws IOException
      */
     @FXML

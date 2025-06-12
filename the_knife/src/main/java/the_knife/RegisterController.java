@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.io.BufferedReader;
-import java.io.FileReader;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -15,12 +13,19 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import the_knife.classes.Funzioni;
 import the_knife.classes.Utente;
-import the_knife.classes.Ristorante;
 
 
+/**
+ * Controller per la schermata di registrazione.
+ * Gestisce l'interazione dell'utente con i campi di input e la navigazione tra le schermate.
+ * Permette agli utenti di registrarsi inserendo i propri dati personali e di accesso.
+ * Dopo la registrazione, l'utente viene reindirizzato alla schermata "Home".
+ */
 public class RegisterController {
 
-    /** 
+    /**
+     * Metodo per passare alla schermata di login. 
+     * 
      * @throws IOException
      */
     @FXML
@@ -102,7 +107,9 @@ public class RegisterController {
         */
     }
 
-    /** 
+    /**
+     * Metodo per fare lo split di una riga CSV considerando le virgole tra virgolette. 
+     * 
      * @param line
      * @return String[]
      */
@@ -129,6 +136,8 @@ public class RegisterController {
     private ComboBox<String> cmbx_rl;
 
     /** 
+     * Metodo che viene chiamato quando l'utente preme il pulsante di registrazione.
+     * 
      * @throws IOException
      */
     @FXML

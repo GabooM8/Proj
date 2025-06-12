@@ -15,6 +15,10 @@ import the_knife.classes.Utente;
  */
 public class App extends Application {
 
+    /**
+     * La scena principale dell'applicazione.
+     * Viene utilizzata per cambiare il contenuto della finestra principale.
+     */
     private static Scene scene;
 
     /**
@@ -49,15 +53,18 @@ public class App extends Application {
     }
 
     /** 
+     * Metodo sovraccaricato per passare dati al controller della nuova scena.
+     * 
      * @param fxml
      * @param data
      * @throws IOException
      */
-    // Nuovo metodo sovraccaricato per passare dati al controller della nuova scena
     static void setRoot(String fxml, Object data) throws IOException {
         scene.setRoot(loadFXML(fxml, data));
     }
-    /** 
+    /**
+     * Metodo sovraccaricato per passare due set di dati al controller della nuova scena. 
+     * 
      * @param fxml
      * @param data
      * @param data2
@@ -70,6 +77,9 @@ public class App extends Application {
     /**
      * Metodo per ottenere il nodo radice della scena corrente.
      *
+     * @param fxml Il nome del file FXML da caricare (senza estensione).
+     * @param data Dati da passare al controller della nuova scena.
+     * @throws IOException Se si verifica un errore durante il caricamento del file FXML.
      * @return Il nodo radice della scena corrente.
      */
     private static Parent loadFXML(String fxml, Object data) throws IOException {

@@ -9,22 +9,26 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.control.ButtonBar;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import the_knife.classes.Recensione;
 import the_knife.classes.Ristorante;
 import the_knife.classes.SottoRecensione;
 import the_knife.classes.Utente;
 
+/**
+ * Controller per la schermata del ristoratore.
+ * Gestisce l'interazione dell'utente ristoratore con i campi di input, la visualizzazione dei propri ristoranti e delle recensioni,
+ */
 public class RistoratoreController {
     
     Utente u=new Utente();
@@ -48,7 +52,9 @@ public class RistoratoreController {
     @FXML
     private ListView<Recensione> list_rece;
 
-    /** 
+    /**
+     * Metodo per passare alla schermata di Home.
+     * 
      * @throws IOException
      */
     @FXML
@@ -56,8 +62,10 @@ public class RistoratoreController {
         App.setRoot("Home",u);
     }
 
-    /** 
-     * @param u
+    /**
+     * Inizializza i dati del profilo dell'utente ristoratore. 
+     * 
+     * @param u l'utente ristoratore da inizializzare
      */
     public void initData(Utente u) {
         //inizializza utente
@@ -117,6 +125,10 @@ public class RistoratoreController {
         list_rece.setItems(observableRecensioni);
     }
 
+    /**
+     * Metodo che viene chiamato all'inizializzazione della schermata.
+     * Imposta le celle della ListView per le recensioni e i ristoranti.
+     */
     @FXML
     public void initialize() {
         if(list_rece != null) {
@@ -245,8 +257,11 @@ public class RistoratoreController {
         }
     }
 
+    /**
+     * Metodo per aggiornare il profilo dell'utente ristoratore.
+     * Legge i dati dai campi di input, aggiorna l'oggetto Utente e salva le modifiche nel file.
+     */
     public void updateProfile() {
-        // Logica per aggiornare il profilo dell'utente
 
 
         //prende tutti gli utenti dal file
@@ -285,8 +300,11 @@ public class RistoratoreController {
         alert.showAndWait();
     }
 
+    /**
+     * Metodo per aggiungere un nuovo ristorante.
+     * Crea un dialog per l'inserimento dei dettagli del ristorante e aggiorna il file con il nuovo ristorante.
+     */
     public void addRistorante() {
-        //Metodo per la creazione del dialog che permette l'inserimento di un nuovo ristorante
 
         //crea dialog
         Dialog<Void> dialog = new Dialog<>();
@@ -444,7 +462,9 @@ public class RistoratoreController {
         dialog.showAndWait();
     }
 
-    /** 
+    /**
+     * Metodo per passare alla schermata del ristorante selezionato. 
+     * 
      * @throws IOException
      */
     @FXML
