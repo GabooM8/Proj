@@ -16,5 +16,6 @@ the_knife\classes\SottoRecensione.class
 the_knife\HomeController.class
 the_knife\RistoranteController$1.class
 the_knife\RistoratoreController.class
+the_knife\classes\Funzioni.class
 the_knife\HomeController$1.class
 the_knife\GuestController.class
