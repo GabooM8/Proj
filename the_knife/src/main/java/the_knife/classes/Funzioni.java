@@ -1,5 +1,9 @@
 package the_knife.classes;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -410,5 +414,105 @@ public class Funzioni {
         FileMenager.addToFile(ristorantiObj, "ristoranti.bin");
         
         System.out.println("Recensione con ID " + idRecensione + " modificata con successo.");
+    }
+
+    public void addfileRist(){
+        
+        File file = new File("the_knife/src/main/java/the_knife/files/");
+        
+        if (!file.exists()) {
+            String filename = "ristoranti.bin";
+
+            List<Object> ristoranti = new ArrayList<>();
+
+            String csvFile = "the_knife/src/main/java/the_knife/files/michelin_my_maps.csv";
+            
+            try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+            String line;
+            int cont = 0;
+            while ((line = br.readLine()) != null) { 
+                if (cont == 0) {
+                    cont++;
+                    continue; // Salta l'intestazione del CSV
+                }
+
+                String[] values = parseCSVLine(line); // Fa split (considerando le virgole tra virgolette)
+
+                // Rimuove le virgolette da ogni valore
+                for (int i = 0; i < values.length; i++) {
+                    values[i] = values[i].trim().replace("\"", "");
+                }
+
+                // Creo variabili
+                String[] location = values[2].split(",");
+
+                String citta = location[0].trim();
+                String nazione;
+                if (location.length < 2) {
+                    nazione = location[0].trim();
+                } else {
+                    nazione = location[1].trim();
+                }
+
+                int numero_st = 0;
+                boolean delivery = values[7] != null && !values[7].isEmpty();
+                boolean prenotazione = values[9] != null && !values[9].isEmpty();
+
+                Ristorante ristorante = new Ristorante(
+                    cont,
+                    values[0],
+                    values[1],
+                    nazione,
+                    citta,
+                    values[3].length(),
+                    numero_st,
+                    values[4],
+                    Double.parseDouble(values[6]),
+                    Double.parseDouble(values[5]),
+                    delivery,
+                    prenotazione,
+                    values[12]
+                );
+                ristoranti.add(ristorante);
+                cont++;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+
+            FileMenager.addToFile(ristoranti, filename);
+
+            List<Object> ristorantiRead = FileMenager.readFromFile(filename);
+            for (Object obj : ristorantiRead) {
+                Ristorante ris = (Ristorante) obj;
+                System.out.println("Ristorante: " + ris.toString());
+            }
+        }
+        
+    }
+
+    /**
+     * Metodo di utilità per effettuare lo split di una riga CSV considerando le virgole tra virgolette.
+     * @param line La riga CSV da suddividere.
+     * @return Un array di stringhe con i valori della riga.
+     */
+    private String[] parseCSVLine(String line) {
+        List<String> result = new ArrayList<>();
+        StringBuilder current = new StringBuilder();
+        boolean inQuotes = false;
+        for (int i = 0; i < line.length(); i++) {
+            char c = line.charAt(i);
+            if (c == '\"') {
+                inQuotes = !inQuotes;
+            } else if (c == ',' && !inQuotes) {
+                result.add(current.toString());
+                current.setLength(0);
+            } else {
+                current.append(c);
+            }
+        }
+        result.add(current.toString());
+        return result.toArray(new String[0]);
     }
 }
