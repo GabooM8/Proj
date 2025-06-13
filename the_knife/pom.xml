@@ -1,63 +1,84 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>the_knife</groupId>
-    <artifactId>the_knife</artifactId>
-    <version>1.0-SNAPSHOT</version>
+
+    <groupId>com.example</groupId> <!-- Cambia con il tuo groupId -->
+    <artifactId>the_knife</artifactId> <!-- Cambia con il tuo artifactId -->
+    <version>1.0-SNAPSHOT</version> <!-- Cambia con la tua versione -->
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source> <!-- O la tua versione Java -->
+        <maven.compiler.target>11</maven.compiler.target> <!-- O la tua versione Java -->
+        <javafx.version>17.0.10</javafx.version> <!-- Usa una versione recente di JavaFX compatibile con il tuo JDK -->
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
-            <version>13</version>
+            <version>${javafx.version}</version>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
-            <version>13</version>
+            <version>${javafx.version}</version>
         </dependency>
+        <!-- Aggiungi qui altre dipendenze JavaFX se necessarie (es. javafx-media, javafx-web) -->
+        <!-- ...altre dipendenze del tuo progetto... -->
     </dependencies>
+
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.0</version>
+                <version>3.8.1</version> <!-- O versione più recente -->
                 <configuration>
-                    <release>11</release>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
-                <version>0.0.8</version>
+                <version>0.0.8</version> <!-- Controlla per versioni più recenti se disponibili -->
+                <configuration>
+                    <!-- La mainClass qui è per javafx:run, non per il JAR ombreggiato -->
+                    <mainClass>the_knife.Launcher</mainClass> 
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.2.4</version> <!-- O versione più recente -->
                 <executions>
                     <execution>
-                        <!-- Default configuration for running -->
-                        <!-- Usage: mvn clean javafx:run -->
-                        <id>default-cli</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
                         <configuration>
-                            <mainClass>the_knife.App</mainClass>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <!-- Modifica questa riga per puntare alla nuova classe Launcher -->
+                                    <mainClass>the_knife.Launcher</mainClass>
+                                </transformer>
+                            </transformers>
+                            <filters>
+                                <filter>
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/*.SF</exclude>
+                                        <exclude>META-INF/*.DSA</exclude>
+                                        <exclude>META-INF/*.RSA</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
-                            
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.2.2</version>
-                <configuration>
-                    <archive>
-                    <manifest>
-                        <mainClass>the_knife.App</mainClass>
-                    </manifest>
-                    </archive>
-                </configuration>
             </plugin>
         </plugins>
     </build>
