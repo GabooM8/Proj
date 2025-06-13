@@ -418,9 +418,10 @@ public class Funzioni {
 
     public void addfileRist(){
         
-        File file = new File("the_knife/src/main/java/the_knife/files/");
+        File file = new File("the_knife/src/main/java/the_knife/files/ristoranti.bin");
         
         if (!file.exists()) {
+            
             String filename = "ristoranti.bin";
 
             List<Object> ristoranti = new ArrayList<>();
