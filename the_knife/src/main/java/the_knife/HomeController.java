@@ -105,7 +105,6 @@ public class HomeController {
             utenteLat = coord[0];
             utenteLon = coord[1];
         }
-        funzioni.addfileRist();
     }
 
     /**
