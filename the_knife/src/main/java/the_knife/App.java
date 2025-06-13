@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import the_knife.classes.Funzioni;
 import the_knife.classes.Ristorante;
 import the_knife.classes.Utente;
 
@@ -134,7 +135,8 @@ public class App extends Application {
      * @param args Gli argomenti della riga di comando (non utilizzati in questo caso).
      */
     public static void main(String[] args) {
-        
+        Funzioni f = new Funzioni();
+        f.addfileRist();
         launch();
     }
 
