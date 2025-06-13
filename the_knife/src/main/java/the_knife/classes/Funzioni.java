@@ -426,7 +426,7 @@ public class Funzioni {
 
             List<Object> ristoranti = new ArrayList<>();
 
-            String csvFile = "the_knife/src/main/java/the_knife/files/michelin_my_maps.csv";
+            String csvFile = "the_knife/src/main/java/the_knife/source/michelin_my_maps.csv";
             
             try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
             String line;
