@@ -76,11 +76,11 @@ public class FileMenager {
             if (resourceStream != null) {
                 try (ObjectInputStream ois = new ObjectInputStream(resourceStream)) {
                     List<Object> dataFromJar = (List<Object>) ois.readObject();
-                    System.out.println("Dati iniziali caricati per " + fileName + " dal JAR.");
+                    //System.out.println("Dati iniziali caricati per " + fileName + " dal JAR.");
                     
                     // Tenta di salvare questi dati iniziali nel file esterno per modifiche future
                     addToFile(dataFromJar, fileName); 
-                    System.out.println("Dati iniziali salvati per " + fileName + " in " + externalFile.getAbsolutePath());
+                    //System.out.println("Dati iniziali salvati per " + fileName + " in " + externalFile.getAbsolutePath());
                     return dataFromJar;
                 }
             } else {

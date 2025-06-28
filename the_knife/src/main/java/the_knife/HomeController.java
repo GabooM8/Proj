@@ -406,9 +406,9 @@ public class HomeController {
      */
     @FXML
     private void switchToProfiloUT() throws IOException {
-        System.out.println("[DEBUG] HomeController.switchToProfiloUT: Inizio metodo.");
-        System.out.println("[DEBUG] HomeController.switchToProfiloUT: Valore di Ruolo: " + Ruolo);
-        System.out.println("[DEBUG] HomeController.switchToProfiloUT: Oggetto Utente u: " + (u != null ? u.getUsername() : "null"));
+        //System.out.println("[DEBUG] HomeController.switchToProfiloUT: Inizio metodo.");
+        //System.out.println("[DEBUG] HomeController.switchToProfiloUT: Valore di Ruolo: " + Ruolo);
+        //System.out.println("[DEBUG] HomeController.switchToProfiloUT: Oggetto Utente u: " + (u != null ? u.getUsername() : "null"));
 
         if (Ruolo == null) {
             System.err.println("[ERROR] HomeController.switchToProfiloUT: Ruolo è null! Navigazione a Login.");
@@ -424,16 +424,16 @@ public class HomeController {
 
         try {
             if(Ruolo.equals("cliente")) {
-                System.out.println("[DEBUG] Navigazione a ProfiloUt per cliente: " + (u != null ? u.getUsername() : "ERRORE U E' NULL"));
+                //System.out.println("[DEBUG] Navigazione a ProfiloUt per cliente: " + (u != null ? u.getUsername() : "ERRORE U E' NULL"));
                 App.setRoot("ProfiloUt", u); // Nome FXML corretto
             } else if(Ruolo.equals("ristoratore")) {
-                System.out.println("[DEBUG] Navigazione a ristoratore per ristoratore: " + (u != null ? u.getUsername() : "ERRORE U E' NULL"));
+                //System.out.println("[DEBUG] Navigazione a ristoratore per ristoratore: " + (u != null ? u.getUsername() : "ERRORE U E' NULL"));
                 App.setRoot("ristoratore", u); // Assicurati che ristoratore.fxml sia il nome corretto
             } else if(Ruolo.equals("guest")) {
-                System.out.println("[DEBUG] Navigazione a Register per guest.");
+                //System.out.println("[DEBUG] Navigazione a Register per guest.");
                 App.setRoot("Register"); // Assicurati che Register.fxml sia il nome corretto
             } else {
-                System.err.println("[ERROR] HomeController.switchToProfiloUT: Ruolo non riconosciuto: " + Ruolo + ". Navigazione a Login.");
+                //System.err.println("[ERROR] HomeController.switchToProfiloUT: Ruolo non riconosciuto: " + Ruolo + ". Navigazione a Login.");
                 App.setRoot("Login"); // Fallback
             }
         } catch (IOException e) {

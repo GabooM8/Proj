@@ -104,7 +104,7 @@ public class ProfiloUtControlle {
      */
     @FXML
     public void initialize() {
-        System.out.println("ProfiloUtControlle initialize - id utente (prima di initData): " + (this.u != null ? this.u.getId() : "utente nullo"));
+        //System.out.println("ProfiloUtControlle initialize - id utente (prima di initData): " + (this.u != null ? this.u.getId() : "utente nullo"));
 
         if (prefListView == null) {
             System.err.println("ERRORE FATALE: prefListView non è stato iniettato correttamente in initialize(). Controllare il file FXML.");
@@ -238,7 +238,7 @@ public class ProfiloUtControlle {
      */
     public void initData(Utente u) {
         this.u = u;
-        System.out.println("ProfiloUtControlle initData - id utente: " + this.u.getId());
+        //System.out.println("ProfiloUtControlle initData - id utente: " + this.u.getId());
 
         // Inizializza i campi del profilo con i dati dell'utente
         nome.setText(u.getNome());

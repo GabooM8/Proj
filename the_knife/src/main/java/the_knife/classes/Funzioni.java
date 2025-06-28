@@ -122,17 +122,17 @@ public class Funzioni {
         List<Object> utenti = FileMenager.readFromFile(filename);
         for(Object obj : utenti) { // Itera attraverso gli utenti per trovare quello con l'ID specificato
             Utente u = (Utente) obj;
-            System.out.println(u.getId() + " " + idUtente);
+            //System.out.println(u.getId() + " " + idUtente);
             if (u.getId() == idUtente) { // Controlla se l'ID dell'utente corrisponde a quello passato come parametro
                 utente=u;
                 break;
             }
         }
         if (utente == null) {
-            System.out.println("Utente non trovato.");
+            //System.out.println("Utente non trovato.");
             return new ArrayList<>();
         }
-        System.out.println("Ristoranti preferiti per l'utente " + utente.getNome() + ":");
+        //System.out.println("Ristoranti preferiti per l'utente " + utente.getNome() + ":");
         List<Ristorante> preferiti = new ArrayList<>();
         String ristoranteFile = "ristoranti.bin";
         List<Object> ristoranti = FileMenager.readFromFile(ristoranteFile);
@@ -263,7 +263,7 @@ public class Funzioni {
         }
         
         if (recensioneDaEliminare == null) {
-            System.out.println("Recensione con ID " + idRecensione + " non trovata.");
+            //System.out.println("Recensione con ID " + idRecensione + " non trovata.");
             return;
         }
         
@@ -325,7 +325,7 @@ public class Funzioni {
         List<Object> risposteObj = new ArrayList<>(risposte);
         FileMenager.addToFile(risposteObj, "risposte.bin");
         
-        System.out.println("Recensione con ID " + idRecensione + " eliminata con successo insieme a tutte le sue risposte.");
+        //System.out.println("Recensione con ID " + idRecensione + " eliminata con successo insieme a tutte le sue risposte.");
     }
 
     /**
@@ -387,7 +387,7 @@ public class Funzioni {
         }
         
         if (!recensioneTrovata) {
-            System.out.println("Recensione con ID " + idRecensione + " non trovata.");
+            //System.out.println("Recensione con ID " + idRecensione + " non trovata.");
             return;
         }
         
@@ -413,7 +413,7 @@ public class Funzioni {
         List<Object> ristorantiObj = new ArrayList<>(ristoranti);
         FileMenager.addToFile(ristorantiObj, "ristoranti.bin");
         
-        System.out.println("Recensione con ID " + idRecensione + " modificata con successo.");
+        //System.out.println("Recensione con ID " + idRecensione + " modificata con successo.");
     }
 
     public void addfileRist(){
@@ -487,7 +487,7 @@ public class Funzioni {
             List<Object> ristorantiRead = FileMenager.readFromFile(filename);
             for (Object obj : ristorantiRead) {
                 Ristorante ris = (Ristorante) obj;
-                System.out.println("Ristorante: " + ris.toString());
+                //System.out.println("Ristorante: " + ris.toString());
             }
         }
         
