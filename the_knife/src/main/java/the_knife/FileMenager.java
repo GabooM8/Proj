@@ -10,11 +10,20 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe per la gestione dei file dell'applicazione "The Knife".
+ * Questa classe fornisce metodi per leggere e scrivere liste di oggetti su file,
+ * sia nella directory esterna dell'utente che all'interno del JAR.
+ */
 public class FileMenager {
 
-    // Percorso base per le risorse all'interno del JAR
+    /**
+     * Percorso base per le risorse all'interno del JAR
+     */
     private static final String RESOURCE_DIRECTORY_IN_JAR = "/the_knife/files/";
-    // Directory per l'archiviazione esterna scrivibile dei dati
+    /**
+     * Directory per l'archiviazione esterna scrivibile dei dati
+     */
     private static final File EXTERNAL_DATA_DIR = new File(System.getProperty("user.home") + File.separator + ".the_knife_app_data");
 
     static {
