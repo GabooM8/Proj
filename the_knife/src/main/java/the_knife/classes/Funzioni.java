@@ -1,8 +1,6 @@
 package the_knife.classes;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -417,18 +415,24 @@ public class Funzioni {
     }
 
     public void addfileRist(){
+        // Controlla se i ristoranti sono già stati caricati
+        List<Object> ristorantiEsistenti = FileMenager.readFromFile("ristoranti.bin");
         
-        File file = new File("the_knife/src/main/java/the_knife/files/ristoranti.bin");
-        
-        if (!file.exists()) {
-            
+        if (ristorantiEsistenti.isEmpty()) {
+            System.out.println("DEBUG: Caricamento ristoranti dal CSV...");
             String filename = "ristoranti.bin";
-
             List<Object> ristoranti = new ArrayList<>();
 
-            String csvFile = "the_knife/src/main/java/the_knife/source/michelin_my_maps.csv";
-            
-            try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+            // Usa getResourceAsStream per leggere il CSV dalle risorse del JAR
+            try (java.io.InputStream csvStream = getClass().getResourceAsStream("/the_knife/files/michelin_my_maps.csv");
+                 java.io.InputStreamReader isr = new java.io.InputStreamReader(csvStream);
+                 BufferedReader br = new BufferedReader(isr)) {
+                
+                if (csvStream == null) {
+                    System.err.println("ERRORE: File CSV non trovato nelle risorse: /the_knife/files/michelin_my_maps.csv");
+                    return;
+                }
+                
             String line;
             int cont = 0;
             while ((line = br.readLine()) != null) { 
@@ -478,19 +482,19 @@ public class Funzioni {
                 cont++;
             }
         } catch (IOException e) {
+            System.err.println("ERRORE: Impossibile leggere il file CSV dalle risorse");
             e.printStackTrace();
+            return;
         }
-        
 
             FileMenager.addToFile(ristoranti, filename);
+            System.out.println("DEBUG: Caricati " + ristoranti.size() + " ristoranti dal CSV");
 
             List<Object> ristorantiRead = FileMenager.readFromFile(filename);
-            for (Object obj : ristorantiRead) {
-                Ristorante ris = (Ristorante) obj;
-                //System.out.println("Ristorante: " + ris.toString());
-            }
+            System.out.println("DEBUG: Verifica lettura: " + ristorantiRead.size() + " ristoranti letti");
+        } else {
+            System.out.println("DEBUG: Ristoranti già presenti: " + ristorantiEsistenti.size());
         }
-        
     }
 
     /**

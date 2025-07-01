@@ -67,33 +67,41 @@ public class FileMenager {
      */
     public static List<Object> readFromFile(String fileName) {
         File externalFile = getExternalFile(fileName);
+        System.out.println("DEBUG: Cerco il file esterno: " + externalFile.getAbsolutePath());
 
         if (externalFile.exists()) {
+            System.out.println("DEBUG: File esterno trovato, leggo da: " + externalFile.getAbsolutePath());
             try (ObjectInputStream inp = new ObjectInputStream(new FileInputStream(externalFile))) {
-                return (List<Object>) inp.readObject();
+                List<Object> data = (List<Object>) inp.readObject();
+                System.out.println("DEBUG: Letti " + data.size() + " elementi dal file esterno");
+                return data;
             } catch (IOException | ClassNotFoundException e) {
                 System.err.println("Errore durante la lettura dal file esterno: " + externalFile.getAbsolutePath() + 
                                    ". Tentativo di caricamento dal JAR. Errore: " + e.getMessage());
                 // Opzionale: eliminare o rinominare il file esterno corrotto qui.
                 // externalFile.delete(); 
             }
+        } else {
+            System.out.println("DEBUG: File esterno non trovato, cerco nel JAR");
         }
 
         // Se non trovato nell'archivio esterno o errore di lettura, tenta il caricamento dalle risorse JAR
         String resourcePath = RESOURCE_DIRECTORY_IN_JAR + fileName;
+        System.out.println("DEBUG: Cerco risorsa nel JAR: " + resourcePath);
         try (InputStream resourceStream = FileMenager.class.getResourceAsStream(resourcePath)) {
             if (resourceStream != null) {
+                System.out.println("DEBUG: Risorsa trovata nel JAR, carico dati iniziali");
                 try (ObjectInputStream ois = new ObjectInputStream(resourceStream)) {
                     List<Object> dataFromJar = (List<Object>) ois.readObject();
-                    //System.out.println("Dati iniziali caricati per " + fileName + " dal JAR.");
+                    System.out.println("DEBUG: Caricati " + dataFromJar.size() + " elementi dal JAR");
                     
                     // Tenta di salvare questi dati iniziali nel file esterno per modifiche future
                     addToFile(dataFromJar, fileName); 
-                    //System.out.println("Dati iniziali salvati per " + fileName + " in " + externalFile.getAbsolutePath());
+                    System.out.println("DEBUG: Dati salvati nel file esterno: " + externalFile.getAbsolutePath());
                     return dataFromJar;
                 }
             } else {
-                System.err.println("Risorsa non trovata nel JAR: " + resourcePath + 
+                System.err.println("DEBUG: Risorsa non trovata nel JAR: " + resourcePath + 
                                    " e file esterno non trovato/leggibile: " + externalFile.getAbsolutePath());
                 return new ArrayList<>(); // File non trovato
             }
