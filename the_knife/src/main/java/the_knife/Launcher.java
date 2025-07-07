@@ -1,3 +1,8 @@
+/**
+ * @author Michele Viselli 763016 VA
+ * @author Gabriele Macchi 760959 VA
+ */
+
 package the_knife;
 
 /**
