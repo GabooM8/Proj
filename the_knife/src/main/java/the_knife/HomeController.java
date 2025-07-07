@@ -29,6 +29,12 @@ import the_knife.classes.Utente;
  * Gestisce l'interazione dell'utente con i campi di input e la navigazione tra le schermate.
  */
 public class HomeController {
+
+    /**
+     * Costruttore privato per evitare l'istanza della classe.
+     */
+    private HomeController() {}
+
     /**
      * Varibile per il nuovo utente
      */

@@ -29,9 +29,14 @@ import the_knife.classes.Utente;
 public class RegisterController {
 
     /**
+     * Costruttore privato per evitare l'istanza della classe.
+     */
+    private RegisterController() {}
+
+    /**
      * Metodo per passare alla schermata di login. 
      * 
-     * @throws IOException
+     * @throws IOException errore durante il caricamento della schermata di login.
      */
     @FXML
     public void switchToPrimary() throws IOException {
@@ -115,8 +120,8 @@ public class RegisterController {
     /**
      * Metodo per fare lo split di una riga CSV considerando le virgole tra virgolette. 
      * 
-     * @param line
-     * @return String[]
+     * @param line La riga CSV da analizzare.
+     * @return String[] Un array di stringhe che rappresentano i valori della riga CSV.
      */
     public static String[] parseCSVLine(String line) {
         // Metodo per fare lo split di una riga CSV considerando le virgole tra virgolette
@@ -143,7 +148,7 @@ public class RegisterController {
     /** 
      * Metodo che viene chiamato quando l'utente preme il pulsante di registrazione.
      * 
-     * @throws IOException
+     * @throws IOException Se si verifica un errore durante il caricamento della schermata "Home".
      */
     @FXML
     public void switchToHome() throws IOException {

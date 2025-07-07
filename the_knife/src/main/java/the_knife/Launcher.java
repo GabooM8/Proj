@@ -10,8 +10,20 @@ package the_knife;
  * Questa classe contiene il metodo main che richiama il metodo main della classe principale JavaFX.
  */
 public class Launcher {
+
+    /**
+     * Costruttore privato per evitare l'istanza della classe.
+     * Questa classe è una utility e non dovrebbe essere istanziata.
+     */
+    private Launcher() {}
+
+    /**
+     * Metodo main per avviare l'applicazione JavaFX.
+     * 
+     * @param args Argomenti della riga di comando (non utilizzati in questo caso).
+     */
     public static void main(String[] args) {
-        // Chiama il metodo main della tua classe principale JavaFX (App.java)
+        // Chiama il metodo main della classe principale JavaFX (App.java)
         App.main(args);
     }
 }

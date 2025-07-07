@@ -35,6 +35,11 @@ import the_knife.classes.Utente;
  * Gestisce l'interazione dell'utente ristoratore con i campi di input, la visualizzazione dei propri ristoranti e delle recensioni,
  */
 public class RistoratoreController {
+
+    /**
+     * Costruttore privato per evitare l'istanza della classe.
+     */
+    private RistoratoreController() {}
     
     Utente u=new Utente();
 
@@ -60,7 +65,7 @@ public class RistoratoreController {
     /**
      * Metodo per passare alla schermata di Home.
      * 
-     * @throws IOException
+     * @throws IOException errore durante il caricamento della schermata Home.
      */
     @FXML
     public void switchToHome() throws IOException {
@@ -470,7 +475,7 @@ public class RistoratoreController {
     /**
      * Metodo per passare alla schermata del ristorante selezionato. 
      * 
-     * @throws IOException
+     * @throws IOException errore durante il caricamento della schermata del ristorante.
      */
     @FXML
     public void switchToRistorante() throws IOException {

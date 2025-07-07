@@ -19,9 +19,14 @@ import the_knife.classes.Utente;
 public class GuestController {
 
     /**
+     * Costruttore privato per evitare l'istanza della classe.
+     */
+    private GuestController() {}
+
+    /**
      * Metodo per tornare alla schermata di login. 
      * 
-     * @throws IOException
+     * @throws IOException errore durante il caricamento della schermata di login.
      */
     @FXML
     public void switchToPrimary() throws IOException {
@@ -40,7 +45,7 @@ public class GuestController {
     /**
      * Metodo per passare alla schermata Home. 
      * 
-     * @throws IOException
+     * @throws IOException errore durante il caricamento della schermata Home.
      */
     @FXML
     public void switchToHome() throws IOException {

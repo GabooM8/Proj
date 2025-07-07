@@ -38,6 +38,11 @@ import the_knife.classes.Utente;
  */
 public class RistoranteController {
 
+    /**
+     * Costruttore privato per evitare l'istanza della classe.
+     */
+    private RistoranteController() {}
+
     //inizializza variabili per il ristorante corrente e l'utente
     private Ristorante ristoranteCorrente;
     Utente u=new Utente();
@@ -632,7 +637,7 @@ public class RistoranteController {
     /**
      * Metodo per passare alla schermata "Home". 
      * 
-     * @throws IOException
+     * @throws IOException errore durante il caricamento della schermata "Home".
      */
     @FXML
     public void switchToHome() throws IOException {

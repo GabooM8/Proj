@@ -22,10 +22,14 @@ import the_knife.classes.Utente;
 public class LoginController {
 
     /**
+     * Costruttore privato per evitare l'istanza della classe.
+     */
+    private LoginController() {}
+
+    /**
      * Metodo per passare alla schermata di registrazione utente
-     * 
-     * @param switchToHome(
-     * @throws IOException
+     *
+     * @throws IOException errore durante il caricamento della schermata di registrazione.
      */
     @FXML
     public void switchToSecondary() throws IOException {
@@ -33,9 +37,8 @@ public class LoginController {
     }
     /**
      *  Metodo per passare alla schermata di registrazione guest
-     * 
-     * @param switchToHome(
-     * @throws IOException
+     *
+     * @throws IOException errore durante il caricamento della schermata guest.
      */
     @FXML
     public void switchToGuest() throws IOException {

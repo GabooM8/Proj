@@ -21,6 +21,11 @@ import java.util.List;
  * sia nella directory esterna dell'utente che all'interno del JAR.
  */
 public class FileMenager {
+    /**
+     * Costruttore di default.
+     * Non è necessario istanziare questa classe, quindi il costruttore è privato.
+     */
+    private FileMenager() {}
 
     /**
      * Percorso base per le risorse all'interno del JAR
@@ -41,8 +46,8 @@ public class FileMenager {
     }
 
     /**
-     * @param fileName
-     * @return
+     * @param fileName Il nome del file da cercare nella directory esterna.
+     * @return Un oggetto File che rappresenta il file nella directory esterna.
      */
     public static File getExternalFile(String fileName) {
         return new File(EXTERNAL_DATA_DIR, fileName);
