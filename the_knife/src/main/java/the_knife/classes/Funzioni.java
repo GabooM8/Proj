@@ -12,6 +12,9 @@ import java.util.List;
 
 import the_knife.FileMenager;
 
+/**
+ * Classe contenente numerose funzioni usate nel progetto
+ */
 public class Funzioni {
     /** 
      * Metodo che cerca ristoranti in base ai filtri specificati.
@@ -336,7 +339,7 @@ public class Funzioni {
      * 
      * @param ristorante Il ristorante di cui ricalcolare le stelle.
      */
-    private void ricalcolaStelle(Ristorante ristorante) {
+    public void ricalcolaStelle(Ristorante ristorante) {
         if (ristorante.getRecensioni().isEmpty()) {
             ristorante.setNumStelle(0);
             return;
@@ -507,7 +510,7 @@ public class Funzioni {
      * @param line La riga CSV da suddividere.
      * @return Un array di stringhe con i valori della riga.
      */
-    private String[] parseCSVLine(String line) {
+    public String[] parseCSVLine(String line) {
         List<String> result = new ArrayList<>();
         StringBuilder current = new StringBuilder();
         boolean inQuotes = false;

@@ -29,19 +29,42 @@ import the_knife.classes.Utente;
  * Gestisce l'interazione dell'utente con i campi di input e la navigazione tra le schermate.
  */
 public class HomeController {
-    
-    //variabili per gestire le informazioni dell'utente
-
+    /**
+     * Varibile per il nuovo utente
+     */
     Utente u=new Utente();
 
+    /**
+     * Ruolo dell'utente (ristoratore o cliente)
+     */
     String Ruolo;
+    /**
+     * Username dell'utente
+     */
     String Username;
+    /**
+     * Luogo di residenza dell'utente
+     */
     String Luogo;
-
+    /**
+     * Indica se il ristorante fa delivery o no
+     */
     boolean delivery = false;
+    /**
+     * Indica se il ristorante fa prenotazione o no
+     */
     boolean prenotazione = false;
+    /**
+     * Indica la fascia di prezzo del ristorante
+     */
     int fasciaPrezzo = 0;
+    /**
+     * Indica il numero di stelle del ristorante
+     */
     int numStelle = 0;
+    /**
+     * Indica la cucina del ristorante
+     */
     String cucina = "";
 
     // Elementi FXML
@@ -63,8 +86,10 @@ public class HomeController {
     @FXML private CheckBox deliveryCheckBox;
     @FXML private CheckBox prenotazioneCheckBox;
 
-    // Lista di elementi per il prezzoComboBox
-    private ObservableList<String> opzioniFiltroPrezzo = FXCollections.observableArrayList(
+    /**
+     * Lista di elementi per il prezzoComboBox
+     */
+    public ObservableList<String> opzioniFiltroPrezzo = FXCollections.observableArrayList(
         "Tutte",
         "Bassa (€)",
         "Media (€€)",
@@ -72,8 +97,10 @@ public class HomeController {
         "Molto Alta (€€€€)"
     );
 
-     // Lista di elementi per il stelleComboBox
-    private ObservableList<String> opzioniFiltroStelle = FXCollections.observableArrayList(
+    /**
+     * Lista di elementi per il stelleComboBox
+     */
+    public ObservableList<String> opzioniFiltroStelle = FXCollections.observableArrayList(
         "Nessuna",
         "Una stella (*)",
         "Due stelle (**)",
@@ -82,12 +109,19 @@ public class HomeController {
         "Cinque stelle (*****))"
     );
     
-    // Variabili per latitudine e longitudine dell'utente
+    /**
+     * latitudine del luogo inserito dall'utente
+     */
     public double utenteLat = 0.0;
+    /**
+     * longitudine del luogo inserito dall'utente
+     */
     public double utenteLon = 0.0;
 
-    // Lista attuale dei ristoranti
-    private List<Ristorante> ristorantiCorrenti = null;
+    /**
+     * Lista attuale dei ristoranti
+     */
+    public List<Ristorante> ristorantiCorrenti = null;
 
     /** 
      * Inizializza i dati dell'utente e i campi della schermata Home.
@@ -179,7 +213,7 @@ public class HomeController {
      * @param event L'evento di azione del pulsante di ricerca.
      */
     @FXML
-    private void inputSearchBar(ActionEvent event) { // Chiamato quando si preme Invio nella searchBar
+    public void inputSearchBar(ActionEvent event) { // Chiamato quando si preme Invio nella searchBar
         aggiornaApplicazioneFiltri();
     }
 
@@ -190,7 +224,7 @@ public class HomeController {
      * @param event L'evento di azione del pulsante di ordinamento.
      */
     @FXML
-    private void sortButtonAction(ActionEvent event) {
+    public void sortButtonAction(ActionEvent event) {
         if (ristorantiCorrenti == null || ristorantiCorrenti.isEmpty()) return;
 
         Funzioni funzioni = new Funzioni();
@@ -255,7 +289,7 @@ public class HomeController {
      * @param event L'evento di azione del campo di testo della località.
      */
     @FXML
-    private void locationTextFieldAction(ActionEvent event) {
+    public void locationTextFieldAction(ActionEvent event) {
         aggiornaApplicazioneFiltri();
     }
 
@@ -266,7 +300,7 @@ public class HomeController {
      * @param event L'evento di azione del ComboBox del prezzo.
      */
     @FXML
-    private void prezzoComboBoxAction(ActionEvent event) {
+    public void prezzoComboBoxAction(ActionEvent event) {
         String selectedOption = prezzoComboBox.getSelectionModel().getSelectedItem();
         if (selectedOption != null) {
             //System.out.println("Filtro prezzo selezionato: " + selectedOption);
@@ -292,7 +326,7 @@ public class HomeController {
      * @param event L'evento di azione del ComboBox delle stelle.
      */
     @FXML
-    private void stelleComboBoxAction(ActionEvent event) {
+    public void stelleComboBoxAction(ActionEvent event) {
         String selectedOption = stelleComboBox.getSelectionModel().getSelectedItem();
         if (selectedOption != null) {
             //System.out.println("Filtro stelle selezionato: " + selectedOption);
@@ -320,7 +354,7 @@ public class HomeController {
      * @param event L'evento di azione della casella di controllo della consegna.
      */
     @FXML
-    private void deliveryCheckBoxAction(ActionEvent event) {
+    public void deliveryCheckBoxAction(ActionEvent event) {
         if (deliveryCheckBox.isSelected()) {
             delivery = true;
         } else {
@@ -336,7 +370,7 @@ public class HomeController {
      * @param event L'evento di azione della casella di controllo della prenotazione.
      */
     @FXML
-    private void prenotazioneCheckBoxAction(ActionEvent event) {
+    public void prenotazioneCheckBoxAction(ActionEvent event) {
         if (prenotazioneCheckBox.isSelected()) {
             prenotazione = true;
         } else {
@@ -352,7 +386,7 @@ public class HomeController {
      * @param event L'evento di azione del pulsante di reset.
      */
     @FXML
-    private void resetFilters(ActionEvent event) {
+    public void resetFilters(ActionEvent event) {
         // Resetta i filtri
         searchBar.clear();
         prezzoComboBox.getSelectionModel().select("Tutte");
@@ -379,7 +413,7 @@ public class HomeController {
      * Metodo privato per aggiornare la lista dei ristoranti in base ai filtri applicati.
      * Viene chiamato quando l'utente interagisce con i campi di ricerca o i filtri.
      */
-    private void aggiornaApplicazioneFiltri() {
+    public void aggiornaApplicazioneFiltri() {
         String input = searchBar.getText();
         String location = locationTextField.getText();
 
@@ -410,7 +444,7 @@ public class HomeController {
      * @throws IOException Se si verifica un errore durante il caricamento della vista di login.
      */
     @FXML
-    private void switchToProfiloUT() throws IOException {
+    public void switchToProfiloUT() throws IOException {
         //System.out.println("[DEBUG] HomeController.switchToProfiloUT: Inizio metodo.");
         //System.out.println("[DEBUG] HomeController.switchToProfiloUT: Valore di Ruolo: " + Ruolo);
         //System.out.println("[DEBUG] HomeController.switchToProfiloUT: Oggetto Utente u: " + (u != null ? u.getUsername() : "null"));
@@ -460,7 +494,7 @@ public class HomeController {
      * @throws IOException Se si verifica un errore durante il caricamento della vista del ristorante.
      */
     @FXML
-    private void switchToRistorante() throws IOException {
+    public void switchToRistorante() throws IOException {
 
         Ristorante selectedRistorante = ristoranteListView.getSelectionModel().getSelectedItem(); // Ottieni il ristorante selezionato dalla ListView
 

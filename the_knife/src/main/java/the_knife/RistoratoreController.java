@@ -63,7 +63,7 @@ public class RistoratoreController {
      * @throws IOException
      */
     @FXML
-    private void switchToHome() throws IOException {
+    public void switchToHome() throws IOException {
         App.setRoot("Home",u);
     }
 
@@ -473,7 +473,7 @@ public class RistoratoreController {
      * @throws IOException
      */
     @FXML
-    private void switchToRistorante() throws IOException {
+    public void switchToRistorante() throws IOException {
             Ristorante selectedRistorante = list_rist.getSelectionModel().getSelectedItem(); //preleva il ristorante selezionato dalla listview
 
             if (selectedRistorante != null) {

@@ -28,7 +28,7 @@ public class LoginController {
      * @throws IOException
      */
     @FXML
-    private void switchToSecondary() throws IOException {
+    public void switchToSecondary() throws IOException {
         App.setRoot("Register");
     }
     /**
@@ -38,7 +38,7 @@ public class LoginController {
      * @throws IOException
      */
     @FXML
-    private void switchToGuest() throws IOException {
+    public void switchToGuest() throws IOException {
         App.setRoot("guest");
     }
 
@@ -59,7 +59,7 @@ public class LoginController {
      * @throws IOException Se si verifica un errore durante il caricamento della schermata "Home".
      */
     @FXML
-    private void switchToHome() throws IOException {
+    public void switchToHome() throws IOException {
         String username = N_Utente.getText();
         String password = N_Password.getText();
 

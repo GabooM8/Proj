@@ -40,7 +40,11 @@ public class FileMenager {
         }
     }
 
-    private static File getExternalFile(String fileName) {
+    /**
+     * @param fileName
+     * @return
+     */
+    public static File getExternalFile(String fileName) {
         return new File(EXTERNAL_DATA_DIR, fileName);
     }
 

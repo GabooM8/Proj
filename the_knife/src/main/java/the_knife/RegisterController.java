@@ -34,7 +34,7 @@ public class RegisterController {
      * @throws IOException
      */
     @FXML
-    private void switchToPrimary() throws IOException {
+    public void switchToPrimary() throws IOException {
         App.setRoot("Login");
 
        
@@ -146,7 +146,7 @@ public class RegisterController {
      * @throws IOException
      */
     @FXML
-    private void switchToHome() throws IOException {
+    public void switchToHome() throws IOException {
         // Recupera i valori dai campi di input
         String U_nome=nome.getText();
         String U_cognome=cognome.getText();

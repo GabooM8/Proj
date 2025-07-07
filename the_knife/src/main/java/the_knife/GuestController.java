@@ -24,12 +24,17 @@ public class GuestController {
      * @throws IOException
      */
     @FXML
-    private void switchToPrimary() throws IOException {
+    public void switchToPrimary() throws IOException {
         App.setRoot("Login");
     }
-
+    /**
+     * Nome inserito dal Guest
+     */
     @FXML
     private TextField nome;
+    /**
+     * Luogo inserito dal Guest
+     */
     @FXML
     private TextField luogo;
     /**
@@ -38,7 +43,7 @@ public class GuestController {
      * @throws IOException
      */
     @FXML
-    private void switchToHome() throws IOException {
+    public void switchToHome() throws IOException {
         String G_nome=nome.getText();
         String G_luogo=luogo.getText();
 

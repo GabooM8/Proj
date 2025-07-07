@@ -295,8 +295,10 @@ public class RistoranteController {
         dialog.showAndWait();
     }
 
-    private void visualizzaRecensioni() {
-        // Metodo per visualizzare le recensioni del ristorante corrente nella ListView
+    /**
+     * Metodo per visualizzare le recensioni del ristorante corrente nella ListView
+     */
+    public void visualizzaRecensioni() {
 
         // Controlla se il ristorante corrente e la ListView delle recensioni sono stati inizializzati
         if (ristoranteCorrente == null || recensioniListView == null) {
@@ -436,9 +438,9 @@ public class RistoranteController {
     /**
      * Metodo per visualizzare le risposte a una recensione in un dialog.
      * 
-     * @param recensione
+     * @param recensione la recensione di cui visualizzare le risposte
      */
-    private void visualizzaRisposte(Recensione recensione) {
+    public void visualizzaRisposte(Recensione recensione) {
 
         Dialog<Void> dialog = new Dialog<>();
         dialog.setTitle("Risposte");
@@ -484,9 +486,9 @@ public class RistoranteController {
     /**
      * Metodo per modificare una recensione esistente. 
      * 
-     * @param recensione
+     * @param recensione la recensione da modificare
      */
-    private void modificaRecensione(Recensione recensione) {
+    public void modificaRecensione(Recensione recensione) {
         Dialog<Void> dialog = new Dialog<>();
         dialog.setTitle("Modifica Recensione");
         dialog.setHeaderText("Modifica i dettagli della recensione");
@@ -600,7 +602,7 @@ public class RistoranteController {
      * 
      * @param ristorante Il ristorante per il quale ricalcolare le stelle.
      */
-    private void ricalcolaStelle(Ristorante ristorante) {
+    public void ricalcolaStelle(Ristorante ristorante) {
         if (ristorante.getRecensioni() == null || ristorante.getRecensioni().isEmpty()) {
             ristorante.setNumStelle(0);
             return;
@@ -633,7 +635,7 @@ public class RistoranteController {
      * @throws IOException
      */
     @FXML
-    private void switchToHome() throws IOException {
+    public void switchToHome() throws IOException {
         App.setRoot("Home",u);
     }
 

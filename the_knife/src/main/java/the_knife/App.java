@@ -88,7 +88,7 @@ public class App extends Application {
      * @throws IOException Se si verifica un errore durante il caricamento del file FXML.
      * @return Il nodo radice della scena corrente.
      */
-    private static Parent loadFXML(String fxml, Object data) throws IOException {
+    public static Parent loadFXML(String fxml, Object data) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         Parent parent = fxmlLoader.load();
         
@@ -117,7 +117,7 @@ public class App extends Application {
      * @return Il nodo radice della scena.
      * @throws IOException Se si verifica un errore durante il caricamento del file FXML.
      */
-    private static Parent loadFXML(String fxml, Object data, Object data2) throws IOException {
+    public static Parent loadFXML(String fxml, Object data, Object data2) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         Parent parent = fxmlLoader.load();
         

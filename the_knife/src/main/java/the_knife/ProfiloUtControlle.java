@@ -28,10 +28,11 @@ import the_knife.classes.Utente;
  * Gestisce l'interazione dell'utente con i campi di input e la visualizzazione dei ristoranti preferiti e delle recensioni.
  */
 public class ProfiloUtControlle {
-    
-    Utente u=new Utente();
 
-    //inizializza i campi FXML per il profilo dell'utente
+    /**
+     * Variabile per il nuovo utente
+     */
+    Utente u=new Utente();
 
     @FXML
     private TextField nome;
@@ -55,7 +56,7 @@ public class ProfiloUtControlle {
      * @throws IOException
      */
     @FXML
-    private void switchToHome() throws IOException {
+    public void switchToHome() throws IOException {
         App.setRoot("Home",u);
     }
 
@@ -299,7 +300,7 @@ public class ProfiloUtControlle {
      * @throws IOException Se si verifica un errore durante la navigazione alla vista del ristorante.
      */
     @FXML
-    private void switchToRistorante() throws IOException {
+    public void switchToRistorante() throws IOException {
 
         //prende il ristorante selezionato dalla ListView
         Ristorante selectedRistorante = prefListView.getSelectionModel().getSelectedItem();
