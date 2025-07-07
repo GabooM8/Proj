@@ -1,0 +1,50 @@
+-J-Duser.language=
+-J-Duser.country=
+@options
+@packages
+@argfile
+--class-path
+'/Users/micheleviselli/.m2/repository/org/openjfx/javafx-controls/17.0.10/javafx-controls-17.0.10.jar:/Users/micheleviselli/.m2/repository/org/openjfx/javafx-graphics/17.0.10/javafx-graphics-17.0.10.jar:/Users/micheleviselli/.m2/repository/org/openjfx/javafx-base/17.0.10/javafx-base-17.0.10.jar:/Users/micheleviselli/.m2/repository/org/openjfx/javafx-fxml/17.0.10/javafx-fxml-17.0.10.jar'
+--module-path
+'/Users/micheleviselli/Documents/University/LabA/Proj/the_knife/target/classes:/Users/micheleviselli/.m2/repository/org/openjfx/javafx-graphics/17.0.10/javafx-graphics-17.0.10-mac-aarch64.jar:/Users/micheleviselli/.m2/repository/org/openjfx/javafx-controls/17.0.10/javafx-controls-17.0.10-mac-aarch64.jar:/Users/micheleviselli/.m2/repository/org/openjfx/javafx-base/17.0.10/javafx-base-17.0.10-mac-aarch64.jar:/Users/micheleviselli/.m2/repository/org/openjfx/javafx-fxml/17.0.10/javafx-fxml-17.0.10-mac-aarch64.jar'
+--patch-module
+the_knife='/Users/micheleviselli/Documents/University/LabA/Proj/the_knife/src/main/java'
+-encoding
+'UTF-8'
+-protected
+-source
+'11'
+--module-source-path
+'/Users/micheleviselli/Documents/University/LabA/Proj/the_knife/target/reports/apidocs/src'
+-author
+-bottom
+'Copyright &#169; 2025. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'/Users/micheleviselli/Documents/University/LabA/Proj/the_knife/target/reports/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'the_knife 1.0-SNAPSHOT API'
+-linkoffline
+'https://docs.oracle.com/en/java/javase/11/docs/api' '/Users/micheleviselli/Documents/University/LabA/Proj/the_knife/target/javadoc-bundle-options'
+-use
+-version
+-windowtitle
+'the_knife 1.0-SNAPSHOT API'
+the_knife
+'/Users/micheleviselli/Documents/University/LabA/Proj/the_knife/src/main/java/module-info.java'
+/Users/micheleviselli/Documents/University/LabA/Proj/the_knife/target/reports/apidocs/tag-search-index.js = 1751913809789
+/Users/micheleviselli/Documents/University/LabA/Proj/the_knife/target/reports/apidocs/overview-tree.html = 1751913809780
+/Users/micheleviselli/Documents/University/LabA/Proj/the_knife/target/reports/apidocs/module-search-index.js = 1751913809789
+/Users/micheleviselli/Documents/University/LabA/Proj/the_knife/target/reports/apidocs/index.html = 1751913809800
+/Users/micheleviselli/Documents/University/LabA/Proj/the_knife/target/reports/apidocs/package-search-index.js = 1751913809789
+/Users/micheleviselli/Documents/University/LabA/Proj/the_knife/target/reports/apidocs/index-all.html = 1751913809798
+/Users/micheleviselli/Documents/University/LabA/Proj/the_knife/target/reports/apidocs/allpackages-index.html = 1751913809788
+/Users/micheleviselli/Documents/University/LabA/Proj/the_knife/target/reports/apidocs/member-search-index.js = 1751913809789
+/Users/micheleviselli/Documents/University/LabA/Proj/the_knife/target/reports/apidocs/help-doc.html = 1751913809803
+/Users/micheleviselli/Documents/University/LabA/Proj/the_knife/target/reports/apidocs/element-list = 1751913809757
+/Users/micheleviselli/Documents/University/LabA/Proj/the_knife/target/reports/apidocs/search.html = 1751913809799
+/Users/micheleviselli/Documents/University/LabA/Proj/the_knife/target/reports/apidocs/allclasses-index.html = 1751913809787
+/Users/micheleviselli/Documents/University/LabA/Proj/the_knife/target/reports/apidocs/type-search-index.js = 1751913809789
