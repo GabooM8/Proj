@@ -21,11 +21,6 @@ import java.util.List;
  * sia nella directory esterna dell'utente che all'interno del JAR.
  */
 public class FileMenager {
-    /**
-     * Costruttore di default.
-     * Non è necessario istanziare questa classe, quindi il costruttore è privato.
-     */
-    private FileMenager() {}
 
     /**
      * Percorso base per le risorse all'interno del JAR

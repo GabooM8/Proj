@@ -38,11 +38,6 @@ import the_knife.classes.Utente;
  */
 public class RistoranteController {
 
-    /**
-     * Costruttore privato per evitare l'istanza della classe.
-     */
-    private RistoranteController() {}
-
     //inizializza variabili per il ristorante corrente e l'utente
     private Ristorante ristoranteCorrente;
     Utente u=new Utente();

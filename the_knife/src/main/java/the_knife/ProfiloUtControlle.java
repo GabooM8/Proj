@@ -30,11 +30,6 @@ import the_knife.classes.Utente;
 public class ProfiloUtControlle {
 
     /**
-     * Costruttore privato per evitare l'istanza della classe.
-     */
-    private ProfiloUtControlle() {}
-
-    /**
      * Variabile per il nuovo utente
      */
     Utente u=new Utente();

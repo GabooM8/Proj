@@ -12,12 +12,6 @@ package the_knife;
 public class Launcher {
 
     /**
-     * Costruttore privato per evitare l'istanza della classe.
-     * Questa classe è una utility e non dovrebbe essere istanziata.
-     */
-    private Launcher() {}
-
-    /**
      * Metodo main per avviare l'applicazione JavaFX.
      * 
      * @param args Argomenti della riga di comando (non utilizzati in questo caso).

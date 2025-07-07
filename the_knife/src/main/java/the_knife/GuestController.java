@@ -19,11 +19,6 @@ import the_knife.classes.Utente;
 public class GuestController {
 
     /**
-     * Costruttore privato per evitare l'istanza della classe.
-     */
-    private GuestController() {}
-
-    /**
      * Metodo per tornare alla schermata di login. 
      * 
      * @throws IOException errore durante il caricamento della schermata di login.

@@ -35,11 +35,6 @@ import the_knife.classes.Utente;
  * Gestisce l'interazione dell'utente ristoratore con i campi di input, la visualizzazione dei propri ristoranti e delle recensioni,
  */
 public class RistoratoreController {
-
-    /**
-     * Costruttore privato per evitare l'istanza della classe.
-     */
-    private RistoratoreController() {}
     
     Utente u=new Utente();
 

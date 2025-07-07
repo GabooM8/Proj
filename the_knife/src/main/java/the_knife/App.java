@@ -22,11 +22,6 @@ import the_knife.classes.Utente;
 public class App extends Application {
 
     /**
-     * Costruttore privato per evitare l'istanza della classe.
-     */
-    private App() {}
-
-    /**
      * La scena principale dell'applicazione.
      * Viene utilizzata per cambiare il contenuto della finestra principale.
      */

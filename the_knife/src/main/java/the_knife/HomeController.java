@@ -31,11 +31,6 @@ import the_knife.classes.Utente;
 public class HomeController {
 
     /**
-     * Costruttore privato per evitare l'istanza della classe.
-     */
-    private HomeController() {}
-
-    /**
      * Varibile per il nuovo utente
      */
     Utente u=new Utente();

@@ -29,11 +29,6 @@ import the_knife.classes.Utente;
 public class RegisterController {
 
     /**
-     * Costruttore privato per evitare l'istanza della classe.
-     */
-    private RegisterController() {}
-
-    /**
      * Metodo per passare alla schermata di login. 
      * 
      * @throws IOException errore durante il caricamento della schermata di login.
